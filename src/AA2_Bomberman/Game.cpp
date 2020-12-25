@@ -2,7 +2,7 @@
 
 Game::Game()
 {
-	gameScene = EGameScene::GAME;
+	gameScene = EGameScene::MENU;
 	scene = new Menu();
 	inputManager = new InputManager();
 }
