@@ -11,12 +11,11 @@ class Game
 private:
 	Scene* scene;
 	EGameScene gameScene;
-	InputManager* inputManager;
+	/*InputManager* inputManager;*/
 
 public:
 	Game();
 	~Game();
 
-	void Run();
-	void UpdateInput();
+	void Run(InputManager input);
 };

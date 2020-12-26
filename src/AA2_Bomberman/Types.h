@@ -122,4 +122,4 @@ enum class EDirection { NONE = -1, DOWN, LEFT, RIGHT, UP, COUNT };
 
 enum class EGameScene { GAME, EXIT, MENU, RANKING };
 
-enum class ESceneState { CLICK_PLAY, CLICK_EXIT, CLICK_RANKING };
+enum class ESceneState { CLICK_PLAY, CLICK_EXIT, CLICK_RANKING, RUNNING };

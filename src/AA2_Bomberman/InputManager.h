@@ -13,4 +13,5 @@ public:
 	~InputManager();
 
 	void Update();
+	InputData GetInput() { return _input; }
 };
