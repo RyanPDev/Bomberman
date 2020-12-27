@@ -76,5 +76,6 @@ void Game::Run(InputManager input)
 			break;
 		}
 		//---FRAME CONTROL---
+		input.GetInput().UpdateDeltaTime();
 	}
 }

@@ -6,8 +6,7 @@
 
 int main(int, char* [])
 {
-	Map map;
-
+	//Player player;
 	InputManager input;
 
 	Game game;

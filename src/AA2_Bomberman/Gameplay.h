@@ -1,16 +1,20 @@
 #pragma once
-#include "Scene.h"
 #include <iostream>
+#include "Scene.h"
+#include "Player.h"
 
 class Gameplay : public Scene
 {
 private:
-	int a = 0;
+	std::vector<Player*> _players;
+	//Player player;
 
 public:
 	Gameplay();
 	~Gameplay();
 
 	void Update();
-	void Draw();	
+	void Draw();
+	void InitPlayers();
+	void AddPlayers(int texWidth, int texHeight, Player::EPlayerType type);
 };

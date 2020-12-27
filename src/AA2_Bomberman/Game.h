@@ -11,7 +11,6 @@ class Game
 private:
 	Scene* scene;
 	EGameScene gameScene;
-	/*InputManager* inputManager;*/
 
 public:
 	Game();
