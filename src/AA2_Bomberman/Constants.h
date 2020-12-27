@@ -21,7 +21,8 @@ using MRects = std::unordered_map<std::string, SDL_Rect>;
 const std::string T_BG_MENU = "BackgroundMenu";
 const std::string T_BG_INGAME = "BackgroundInGame";
 const std::string T_CURSOR = "Cursor";
-const std::string T_PLAYERS = "Player";
+const std::string T_PLAYER1 = "Player1";
+const std::string T_PLAYER2 = "Player2";
 const std::string T_PLAYERS_POS = "PlayersPos";
 
 //Font

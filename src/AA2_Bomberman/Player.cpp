@@ -41,7 +41,7 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		initCol = 0;
 		lastCol = initCol + 2;
 		initRow = 0;
-		lastRow = initRow + 4;
+		lastRow = initRow;
 		frame.x = frame.w * initCol;
 		frame.y = frame.h * lastRow;
 		score = 0;
@@ -59,7 +59,7 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		score = 0;
 
 		position.x = SCREEN_WIDTH / 2;
-		position.y = SCREEN_HEIGHT / 2 + 100;
+		position.y = SCREEN_HEIGHT / 2 + 200;
 		break;
 	default:
 		frame.x = 0;
