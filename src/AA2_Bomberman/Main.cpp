@@ -7,9 +7,10 @@
 int main(int, char* [])
 {
 	//Player player;
+	InputData _input;
 	InputManager input;
 
-	Game game;
+	Game game(_input);
 	game.Run(input);
 
 	return 0;

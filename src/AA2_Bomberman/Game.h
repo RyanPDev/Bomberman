@@ -13,7 +13,7 @@ private:
 	EGameScene gameScene;
 
 public:
-	Game();
+	Game(InputData);
 	~Game();
 
 	void Run(InputManager input);

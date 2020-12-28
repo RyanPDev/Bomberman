@@ -9,7 +9,6 @@ public:
 	enum class EPlayerType { NONE = -1, PL1, PL2, COUNT };
 
 private:
-	
 	int score;
 	RECT position;
 	RECT frame;
@@ -26,10 +25,12 @@ public:
 	~Player();
 
 	void Update(InputData* input);
-	void Draw();
-	void Init();
-	//void AddPlayer(int texWidth, int texHeight, Player::EPlayerType type);
+	void Draw(std::string id, Player* p);
 	void SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, EPlayerType _type);
+	bool Move(InputData* input);
+	void UpdateSprite();
+	void ScreenCollision(VEC2& newPosition, InputData* input);
+	
 
 	inline const RECT* GetPosition()const { return &position; }
 	inline const RECT* GetFrame()const { return &frame; }

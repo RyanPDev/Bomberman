@@ -1,13 +1,17 @@
 #include "Game.h"
 
-Game::Game()
+Game::Game(InputData input)
 {
 	gameScene = EGameScene::MENU;
 	scene = new Menu();
+	int a = input.GetScreenSize()->x;
+	input.SetScreenSize(VEC2(SCREEN_WIDTH, SCREEN_HEIGHT));
+	int b = input.GetScreenSize()->x;
 }
 
 Game::~Game()
 {
+	delete scene;
 }
 
 void Game::Run(InputManager input)
@@ -16,7 +20,7 @@ void Game::Run(InputManager input)
 	{
 		input.Update();
 
-		if (input.GetInput().IsPressed(EInputKeys::QUIT)) gameScene = EGameScene::EXIT;		
+		if (input.GetInput().IsPressed(EInputKeys::QUIT)) gameScene = EGameScene::EXIT;
 
 		switch (gameScene)
 		{
@@ -36,7 +40,7 @@ void Game::Run(InputManager input)
 				scene = new Ranking();
 				break;
 			default:
-				scene->Update();
+				scene->Update(input);
 				scene->Draw();
 				break;
 			}
@@ -52,7 +56,7 @@ void Game::Run(InputManager input)
 				scene = new Menu();
 				break;
 			default:
-				scene->Update();
+				scene->Update(input);
 				scene->Draw();
 				break;
 			}
@@ -67,7 +71,7 @@ void Game::Run(InputManager input)
 				scene = new Menu();
 				break;
 			default:
-				scene->Update();
+				scene->Update(input);
 				scene->Draw();
 				break;
 			}

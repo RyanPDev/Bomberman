@@ -10,7 +10,7 @@ Ranking::~Ranking()
 
 }
 
-void Ranking::Update()
+void Ranking::Update(InputManager input)
 {
 
 }
