@@ -7,7 +7,8 @@ Menu::Menu()
 	Renderer::GetInstance()->LoadRect(T_BG_MENU, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 
 	//Audio
-	AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/menu.mp3" });
+	if(!AudioManager::GetInstance()->PausedMusic())
+		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/menu.mp3" });
 
 
 	//Title
@@ -22,7 +23,7 @@ Menu::Menu()
 
 	Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_PLAY_H, "Play", {200,100,0,255}, 0, 0 });
 
-	texturePlay = T_PLAY_N;
+	SetTexturePlay(T_PLAY_N);
 
 	Renderer::GetInstance()->LoadRect(T_PLAY, { SCREEN_WIDTH / 2 - vtmp.x / 2, 250, vtmp.x, vtmp.y });
 
@@ -35,7 +36,7 @@ Menu::Menu()
 
 	Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_SOUND_OFF_H, "Sound off", {200,100,0,255}, 0, 0 });
 
-	textureSound = T_SOUND_ON_N;
+	SetTextureSound(T_SOUND_ON_N);
 
 	Renderer::GetInstance()->LoadRect(T_SOUND, { SCREEN_WIDTH / 2 - vtmp.x, 350, vtmp.x * 2, vtmp.y });
 
@@ -44,7 +45,7 @@ Menu::Menu()
 
 	Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_EXIT_H, "Exit", {200,100,0,255}, 0, 0 });
 
-	textureExit = T_EXIT_N;
+	SetTextureExit(T_EXIT_N);
 
 	Renderer::GetInstance()->LoadRect(T_EXIT, { SCREEN_WIDTH / 2 - vtmp.x / 2, 450, vtmp.x, vtmp.y });
 	//Play
@@ -58,6 +59,8 @@ Menu::~Menu()
 void Menu::Update(InputManager input)
 {
 	input.GetInput().GetScreenSize();
+
+	
 }
 
 void Menu::Draw()

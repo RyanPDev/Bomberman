@@ -1,5 +1,7 @@
 #pragma once
 #include "Types.h"
+#include "Renderer.h"
+#include "AudioManager.h"
 #include "InputManager.h"
 #include "Gameplay.h"
 #include "Menu.h"

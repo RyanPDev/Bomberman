@@ -10,7 +10,8 @@ Gameplay::Gameplay()
 	InitPlayers();
 
 	//Audio
-	AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/game_theme.mp3" });
+	if (!AudioManager::GetInstance()->PausedMusic())
+		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/game_theme.mp3" });
 }
 
 Gameplay::~Gameplay()
