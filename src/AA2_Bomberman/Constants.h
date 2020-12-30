@@ -20,6 +20,7 @@ using MRects = std::unordered_map<std::string, SDL_Rect>;
 #pragma region TEXTURES/RECTS
 const std::string T_BG_MENU = "BackgroundMenu";
 const std::string T_BG_INGAME = "BackgroundInGame";
+const std::string T_BG_RANKING = "BackgroundRanking";
 const std::string T_CURSOR = "Cursor";
 const std::string T_PLAYER1 = "Player1";
 const std::string T_PLAYER2 = "Player2";
@@ -35,6 +36,9 @@ const std::string T_TITLE = "TxtTitle";
 const std::string T_PLAY = "BtnPlay";
 const std::string T_PLAY_N = "BtnPlayN";
 const std::string T_PLAY_H = "BtnPlayH";
+const std::string T_RANKING = "BtnRanking";
+const std::string T_RANKING_N = "BtnRankingN";
+const std::string T_RANKING_H = "BtnRankingH";
 const std::string T_SOUND = "BtnSound";
 const std::string T_SOUND_ON_N = "BtnSoundOnN";
 const std::string T_SOUND_ON_H = "BtnSoundOnH";

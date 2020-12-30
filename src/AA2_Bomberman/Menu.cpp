@@ -19,13 +19,22 @@ Menu::Menu()
 	//Buttons
 	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 150 });
 	//Play
-	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_PLAY_N, "Play", {0,0,0,0}, 0, 0 });
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_PLAY_N, "Play", {0,0,0,255}, 0, 0 });
 
 	Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_PLAY_H, "Play", {200,100,0,255}, 0, 0 });
 
-	SetTexturePlay(T_PLAY_N);
+	texturePlay = T_PLAY_N;
 
 	Renderer::GetInstance()->LoadRect(T_PLAY, { SCREEN_WIDTH / 2 - vtmp.x / 2, 250, vtmp.x, vtmp.y });
+
+	//Ranking
+	VEC2 vtmp2 =Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_RANKING_N, "Ranking", {0,0,0,255}, 0, 0 });
+
+	Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_RANKING_H, "Ranking", {200,100,0,255}, 0, 0 });
+
+	textureRanking = T_RANKING_N;
+
+	Renderer::GetInstance()->LoadRect(T_RANKING, { SCREEN_WIDTH / 2 - vtmp2.x / 2, 350, vtmp2.x, vtmp2.y });
 
 	//Sound On/off
 	Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_SOUND_ON_N, "Sound on", {0,0,0,255}, 0, 0 });
@@ -36,18 +45,18 @@ Menu::Menu()
 
 	Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_SOUND_OFF_H, "Sound off", {200,100,0,255}, 0, 0 });
 
-	SetTextureSound(T_SOUND_ON_N);
+	textureSound = T_SOUND_ON_N;
 
-	Renderer::GetInstance()->LoadRect(T_SOUND, { SCREEN_WIDTH / 2 - vtmp.x, 350, vtmp.x * 2, vtmp.y });
+	Renderer::GetInstance()->LoadRect(T_SOUND, { SCREEN_WIDTH / 2 - vtmp.x, 450, vtmp.x * 2, vtmp.y });
 
 	//Exit
 	Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_EXIT_N, "Exit", {0,0,0,255}, 0, 0 });
 
 	Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_EXIT_H, "Exit", {200,100,0,255}, 0, 0 });
 
-	SetTextureExit(T_EXIT_N);
+	textureExit = T_EXIT_N;
 
-	Renderer::GetInstance()->LoadRect(T_EXIT, { SCREEN_WIDTH / 2 - vtmp.x / 2, 450, vtmp.x, vtmp.y });
+	Renderer::GetInstance()->LoadRect(T_EXIT, { SCREEN_WIDTH / 2 - vtmp.x / 2, 550, vtmp.x, vtmp.y });
 	//Play
 }
 
@@ -72,7 +81,9 @@ void Menu::Draw()
 
 	//Title
 	Renderer::GetInstance()->PushImage(T_TITLE, T_TITLE);
+	//Buttons
 	Renderer::GetInstance()->PushImage(texturePlay, T_PLAY);
+	Renderer::GetInstance()->PushImage(textureRanking, T_RANKING);
 	Renderer::GetInstance()->PushImage(textureSound, T_SOUND);
 	Renderer::GetInstance()->PushImage(textureExit, T_EXIT);
 

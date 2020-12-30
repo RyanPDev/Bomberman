@@ -7,6 +7,7 @@ private:
 	std::string texturePlay;
 	std::string textureExit;
 	std::string textureSound;
+	std::string textureRanking;
 
 public:
 	Menu();

@@ -30,13 +30,11 @@ void Game::Run(InputManager input)
 			//Button Collisions
 			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_PLAY)))
 			{
-
 				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { scene->SetSceneState(ESceneState::CLICK_PLAY); }
 			}
-			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_EXIT)))
+			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_RANKING)))
 			{
-				
-				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { gameScene = EGameScene::EXIT; }
+				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { scene->SetSceneState(ESceneState::CLICK_RANKING); }
 			}
 			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_SOUND)))
 			{
@@ -48,6 +46,11 @@ void Game::Run(InputManager input)
 					}
 					else AudioManager::GetInstance()->ResumeMusic();
 				}
+			}
+			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_EXIT)))
+			{
+				
+				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { gameScene = EGameScene::EXIT; }
 			}
 
 			switch (scene->GetSceneState())
@@ -85,7 +88,7 @@ void Game::Run(InputManager input)
 			}
 			break;
 		case EGameScene::RANKING:
-			if (input.GetInput().IsPressed(EInputKeys::ESC)) gameScene = EGameScene::MENU;
+			if (input.GetInput().IsPressed(EInputKeys::ESC)) scene->SetSceneState(ESceneState::CLICK_EXIT);
 			switch (scene->GetSceneState())
 			{
 			case ESceneState::CLICK_EXIT:
