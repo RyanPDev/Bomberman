@@ -106,10 +106,6 @@ bool Player::Move(InputData* input)
 	//Check player collisions
 	ScreenCollision(newPosition, input);
 
-	//Collisions::ScreenCollision(newPosition, position, frame, input);
-	//if (newPosition.x > input.GetScreenSize()->x - frame.w|| newPosition.x < 0) newPosition.x = position.x;
-	//if (newPosition.y > input.GetScreenSize()->y - frame.h|| newPosition.y < input.GetScreenSize()->y / 4) newPosition.y = position.y;
-
 	//Update position
 	if (newPosition.x != position.x || newPosition.y != position.y) {
 		position.x = newPosition.x;

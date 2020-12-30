@@ -15,7 +15,7 @@ private:
 	EGameScene gameScene;
 
 public:
-	Game(InputData);
+	Game(InputManager);
 	~Game();
 
 	void Run(InputManager input);

@@ -19,10 +19,10 @@ Gameplay::~Gameplay()
 	AudioManager::GetInstance()->~AudioManager();
 }
 
-void Gameplay::Update(InputManager input)
+void Gameplay::Update(InputManager* input)
 {
-	/*for (Player* p : _players)
-		p->Update(&input.GetInput());*/
+	for (Player* p : _players)
+		p->Update(&input->GetInput());
 }
 
 void Gameplay::Draw()

@@ -12,7 +12,7 @@ public:
 	Gameplay();
 	~Gameplay();
 
-	void Update(InputManager input);
+	void Update(InputManager* input);
 	void Draw();
 	void AddPlayer(int texWidth, int texHeight, Player::EPlayerType type);
 	void InitPlayers();

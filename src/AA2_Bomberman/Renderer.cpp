@@ -95,7 +95,7 @@ void Renderer::PushImage(const std::string& id, const std::string& idRect) {
 
 void Renderer::PushImage(const std::string& id, const RECT* rectImage)
 {
-	//SDL_RenderCopy(m_renderer, m_textureData[id], nullptr, &MyRect2SDL(rectImage));
+	SDL_RenderCopy(m_renderer, m_textureData[id], nullptr, &MyRect2SDL(rectImage));
 }
 
 void Renderer::PushSprite(const std::string& id, const  std::string& idRectSprite, const  std::string& idRectPos) {
@@ -105,7 +105,7 @@ void Renderer::PushSprite(const std::string& id, const  std::string& idRectSprit
 
 void Renderer::PushSprite(const std::string& id, const RECT* rectSprite, const RECT* rectPos)
 {
-	/*SDL_RenderCopy(m_renderer, m_textureData[id], &MyRect2SDL(rectSprite), &MyRect2SDL(rectPos));*/
+	SDL_RenderCopy(m_renderer, m_textureData[id], &MyRect2SDL(rectSprite), &MyRect2SDL(rectPos));
 }
 
 void Renderer::PushRotatedSprite(const std::string& id, const std::string& idRectSprite, const std::string& idRectPos, float angle) {

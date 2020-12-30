@@ -13,7 +13,7 @@ public:
 	Menu();
 	~Menu();
 
-	void Update(InputManager input);
+	void Update(InputManager* input);
 	void Draw();
 	void SetTexturePlay(std::string id) { texturePlay = id; }
 	void SetTextureExit(std::string id) { textureExit = id; }

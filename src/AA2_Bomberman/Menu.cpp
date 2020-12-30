@@ -65,11 +65,9 @@ Menu::~Menu()
 	AudioManager::GetInstance()->~AudioManager();
 }
 
-void Menu::Update(InputManager input)
+void Menu::Update(InputManager* input)
 {
-	input.GetInput().GetScreenSize();
-
-	
+	input->GetInput().GetScreenSize();
 }
 
 void Menu::Draw()
