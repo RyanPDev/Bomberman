@@ -27,9 +27,11 @@ const std::string T_PLAYERS_POS = "PlayersPos";
 
 //Font
 const std::string F_SAIYAN = "FontSaiyan";
+const std::string F_GAMEOVER = "FontGameOver";
 const std::string F_ARIAL = "FontArial";
 
 //Menu
+const std::string T_TITLE = "TxtTitle";
 const std::string T_PLAY = "BtnPlay";
 const std::string T_PLAY_N = "BtnPlayN";
 const std::string T_PLAY_H = "BtnPlayH";

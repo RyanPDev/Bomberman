@@ -49,7 +49,7 @@ void Renderer::Render() { SDL_RenderPresent(m_renderer); };
 
 void Renderer::LoadFont(const Font& font) {
 	TTF_Font* ttfFont{ TTF_OpenFont(font.path.c_str(), font.size) };
-	if (ttfFont == nullptr) throw"No espot inicialitzar TTF_Font";
+	if (ttfFont == nullptr) throw"No es pot inicialitzar TTF_Font";
 	m_fontData[font.id] = ttfFont;
 };
 
