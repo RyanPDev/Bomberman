@@ -10,13 +10,13 @@ Gameplay::Gameplay()
 	InitPlayers();
 
 	//Audio
-	if (!AudioManager::GetInstance()->PausedMusic())
-		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/game_theme.mp3" });
+	/*if (!AudioManager::GetInstance()->PausedMusic())
+		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/game_theme.mp3" });*/
 }
 
 Gameplay::~Gameplay()
 {
-	AudioManager::GetInstance()->~AudioManager();
+
 }
 
 void Gameplay::Update(InputManager* input)

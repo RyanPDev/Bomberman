@@ -28,9 +28,7 @@ Renderer::Renderer()
 
 Renderer::~Renderer()
 {
-	for (auto& t : m_textureData) SDL_DestroyTexture(t.second), t.second = nullptr;
-	for (auto& f : m_fontData) TTF_CloseFont(f.second), f.second = nullptr;
-	for (auto& f : m_rects) { delete f.second; f.second = nullptr; };
+	DestroyTextures();
 
 	SDL_DestroyRenderer(m_renderer);
 	m_renderer = nullptr;
@@ -42,6 +40,13 @@ Renderer::~Renderer()
 	TTF_Quit();
 	SDL_Quit();
 };
+
+void Renderer::DestroyTextures()
+{
+	for (auto& t : m_textureData) SDL_DestroyTexture(t.second), t.second = nullptr;
+	for (auto& f : m_fontData) TTF_CloseFont(f.second), f.second = nullptr;
+	for (auto& f : m_rects) { delete f.second; f.second = nullptr; };
+}
 
 void Renderer::Clear() { SDL_RenderClear(m_renderer); };
 

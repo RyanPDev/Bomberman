@@ -23,16 +23,27 @@ void Game::Run(InputManager input)
 		switch (gameScene)
 		{
 		case EGameScene::MENU:
+			#pragma region INPUTS
 			//Input Control
 			if (input.GetInput().JustPressed(EInputKeys::ESC)) gameScene = EGameScene::EXIT;
 			//Button Collisions
 			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_PLAY)))
 			{
+				scene->SetTexturePlay(T_PLAY_H);  //SetTexturePlay(T_PLAY_H);
 				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { scene->SetSceneState(ESceneState::CLICK_PLAY); }
+			}
+			else
+			{
+				scene->SetTexturePlay(T_PLAY_N);
 			}
 			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_RANKING)))
 			{
+				scene->SetTextureRanking(T_RANKING_H);
 				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { scene->SetSceneState(ESceneState::CLICK_RANKING); }
+			}
+			else
+			{
+				scene->SetTextureRanking(T_RANKING_N);
 			}
 			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_SOUND)))
 			{
@@ -44,13 +55,32 @@ void Game::Run(InputManager input)
 					}
 					else AudioManager::GetInstance()->ResumeMusic();
 				}
+				if (AudioManager::GetInstance()->PausedMusic()) {
+					scene->SetTextureSound(T_SOUND_OFF_H);
+				}
+				else {
+					scene->SetTextureSound(T_SOUND_ON_H);
+				}
 			}
-			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_EXIT)))
-			{
-				
-				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { gameScene = EGameScene::EXIT; }
+			else {
+				if (AudioManager::GetInstance()->PausedMusic()) {
+					scene->SetTextureSound(T_SOUND_OFF_N);
+				}
+				else {
+					scene->SetTextureSound(T_SOUND_ON_N);
+				}
 			}
 
+			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_EXIT)))
+			{
+				scene->SetTextureExit(T_EXIT_H);
+				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { gameScene = EGameScene::EXIT; }
+			}
+			else
+			{
+				scene->SetTextureExit(T_EXIT_N);
+			}
+			#pragma endregion
 			switch (scene->GetSceneState())
 			{
 			case ESceneState::CLICK_PLAY:

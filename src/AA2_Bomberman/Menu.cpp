@@ -7,9 +7,8 @@ Menu::Menu()
 	Renderer::GetInstance()->LoadRect(T_BG_MENU, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 
 	//Audio
-	if(!AudioManager::GetInstance()->PausedMusic())
-		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/menu.mp3" });
-
+	/*if(!AudioManager::GetInstance()->PausedMusic())
+		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/menu.mp3" });*/
 
 	//Title
 	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 200 });
@@ -62,7 +61,6 @@ Menu::Menu()
 
 Menu::~Menu()
 {
-	AudioManager::GetInstance()->~AudioManager();
 }
 
 void Menu::Update(InputManager* input)
@@ -84,8 +82,6 @@ void Menu::Draw()
 	Renderer::GetInstance()->PushImage(textureRanking, T_RANKING);
 	Renderer::GetInstance()->PushImage(textureSound, T_SOUND);
 	Renderer::GetInstance()->PushImage(textureExit, T_EXIT);
-
-
 
 	Renderer::GetInstance()->Render();
 }
