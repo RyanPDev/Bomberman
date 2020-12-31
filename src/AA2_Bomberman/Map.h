@@ -11,7 +11,10 @@
 struct Cell
 {
 	VEC2 wallPosition;
+	bool existWall;
 	bool destructibleWall;
+	//bool bomb;
+	//PowerUp type;
 };
 
 class Map

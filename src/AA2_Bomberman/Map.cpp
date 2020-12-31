@@ -22,26 +22,52 @@ Map::Map()
 	rapidxml::xml_node<>* pRoot = doc.first_node();
 	rapidxml::xml_node<>* pNode = pRoot->first_node();
 
+	char* x = 0;
+	char* y = 0;
+	char* z = 0;
 	int i = 0;
 	int j = 0;
-	bool wall = false;
-
+	std::string line;
 	for (rapidxml::xml_node<>* pNode = pRoot->first_node()->first_node("Map"); pNode; pNode = pNode->next_sibling())
 	{
-		std::cout << pNode->name() << ':' << '\n';
+		//std::cout << pNode->name() << ':' << '\n';
 
-		for (rapidxml::xml_node<>* pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
+		for (rapidxml::xml_node<>* pNodeI = pNode->first_node(); pNodeI && i < numRows; pNodeI = pNodeI->next_sibling())
 		{
-			std::cout << pNodeI->name() << '\n';
-			for (rapidxml::xml_attribute<>* pNodeA = pNodeI->first_attribute(); pNodeA; pNodeA = pNodeA->next_attribute())
+			//std::cout << pNodeI->name() << '\n';
+			for (rapidxml::xml_attribute<>* pNodeA = pNodeI->first_attribute(); pNodeA && j < numCols && pNodeA->next_attribute() != nullptr; pNodeA = pNodeA->next_attribute()->next_attribute()->next_attribute())
 			{
-				i = (int)pNodeA->value();
-				j = (int)pNodeA->value();
-				std::cout << pNodeA->name() << ':' << pNodeA->value() << '\n';
+				z = pNodeA->value();
+				x = pNodeA->next_attribute()->value();
+				y = pNodeA->next_attribute()->next_attribute()->value();
+				i = atoi(y);
+				j = atoi(x);
+
+				std::string str(z);
+				if (str == "false")
+					map[i][j].destructibleWall = false;
+
+				map[i][j].wallPosition.x = i;
+				map[i][j].wallPosition.y = j;
+
+				//std::cout << pNodeA->name() << ':' << pNodeA->value() << '\n' << pNodeA->next_attribute()->name() << ':' << pNodeA->next_attribute()->value() << std::endl;
 			}
 		};
-		std::cout << '\n';
+		//std::cout << '\n';
 	}
+
+	for (int i = 0; i < numRows; i++)
+		for (int j = 0; j < numCols; j++)
+		{
+			//if (map[i][j].destructibleWall) std::cout << "Destructible wall: true || " << std::endl;
+			if (!map[i][j].destructibleWall)
+			{
+				std::cout << "Position: " << i << "|" << j << std::endl;
+				std::cout << "Destructible wall: false" << std::endl;
+				std::cout << "x: " << map[i][j].wallPosition.x << " y: " << map[i][j].wallPosition.y << std::endl;
+				std::cout << "--------------------------------" << std::endl;
+			}
+		}
 }
 
 Map::~Map()
