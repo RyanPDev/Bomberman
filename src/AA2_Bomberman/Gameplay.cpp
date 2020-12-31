@@ -16,7 +16,8 @@ Gameplay::Gameplay()
 
 Gameplay::~Gameplay()
 {
-
+	_players.clear();
+	delete p;
 }
 
 void Gameplay::Update(InputManager* input)
@@ -41,7 +42,7 @@ void Gameplay::Draw()
 
 void Gameplay::AddPlayer(int texWidth, int texHeight, Player::EPlayerType type)
 {
-	Player* p = new Player();
+	p = new Player();
 	p->SetPlayerValues(texWidth, texHeight, 3, 4, type);
 	_players.push_back(std::move(p));
 }

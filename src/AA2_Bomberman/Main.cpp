@@ -6,11 +6,11 @@
 
 int main(int, char* [])
 {
-	//Map map;
+	Map map;
 	InputManager input;
 
-	Game game(input);
-	game.Run(input);
+	/*Game game(input);
+	game.Run(input);*/
 
 	return 0;
 }

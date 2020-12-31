@@ -7,6 +7,7 @@ class Gameplay : public Scene
 {
 private:
 	std::vector<Player*> _players;
+	Player* p;
 
 public:
 	Gameplay();

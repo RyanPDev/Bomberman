@@ -56,7 +56,6 @@ Menu::Menu()
 	textureExit = T_EXIT_N;
 
 	Renderer::GetInstance()->LoadRect(T_EXIT, { SCREEN_WIDTH / 2 - vtmp.x / 2, 550, vtmp.x, vtmp.y });
-	//Play
 }
 
 Menu::~Menu()
@@ -77,6 +76,7 @@ void Menu::Draw()
 
 	//Title
 	Renderer::GetInstance()->PushImage(T_TITLE, T_TITLE);
+
 	//Buttons
 	Renderer::GetInstance()->PushImage(texturePlay, T_PLAY);
 	Renderer::GetInstance()->PushImage(textureRanking, T_RANKING);

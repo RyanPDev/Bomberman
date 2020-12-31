@@ -6,11 +6,19 @@
 
 #include <iostream>
 #include <sstream>
+#include "Types.h"
+
+struct Cell
+{
+	VEC2 wallPosition;
+	bool destructibleWall;
+};
 
 class Map
 {
 private:
-	char** map;
+	Cell** map;
+	int numRows = 11, numCols = 14;
 
 public:
 	Map();
