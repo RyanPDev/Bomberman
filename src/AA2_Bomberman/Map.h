@@ -11,8 +11,8 @@
 struct Cell
 {
 	VEC2 wallPosition;
-	bool existWall;
-	bool destructibleWall;
+	bool existWall = false;
+	bool destructibleWall = false;
 	//bool bomb;
 	//PowerUp type;
 };

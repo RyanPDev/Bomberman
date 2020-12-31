@@ -44,11 +44,12 @@ Map::Map()
 				j = atoi(x);
 
 				std::string str(z);
-				if (str == "false")
-					map[i][j].destructibleWall = false;
+				if (str == "false") map[i][j].destructibleWall = false;
+				else if (str == "true") map[i][j].destructibleWall = true;
 
 				map[i][j].wallPosition.x = i;
 				map[i][j].wallPosition.y = j;
+				map[i][j].existWall = true;
 
 				//std::cout << pNodeA->name() << ':' << pNodeA->value() << '\n' << pNodeA->next_attribute()->name() << ':' << pNodeA->next_attribute()->value() << std::endl;
 			}
@@ -60,12 +61,15 @@ Map::Map()
 		for (int j = 0; j < numCols; j++)
 		{
 			//if (map[i][j].destructibleWall) std::cout << "Destructible wall: true || " << std::endl;
-			if (!map[i][j].destructibleWall)
+			if (map[i][j].existWall)
 			{
-				std::cout << "Position: " << i << "|" << j << std::endl;
-				std::cout << "Destructible wall: false" << std::endl;
-				std::cout << "x: " << map[i][j].wallPosition.x << " y: " << map[i][j].wallPosition.y << std::endl;
-				std::cout << "--------------------------------" << std::endl;
+				if (!map[i][j].destructibleWall)
+				{
+					std::cout << "Position: " << i << "|" << j << std::endl;
+					std::cout << "Destructible wall: false" << std::endl;
+					std::cout << "x: " << map[i][j].wallPosition.x << " y: " << map[i][j].wallPosition.y << std::endl;
+					std::cout << "--------------------------------" << std::endl;
+				}
 			}
 		}
 }
