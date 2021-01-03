@@ -13,13 +13,12 @@ protected:
 	std::string textureRanking;
 public:
 	~Scene();
-	virtual void Update(EDirection dir) = 0;
+	virtual void Update(InputManager* input) = 0;
 	virtual void Draw() = 0;
 	virtual void SetTexturePlay(std::string id) { texturePlay = id; }
 	virtual void SetTextureExit(std::string id) { textureExit = id; }
 	virtual void SetTextureSound(std::string id) { textureSound = id; }
 	virtual void SetTextureRanking(std::string id) { textureRanking = id; }
-	virtual EDirection GetDirection(EDirection dir) { return dir; }
 
 	ESceneState GetSceneState() { return sceneState; }
 	void SetSceneState(ESceneState state) { sceneState = state; }

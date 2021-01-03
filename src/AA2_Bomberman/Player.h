@@ -24,10 +24,10 @@ public:
 	Player();
 	~Player();
 
-	void Update(EDirection dir);
+	void Update(InputData* input);
 	void Draw(std::string id, Player* p);
 	void SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, EPlayerType _type);
-	bool Move(EDirection dir);
+	bool Move(InputData* input);
 	void UpdateSprite();
 	void ScreenCollision(VEC2& newPosition, InputData* input);
 	

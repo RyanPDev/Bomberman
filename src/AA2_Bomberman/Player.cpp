@@ -15,10 +15,9 @@ Player::~Player()
 
 }
 
-void Player::Update(EDirection _dir)
+void Player::Update(InputData* input)
 {
-	dir = _dir;
-	Move(dir);
+	Move(input);
 	UpdateSprite();
 }
 
@@ -65,37 +64,38 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 	}
 }
 
-bool Player::Move(EDirection dir)
+bool Player::Move(InputData* input)
 {
+	dir = EDirection::NONE;
 	VEC2 newPosition = { position.x, position.y };
 
 	switch (type) {
 	case Player::EPlayerType::PL1:
-		if (dir == EDirection::LEFT) {
-			newPosition.x -= speed;
+		if (input->IsPressed(EInputKeys::LEFT)) {
+			newPosition.x -= speed; dir = EDirection::LEFT;
 		}
-		else if (dir == EDirection::RIGHT) {
-			newPosition.x += speed;
+		else if (input->IsPressed(EInputKeys::RIGHT)) {
+			newPosition.x += speed; dir = EDirection::RIGHT;
 		}
-		else if (dir == EDirection::UP) {
-			newPosition.y -= speed; 
+		else if (input->IsPressed(EInputKeys::UP)) {
+			newPosition.y -= speed; dir = EDirection::UP;
 		}
-		else if (dir == EDirection::DOWN) {
-			newPosition.y += speed;
+		else if (input->IsPressed(EInputKeys::DOWN)) {
+			newPosition.y += speed; dir = EDirection::DOWN;
 		}
 		break;
 	case Player::EPlayerType::PL2:
-		if (dir == EDirection::LEFT) {
-			newPosition.x -= speed;
+		if (input->IsPressed(EInputKeys::A)) {
+			newPosition.x -= speed; dir = EDirection::LEFT;
 		}
-		else if (dir == EDirection::RIGHT) {
-			newPosition.x += speed;
+		else if (input->IsPressed(EInputKeys::D)) {
+			newPosition.x += speed; dir = EDirection::RIGHT;
 		}
-		else if (dir == EDirection::UP) {
-			newPosition.y -= speed;
+		else if (input->IsPressed(EInputKeys::W)) {
+			newPosition.y -= speed; dir = EDirection::UP;
 		}
-		else if (dir == EDirection::DOWN) {
-			newPosition.y += speed;
+		else if (input->IsPressed(EInputKeys::S)) {
+			newPosition.y += speed; dir = EDirection::DOWN;
 		}
 		break;
 	default:
@@ -104,7 +104,7 @@ bool Player::Move(EDirection dir)
 	}
 
 	//Check player collisions
-	//ScreenCollision(newPosition, input);
+	ScreenCollision(newPosition, input);
 
 	//Update position
 	if (newPosition.x != position.x || newPosition.y != position.y) {

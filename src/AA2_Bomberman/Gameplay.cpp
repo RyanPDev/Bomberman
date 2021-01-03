@@ -6,8 +6,6 @@ Gameplay::Gameplay()
 	Renderer::GetInstance()->LoadTexture(T_BG_INGAME, "../../res/img/bgGame.jpg");
 	Renderer::GetInstance()->LoadRect(T_BG_INGAME, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 
-	//Map
-
 	//Players
 	InitPlayers();
 
@@ -22,10 +20,10 @@ Gameplay::~Gameplay()
 	delete p;
 }
 
-void Gameplay::Update(EDirection dir)
+void Gameplay::Update(InputManager* input)
 {
 	for (Player* p : _players)
-		p->Update(dir);
+		p->Update(&input->GetInput());
 }
 
 void Gameplay::Draw()

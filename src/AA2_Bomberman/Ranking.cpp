@@ -12,7 +12,7 @@ Ranking::~Ranking()
 
 }
 
-void Ranking::Update(EDirection dir)
+void Ranking::Update(InputManager* input)
 {
 }
 

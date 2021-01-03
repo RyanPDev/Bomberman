@@ -10,6 +10,6 @@ public:
 	Ranking();
 	~Ranking();
 
-	void Update(EDirection dir);
+	void Update(InputManager* input);
 	void Draw();
 };

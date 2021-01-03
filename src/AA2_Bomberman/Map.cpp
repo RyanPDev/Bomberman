@@ -10,10 +10,10 @@ Map::Map()
 	std::string content(buffer.str());
 	doc.parse<0>(&content[0]);
 
-	/*map = new Cell * [numRows];
+	map = new Cell * [numRows];
 
 	for (int i = 0; i < numRows; i++)
-		map[i] = new Cell[numCols];*/
+		map[i] = new Cell[numCols];
 
 	/*map = new char* [numRows];
 	for (int i = 0; i < numRows; i++)
@@ -76,6 +76,10 @@ Map::Map()
 
 Map::~Map()
 {
+	for (int i = 0; i < numRows; i++)
+		delete[] map[i];
+
+	delete[] map;
 }
 
 void Map::Update() {}

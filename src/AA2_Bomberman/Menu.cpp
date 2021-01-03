@@ -62,7 +62,10 @@ Menu::~Menu()
 {
 }
 
-void Menu::Update(EDirection dir) {}
+void Menu::Update(InputManager* input)
+{
+	input->GetInput().GetScreenSize();
+}
 
 void Menu::Draw()
 {

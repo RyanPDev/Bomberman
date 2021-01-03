@@ -20,8 +20,8 @@ struct Cell
 class Map
 {
 private:
+	Cell** map;
 	int numRows = 11, numCols = 14;
-	Cell map[11][14];
 
 public:
 	Map();
