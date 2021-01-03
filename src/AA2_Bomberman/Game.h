@@ -13,6 +13,7 @@ class Game
 private:
 	Scene* scene;
 	EGameScene gameScene;
+	EDirection dir = EDirection::NONE;
 
 public:
 	Game(InputManager);

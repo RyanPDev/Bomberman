@@ -9,7 +9,6 @@ public:
 	Menu();
 	~Menu();
 
-	void Update(InputManager* input);
+	void Update(EDirection dir);
 	void Draw();
-	
 };

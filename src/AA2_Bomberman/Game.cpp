@@ -94,13 +94,43 @@ void Game::Run(InputManager input)
 				scene = new Ranking();
 				break;
 			default:
-				scene->Update(&input);
+				scene->Update(dir);
 				scene->Draw();
 				break;
 			}
 			break;
 		case EGameScene::GAME:
 			if (input.GetInput().IsPressed(EInputKeys::ESC)) scene->SetSceneState(ESceneState::CLICK_EXIT);
+			
+			if (input.GetInput().IsPressed(EInputKeys::LEFT)) {
+				dir = EDirection::LEFT;
+			}
+			else if (input.GetInput().IsPressed(EInputKeys::RIGHT)) {
+				dir = EDirection::RIGHT;
+			}
+			else if (input.GetInput().IsPressed(EInputKeys::UP)) {
+				dir = EDirection::UP;
+			}
+			else if (input.GetInput().IsPressed(EInputKeys::DOWN)) {
+				dir = EDirection::DOWN;
+			}
+			else
+				dir = EDirection::NONE;
+
+			//if (input.GetInput().IsPressed(EInputKeys::A)) {
+			//	dir = EDirection::LEFT;
+			//}
+			//else if (input.GetInput().IsPressed(EInputKeys::D)) {
+			//	dir = EDirection::RIGHT;
+			//}
+			//else if (input.GetInput().IsPressed(EInputKeys::W)) {
+			//	dir = EDirection::UP;
+			//}
+			//else if (input.GetInput().IsPressed(EInputKeys::S)) {
+			//	dir = EDirection::DOWN;
+			//}
+			//else
+			//	dir = EDirection::NONE;
 
 			switch (scene->GetSceneState())
 			{
@@ -110,7 +140,7 @@ void Game::Run(InputManager input)
 				scene = new Menu();
 				break;
 			default:
-				scene->Update(&input);
+				scene->Update(dir);
 				scene->Draw();
 				break;
 			}
@@ -125,7 +155,7 @@ void Game::Run(InputManager input)
 				scene = new Menu();
 				break;
 			default:
-				scene->Update(&input);
+				scene->Update(dir);
 				scene->Draw();
 				break;
 			}
