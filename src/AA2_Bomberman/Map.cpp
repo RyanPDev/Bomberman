@@ -47,8 +47,8 @@ Map::Map()
 				if (str == "false") map[i][j].destructibleWall = false;
 				else if (str == "true") map[i][j].destructibleWall = true;
 
-				map[i][j].wallPosition.x = i;
-				map[i][j].wallPosition.y = j;
+				map[i][j].wallPosition.y = i * 48 + 128;
+				map[i][j].wallPosition.x = j * 48 + 48;
 				map[i][j].existWall = true;
 
 				//std::cout << pNodeA->name() << ':' << pNodeA->value() << '\n' << pNodeA->next_attribute()->name() << ':' << pNodeA->next_attribute()->value() << std::endl;

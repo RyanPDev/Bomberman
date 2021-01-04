@@ -44,8 +44,8 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		frame.y = frame.h * initRow;
 		score = 0;
 
-		position.x = 300;
-		position.y = 300;
+		position.x = 48;
+		position.y = 128;
 		break;
 	case Player::EPlayerType::PL2:
 		initCol = 1;
@@ -56,8 +56,8 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		frame.y = frame.h * initRow;
 		score = 0;
 
-		position.x = 300;
-		position.y = 400;
+		position.x = 624;
+		position.y = 608;
 		break;
 	default:
 		break;
