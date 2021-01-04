@@ -6,6 +6,9 @@ Gameplay::Gameplay()
 	Renderer::GetInstance()->LoadTexture(T_BG_INGAME, "../../res/img/bgGame.jpg");
 	Renderer::GetInstance()->LoadRect(T_BG_INGAME, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 
+	//Map
+	map.AddWalls();
+
 	//Players
 	InitPlayers();
 
@@ -32,6 +35,9 @@ void Gameplay::Draw()
 
 	//Background
 	Renderer::GetInstance()->PushImage(T_BG_INGAME, T_BG_INGAME);
+
+	//Map	
+	map.Draw();
 
 	//Players
 	_players[0]->Draw(T_PLAYER1, _players[0]);

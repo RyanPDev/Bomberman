@@ -25,6 +25,8 @@ const std::string T_CURSOR = "Cursor";
 const std::string T_PLAYER1 = "Player1";
 const std::string T_PLAYER2 = "Player2";
 const std::string T_PLAYERS_POS = "PlayersPos";
+const std::string T_WALL = "Wall";
+const std::string T_DESTRUCTIBLE_WALL = "DestructibleWall";
 
 //Font
 const std::string F_SAIYAN = "FontSaiyan";

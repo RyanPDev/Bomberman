@@ -7,20 +7,33 @@
 #include <iostream>
 #include <sstream>
 #include "Types.h"
+#include "Wall.h"
+#include "Constants.h"
+#include "Renderer.h"
+#include <vector>
 
 struct Cell
 {
 	VEC2 wallPosition;
 	bool existWall = false;
 	bool destructibleWall = false;
-	//bool bomb;
-	//PowerUp type;
+	bool player1 = false;
+	bool player2 = false;
+	
+	struct Player
+	{
+		VEC2 position;
+		float hp;
+	}p1, p2;
 };
 
 class Map
 {
+public:
+	Cell map[11][14];
+	std::vector<Wall*> walls;
+
 private:
-	Cell** map;
 	int numRows = 11, numCols = 14;
 
 public:
@@ -29,4 +42,5 @@ public:
 
 	void Update();
 	void Draw();
+	void AddWalls();
 };
