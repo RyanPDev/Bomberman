@@ -5,10 +5,7 @@
 #include "InputManager.h"
 
 int main(int, char* [])
-{/*
-	InputManager input;
-	InputData _input = input.GetInput();*/
-
+{
 	Game game;
 	game.Run();
 
