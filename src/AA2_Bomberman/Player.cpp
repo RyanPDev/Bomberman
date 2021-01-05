@@ -43,7 +43,7 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		lastRow = initRow + 1;
 		frame.x = frame.w * initCol;
 		frame.y = frame.h * initRow;
-		score = 0;
+		score = 100;
 
 		position.x = 48;
 		position.y = 128;
@@ -55,7 +55,7 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		lastRow = initRow + 1;
 		frame.x = frame.w * initCol;
 		frame.y = frame.h * initRow;
-		score = 0;
+		score = 200;
 
 		position.x = 624;
 		position.y = 608;

@@ -29,9 +29,7 @@ const std::string T_WALL = "Wall";
 const std::string T_DESTRUCTIBLE_WALL = "DestructibleWall";
 
 //Font
-const std::string F_SAIYAN = "FontSaiyan";
 const std::string F_GAMEOVER = "FontGameOver";
-const std::string F_ARIAL = "FontArial";
 
 //Menu
 const std::string T_TITLE = "TxtTitle";
@@ -54,6 +52,7 @@ const std::string T_EXIT_H = "BtnExitH";
 const std::string T_TIME = "TxtTime";
 const std::string T_SC_PL1 = "TxtScPl1";
 const std::string T_SC_PL2 = "TxtScPl2";
-const std::string T_SC_NUM = "TxtScNum";
+const std::string T_SC_NUM_PL1 = "TxtScNumPl1";
+const std::string T_SC_NUM_PL2 = "TxtScNumPl2";
 const std::string RF_SC_NUM = "FrameScNum";
 #pragma endregion

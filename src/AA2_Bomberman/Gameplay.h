@@ -19,4 +19,5 @@ public:
 	void Draw();
 	void AddPlayer(int texWidth, int texHeight, Player::EPlayerType type);
 	void InitPlayers();
+	void UpdateScoreText();
 };
