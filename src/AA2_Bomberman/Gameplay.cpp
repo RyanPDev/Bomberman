@@ -23,10 +23,10 @@ Gameplay::~Gameplay()
 	delete p;
 }
 
-void Gameplay::Update(InputManager* input)
+void Gameplay::Update()
 {
 	for (Player* p : _players)
-		p->Update(&input->GetInput());
+		p->Update(&map);
 }
 
 void Gameplay::Draw()

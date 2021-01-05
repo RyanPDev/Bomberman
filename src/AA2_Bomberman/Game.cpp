@@ -1,10 +1,10 @@
 #include "Game.h"
 
-Game::Game(InputManager input)
+Game::Game()
 {
 	gameScene = EGameScene::MENU;
 	scene = new Menu();
-	input.GetInput().SetScreenSize(VEC2(SCREEN_WIDTH, SCREEN_HEIGHT));
+	//InputManager::GetInstance()->GetInput().SetScreenSize(VEC2(SCREEN_WIDTH, SCREEN_HEIGHT));
 }
 
 Game::~Game()
@@ -12,42 +12,42 @@ Game::~Game()
 	delete scene;
 }
 
-void Game::Run(InputManager input)
+void Game::Run()
 {
 	while (gameScene != EGameScene::EXIT)
 	{
-		input.Update();
+		InputManager::GetInstance()->Update();
 
-		if (input.GetInput().IsPressed(EInputKeys::QUIT)) gameScene = EGameScene::EXIT;
+		if (InputManager::GetInstance()->GetInput().IsPressed(EInputKeys::QUIT)) gameScene = EGameScene::EXIT;
 
 		switch (gameScene)
 		{
 		case EGameScene::MENU:
 			#pragma region INPUTS
 			//Input Control
-			if (input.GetInput().JustPressed(EInputKeys::ESC)) gameScene = EGameScene::EXIT;
+			if (InputManager::GetInstance()->GetInput().JustPressed(EInputKeys::ESC)) gameScene = EGameScene::EXIT;
 			//Button Collisions
-			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_PLAY)))
+			if (Collisions::ExistCollision(InputManager::GetInstance()->GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_PLAY)))
 			{
 				scene->SetTexturePlay(T_PLAY_H);  //SetTexturePlay(T_PLAY_H);
-				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { scene->SetSceneState(ESceneState::CLICK_PLAY); }
+				if (InputManager::GetInstance()->GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { scene->SetSceneState(ESceneState::CLICK_PLAY); }
 			}
 			else
 			{
 				scene->SetTexturePlay(T_PLAY_N);
 			}
-			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_RANKING)))
+			if (Collisions::ExistCollision(InputManager::GetInstance()->GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_RANKING)))
 			{
 				scene->SetTextureRanking(T_RANKING_H);
-				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { scene->SetSceneState(ESceneState::CLICK_RANKING); }
+				if (InputManager::GetInstance()->GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { scene->SetSceneState(ESceneState::CLICK_RANKING); }
 			}
 			else
 			{
 				scene->SetTextureRanking(T_RANKING_N);
 			}
-			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_SOUND)))
+			if (Collisions::ExistCollision(InputManager::GetInstance()->GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_SOUND)))
 			{
-				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT))
+				if (InputManager::GetInstance()->GetInput().JustPressed(EInputKeys::MOUSE_LEFT))
 				{
 					if (!AudioManager::GetInstance()->PausedMusic())
 					{
@@ -71,10 +71,10 @@ void Game::Run(InputManager input)
 				}
 			}
 
-			if (Collisions::ExistCollision(input.GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_EXIT)))
+			if (Collisions::ExistCollision(InputManager::GetInstance()->GetInput().GetMouseCoords(), Renderer::GetInstance()->GetRect(T_EXIT)))
 			{
 				scene->SetTextureExit(T_EXIT_H);
-				if (input.GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { gameScene = EGameScene::EXIT; }
+				if (InputManager::GetInstance()->GetInput().JustPressed(EInputKeys::MOUSE_LEFT)) { gameScene = EGameScene::EXIT; }
 			}
 			else
 			{
@@ -94,14 +94,14 @@ void Game::Run(InputManager input)
 				scene = new Ranking();
 				break;
 			default:
-				scene->Update(&input);
+				scene->Update();
 				scene->Draw();
 				break;
 			}
 			break;
 		case EGameScene::GAME:
-			if (input.GetInput().IsPressed(EInputKeys::ESC)) scene->SetSceneState(ESceneState::CLICK_EXIT);
-
+			if (InputManager::GetInstance()->GetInput().IsPressed(EInputKeys::ESC)) scene->SetSceneState(ESceneState::CLICK_EXIT);
+			
 			switch (scene->GetSceneState())
 			{
 			case ESceneState::CLICK_EXIT:
@@ -110,13 +110,13 @@ void Game::Run(InputManager input)
 				scene = new Menu();
 				break;
 			default:
-				scene->Update(&input);
+				scene->Update();
 				scene->Draw();
 				break;
 			}
 			break;
 		case EGameScene::RANKING:
-			if (input.GetInput().IsPressed(EInputKeys::ESC)) scene->SetSceneState(ESceneState::CLICK_EXIT);
+			if (InputManager::GetInstance()->GetInput().IsPressed(EInputKeys::ESC)) scene->SetSceneState(ESceneState::CLICK_EXIT);
 			switch (scene->GetSceneState())
 			{
 			case ESceneState::CLICK_EXIT:
@@ -125,7 +125,7 @@ void Game::Run(InputManager input)
 				scene = new Menu();
 				break;
 			default:
-				scene->Update(&input);
+				scene->Update();
 				scene->Draw();
 				break;
 			}
@@ -134,6 +134,6 @@ void Game::Run(InputManager input)
 			break;
 		}
 		//---FRAME CONTROL---
-		input.GetInput().UpdateDeltaTime();
+		InputManager::GetInstance()->GetInput().UpdateDeltaTime();
 	}
 }

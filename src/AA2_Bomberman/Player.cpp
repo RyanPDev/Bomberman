@@ -15,12 +15,13 @@ Player::~Player()
 
 }
 
-void Player::Update(InputData* input)
+void Player::Update(Map* map)
 {
-	Move(input);
+	Move();
+	PlayerWallCollision(map);
+	UpdatePosition();
 	UpdateSprite();
 }
-
 
 void Player::Draw(std::string id, Player* p)
 {
@@ -64,48 +65,62 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 	}
 }
 
-bool Player::Move(InputData* input)
+void Player::Move()
 {
 	dir = EDirection::NONE;
-	VEC2 newPosition = { position.x, position.y };
+	//VEC2 newPosition = { position.x, position.y };
 
 	switch (type) {
 	case Player::EPlayerType::PL1:
-		if (input->IsPressed(EInputKeys::LEFT)) {
+		//std::cout << input.IsPressed(EInputKeys::LEFT);
+		if (InputManager::GetInstance()->GetInput().IsPressed(EInputKeys::LEFT)) {
 			newPosition.x -= speed; dir = EDirection::LEFT;
 		}
-		else if (input->IsPressed(EInputKeys::RIGHT)) {
+		else if (InputManager::GetInstance()->GetInput().IsPressed(EInputKeys::RIGHT)) {
 			newPosition.x += speed; dir = EDirection::RIGHT;
 		}
-		else if (input->IsPressed(EInputKeys::UP)) {
+		else if (InputManager::GetInstance()->GetInput().IsPressed(EInputKeys::UP)) {
 			newPosition.y -= speed; dir = EDirection::UP;
 		}
-		else if (input->IsPressed(EInputKeys::DOWN)) {
+		else if (InputManager::GetInstance()->GetInput().IsPressed(EInputKeys::DOWN)) {
 			newPosition.y += speed; dir = EDirection::DOWN;
 		}
 		break;
 	case Player::EPlayerType::PL2:
-		if (input->IsPressed(EInputKeys::A)) {
+		if (InputManager::GetInstance()->GetInput().IsPressed(EInputKeys::A)) {
 			newPosition.x -= speed; dir = EDirection::LEFT;
 		}
-		else if (input->IsPressed(EInputKeys::D)) {
+		else if (InputManager::GetInstance()->GetInput().IsPressed(EInputKeys::D)) {
 			newPosition.x += speed; dir = EDirection::RIGHT;
 		}
-		else if (input->IsPressed(EInputKeys::W)) {
+		else if (InputManager::GetInstance()->GetInput().IsPressed(EInputKeys::W)) {
 			newPosition.y -= speed; dir = EDirection::UP;
 		}
-		else if (input->IsPressed(EInputKeys::S)) {
+		else if (InputManager::GetInstance()->GetInput().IsPressed(EInputKeys::S)) {
 			newPosition.y += speed; dir = EDirection::DOWN;
 		}
 		break;
 	default:
-		return false;
 		break;
 	}
 
 	//Check player collisions
-	ScreenCollision(newPosition, input);
+	ScreenCollision(newPosition);
 
+	//Update position
+	//if (newPosition.x != position.x || newPosition.y != position.y) {
+	//	position.x = newPosition.x;
+	//	position.y = newPosition.y;
+	//	return true;
+	//}
+	//else
+	//	frameCount = 0;
+
+	//return false;
+}
+
+bool Player::UpdatePosition()
+{
 	//Update position
 	if (newPosition.x != position.x || newPosition.y != position.y) {
 		position.x = newPosition.x;
@@ -151,10 +166,26 @@ void Player::UpdateSprite()
 	}
 }
 
-void Player::ScreenCollision(VEC2& newPosition, InputData* input)
+void Player::ScreenCollision(VEC2& newPosition)
 {
-	input->SetScreenSize(VEC2(SCREEN_WIDTH, SCREEN_HEIGHT)); //-->!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	int a = input->GetScreenSize()->x;
-	if (newPosition.x > input->GetScreenSize()->x - (frame.w * 2) || newPosition.x < frame.w) newPosition.x = position.x;
-	if (newPosition.y > input->GetScreenSize()->y - (frame.h * 2) || newPosition.y < input->GetScreenSize()->y - 576) newPosition.y = position.y;
+	if (newPosition.x > InputManager::GetInstance()->GetInput().GetScreenSize()->x - (frame.w * 2) + 10 || newPosition.x < frame.w) newPosition.x = position.x;
+	if (newPosition.y > InputManager::GetInstance()->GetInput().GetScreenSize()->y - (frame.h * 2) || newPosition.y < InputManager::GetInstance()->GetInput().GetScreenSize()->y - 601) newPosition.y = position.y;
+}
+
+void Player::PlayerWallCollision(Map* map)
+{
+	for (Wall* w : map->walls)
+	{
+		if (Collisions::ExistCollision(RECT(newPosition.x, newPosition.y, position.w - 10, position.h - 5),
+			RECT(w->GetPosition()->x, w->GetPosition()->y, w->GetPosition()->w - 10, w->GetPosition()->h - 25)))
+		{
+			newPosition.x = position.x;
+			newPosition.y = position.y;
+		}
+	}
+}
+
+void Player::PlayerCollision()
+{
+
 }

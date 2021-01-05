@@ -2,6 +2,8 @@
 #include "Collisions.h"
 #include "Constants.h"
 #include "Renderer.h"
+#include "Map.h"
+#include "InputManager.h"
 
 class Player
 {
@@ -11,6 +13,7 @@ public:
 private:
 	int score;
 	RECT position;
+	VEC2 newPosition;
 	RECT frame;
 	EPlayerType type;
 	EDirection dir = EDirection::NONE;
@@ -24,13 +27,15 @@ public:
 	Player();
 	~Player();
 
-	void Update(InputData* input);
-	void Draw(std::string id, Player* p);
-	void SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, EPlayerType _type);
-	bool Move(InputData* input);
+	void Update(Map*);
+	void Draw(std::string, Player*);
+	void SetPlayerValues(int, int, int, int, EPlayerType);
+	void Move();
+	bool UpdatePosition();
 	void UpdateSprite();
-	void ScreenCollision(VEC2& newPosition, InputData* input);
-	
+	void ScreenCollision(VEC2&);
+	void PlayerWallCollision(Map*);
+	void PlayerCollision();
 
 	inline const RECT* GetPosition()const { return &position; }
 	inline const RECT* GetFrame()const { return &frame; }

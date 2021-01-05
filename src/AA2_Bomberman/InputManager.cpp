@@ -1,6 +1,8 @@
 #include "InputManager.h"
 
-InputManager::InputManager() {}
+InputManager* InputManager::input = nullptr;
+
+InputManager::InputManager() { _input.SetScreenSize(VEC2(SCREEN_WIDTH, SCREEN_HEIGHT)); }
 InputManager::~InputManager() {}
 
 void InputManager::Update()

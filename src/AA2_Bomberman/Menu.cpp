@@ -62,9 +62,8 @@ Menu::~Menu()
 {
 }
 
-void Menu::Update(InputManager* input)
+void Menu::Update()
 {
-	input->GetInput().GetScreenSize();
 }
 
 void Menu::Draw()

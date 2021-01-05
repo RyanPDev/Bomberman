@@ -10,6 +10,6 @@ public:
 	Ranking();
 	~Ranking();
 
-	void Update(InputManager* input);
+	void Update();
 	void Draw();
 };

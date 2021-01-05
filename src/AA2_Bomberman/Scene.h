@@ -13,7 +13,7 @@ protected:
 	std::string textureRanking;
 public:
 	~Scene();
-	virtual void Update(InputManager* input) = 0;
+	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void SetTexturePlay(std::string id) { texturePlay = id; }
 	virtual void SetTextureExit(std::string id) { textureExit = id; }
