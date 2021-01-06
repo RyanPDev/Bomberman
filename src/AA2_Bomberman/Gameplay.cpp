@@ -76,8 +76,10 @@ void Gameplay::Draw()
 	}
 
 	//Players
-	_players[0]->Draw(T_PLAYER1, _players[0]);
-	_players[1]->Draw(T_PLAYER2, _players[1]);
+	for (int i = 0; i < _players.size(); i++)
+	{
+		_players[i]->Draw(T_PLAYER + std::to_string(i + 1), _players[i]);
+	}
 
 	renderer->Render();
 }
