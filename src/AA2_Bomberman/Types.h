@@ -2,6 +2,7 @@
 #include <math.h>
 #include <ctime>
 #include <string>
+#include "Constants.h"
 
 struct VEC2
 {
@@ -72,7 +73,7 @@ private:
 	bool keyboardPressed[(int)EInputKeys::COUNT] = {};
 	bool keyboardKeyDown[(int)EInputKeys::COUNT] = {};
 	VEC2 mouseCoords;
-	VEC2 screenSize;
+	VEC2 screenSize = { SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	//TimeControl
 	clock_t lastTime = clock();

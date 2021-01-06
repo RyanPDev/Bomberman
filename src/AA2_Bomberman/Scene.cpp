@@ -2,5 +2,7 @@
 
 Scene::~Scene()
 {
-	Renderer::GetInstance()->DestroyTextures();
+	renderer->DestroyTextures();
+	_players.clear();
+	delete p;
 }

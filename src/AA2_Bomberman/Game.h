@@ -13,6 +13,7 @@ class Game
 private:
 	Scene* scene;
 	EGameScene gameScene;
+	InputData* _input;
 
 public:
 	Game();

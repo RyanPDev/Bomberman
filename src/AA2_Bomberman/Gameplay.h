@@ -7,16 +7,13 @@
 class Gameplay : public Scene
 {
 private:
-	Player* p;
-	Map map;
 
 public:
 	Gameplay();
 	~Gameplay();
 
-	std::vector<Player*> _players;
-	void Update();
+	//std::vector<Player*> _players;
+	void Update(InputData*);
 	void Draw();
-	void AddPlayer(int texWidth, int texHeight, Player::EPlayerType type);
-	void InitPlayers();
+	void AddPlayer(std::string id, Player::EPlayerType type);
 };

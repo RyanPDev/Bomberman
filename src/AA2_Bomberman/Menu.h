@@ -9,7 +9,6 @@ public:
 	Menu();
 	~Menu();
 
-	void Update();
-	void Draw();
-	
+	void Update(InputData*);
+	void Draw();	
 };

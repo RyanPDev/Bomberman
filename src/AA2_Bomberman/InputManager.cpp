@@ -2,7 +2,7 @@
 
 InputManager* InputManager::input = nullptr;
 
-InputManager::InputManager() { _input.SetScreenSize(VEC2(SCREEN_WIDTH, SCREEN_HEIGHT)); }
+InputManager::InputManager() {}
 InputManager::~InputManager() {}
 
 void InputManager::Update()

@@ -14,7 +14,6 @@ Map::Map()
 
 	int i = 0;
 	int j = 0;
-	std::string line;
 	for (rapidxml::xml_node<>* pNode = pRoot->first_node("Level1"); pNode; pNode = pNode->next_sibling())
 	{
 		for (rapidxml::xml_node<>* pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
@@ -57,25 +56,28 @@ Map::Map()
 		}
 	}
 
-	for (int i = 0; i < numRows; i++)
-		for (int j = 0; j < numCols; j++)
-		{
-			//if (map[i][j].destructibleWall) std::cout << "Destructible wall: true || " << std::endl;
-			if (map[i][j].existWall)
-			{
-				if (!map[i][j].destructibleWall)
-				{
-					std::cout << "Position: " << i << "|" << j << std::endl;
-					std::cout << "Destructible wall: false" << std::endl;
-					std::cout << "x: " << map[i][j].wallPosition.x << " y: " << map[i][j].wallPosition.y << std::endl;
-					std::cout << "--------------------------------" << std::endl;
-				}
-			}
-		}
+	//for (int i = 0; i < numRows; i++)
+	//	for (int j = 0; j < numCols; j++)
+	//	{
+	//		//if (map[i][j].destructibleWall) std::cout << "Destructible wall: true || " << std::endl;
+	//		if (map[i][j].existWall)
+	//		{
+	//			if (!map[i][j].destructibleWall)
+	//			{
+	//				std::cout << "Position: " << i << "|" << j << std::endl;
+	//				std::cout << "Destructible wall: false" << std::endl;
+	//				std::cout << "x: " << map[i][j].wallPosition.x << " y: " << map[i][j].wallPosition.y << std::endl;
+	//				std::cout << "--------------------------------" << std::endl;
+	//			}
+	//		}
+	//	}
+
+	//Renderer::GetInstance()->LoadTexture(T_WALL, "../../res/img/items.png");
 }
 
 Map::~Map()
 {
+	walls.clear();
 }
 
 void Map::Update()
@@ -100,16 +102,15 @@ void Map::AddWalls()
 			{
 				if (map[i][j].destructibleWall == false)
 				{
-					Renderer::GetInstance()->LoadTexture(T_WALL, "../../res/img/items.png");
 					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, 48, 48 });
 					w->SetWallValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2);
 					walls.push_back(std::move(w));
 				}
 				else
 				{
-					/*Renderer::GetInstance()->LoadTexture(T_DESTRUCTIBLE_WALL, "../../res/img/items.png");
+					/*renderer->LoadTexture(T_DESTRUCTIBLE_WALL, "../../res/img/items.png");
 					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, 48, 48 });
-					w->SetWallValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2);
+					w->SetWallValues(renderer->GetTextureSize(T_WALL).x, renderer->GetTextureSize(T_WALL).y, 3, 2);
 					walls.push_back(std::move(w));*/
 				}
 			}

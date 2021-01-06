@@ -19,7 +19,14 @@ private:
 
 public:
 	~Renderer();
-	static Renderer* GetInstance() { if (renderer == nullptr) { renderer = new Renderer; } return renderer; }
+	static Renderer* GetInstance() 
+	{ 
+		if (renderer == nullptr) 
+		{ 
+			renderer = new Renderer;
+		} 
+		return renderer; 
+	}
 
 	void DestroyTextures();
 	void Clear();

@@ -27,13 +27,13 @@ public:
 	Player();
 	~Player();
 
-	void Update(Map*);
+	void Update(InputData*, Map*);
 	void Draw(std::string, Player*);
 	void SetPlayerValues(int, int, int, int, EPlayerType);
-	void Move();
+	void Move(InputData*);
 	bool UpdatePosition();
 	void UpdateSprite();
-	void ScreenCollision(VEC2&);
+	void ScreenCollision(VEC2&, InputData*);
 	void PlayerWallCollision(Map*);
 	void PlayerCollision();
 
