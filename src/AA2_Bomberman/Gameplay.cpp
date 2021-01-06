@@ -77,7 +77,6 @@ void Gameplay::Draw()
 	{
 		renderer->PushSprite(T_WALL, w->GetFrame(), w->GetPosition());
 	}
-	//map.Draw();
 
 	//Players
 	_players[0]->Draw(T_PLAYER1, _players[0]);
