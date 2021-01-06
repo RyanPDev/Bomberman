@@ -3,10 +3,17 @@
 #include "Scene.h"
 #include "Player.h"
 #include "Map.h"
+#include <time.h>
 
 class Gameplay : public Scene
 {
 private:
+	//Timer
+	time_t startingTime;
+	time_t updatedTime;
+	time_t timer;
+	struct tm* timerInfo;
+	char timerPtr[80];
 
 public:
 	Gameplay();
@@ -16,5 +23,6 @@ public:
 	void Update(InputData*);
 	void Draw();
 	void AddPlayer(std::string id, Player::EPlayerType type);
-	void UpdateScoreText();
+	void UpdateHUDText();
+	void TimerUpdate();
 };

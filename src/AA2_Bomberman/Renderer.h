@@ -34,9 +34,11 @@ public:
 	void LoadFont(const Font& font);
 	void LoadTexture(const std::string& id, const std::string& path);
 	void LoadRect(const std::string& idRect, const RECT& rect);
+	void UpdateRect(const std::string& idRect, const RECT& rect);
 	RECT GetRect(const std::string& idRect);
 	void SetRect(const std::string& idRect, const RECT& rect);
 	VEC2 LoadTextureText(const std::string& fontId, Text text);
+	VEC2 UpdateTextureText(const std::string& fontId, Text text);
 	VEC2 GetTextureSize(const std::string& id);
 	void PushImage(const std::string& id, const std::string& idRect);
 	void PushImage(const std::string& id, const RECT* rectImage);
