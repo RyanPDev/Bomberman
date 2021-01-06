@@ -16,4 +16,7 @@ public:
 	void Update(InputData*);
 	void Draw();
 	void AddPlayer(std::string id, Player::EPlayerType type);
+
+
+	void UpdateScoreText();
 };
