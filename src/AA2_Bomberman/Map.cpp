@@ -77,6 +77,9 @@ Map::Map()
 
 Map::~Map()
 {
+	for (std::vector<Wall*>::iterator i = walls.begin(); i != walls.end(); ++i) {
+		delete* i;
+	}
 	walls.clear();
 }
 
@@ -87,10 +90,7 @@ void Map::Update()
 
 void Map::Draw() 
 {
-	for (Wall* w : walls)
-	{
-		Renderer::GetInstance()->PushSprite(T_WALL, w->GetFrame(), w->GetPosition());
-	}
+
 }
 
 void Map::AddWalls()

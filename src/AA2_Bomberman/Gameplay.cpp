@@ -74,7 +74,6 @@ void Gameplay::Draw()
 	{
 		renderer->PushSprite(T_WALL, w->GetFrame(), w->GetPosition());
 	}
-	//map.Draw();
 
 	//Players
 	_players[0]->Draw(T_PLAYER1, _players[0]);
@@ -97,9 +96,9 @@ void Gameplay::UpdateScoreText()
 	scoreStringPl2 = std::to_string(_players[1]->GetScore());
 
 	///-------------------------------------------------MEMORY LEAK------------------------------------------------------///
-	renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 90 }); //-->HA D'ANAR AL CONSTRUCTOR
-	VEC2 vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL1, scoreStringPl1, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
-	renderer->LoadRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
-	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL2, scoreStringPl2, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
-	renderer->LoadRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
+	//renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 90 }); //-->HA D'ANAR AL CONSTRUCTOR
+	//VEC2 vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL1, scoreStringPl1, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
+	//renderer->LoadRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
+	//vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL2, scoreStringPl2, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
+	//renderer->LoadRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
 }
