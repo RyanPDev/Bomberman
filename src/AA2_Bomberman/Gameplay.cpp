@@ -20,7 +20,7 @@ Gameplay::Gameplay()
 	/*if (!AudioManager::GetInstance()->PausedMusic())
 		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/game_theme.mp3" });*/
 
-	//HUD
+		//HUD
 	renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 90 });
 
 	//Player 1
@@ -36,9 +36,11 @@ Gameplay::Gameplay()
 	renderer->LoadRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y });
 
 	//Timer
-	renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 120 });
 	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_TIME, "00:00", {0, 0, 0, 255}, 0, 0 });
 	renderer->LoadRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y });
+
+
+	time(&startingTime);
 }
 
 Gameplay::~Gameplay()
@@ -52,7 +54,8 @@ void Gameplay::Update(InputData* _input)
 	for (Player* p : _players)
 		p->Update(_input, &map);
 
-	UpdateScoreText();
+	TimerUpdate();
+	UpdateHUDText();
 }
 
 void Gameplay::Draw()
@@ -90,16 +93,30 @@ void Gameplay::AddPlayer(std::string id, Player::EPlayerType type)
 	_players.push_back(std::move(p));
 }
 
-void Gameplay::UpdateScoreText()
+void Gameplay::TimerUpdate()
+{
+	time(&updatedTime);
+	timer = difftime(updatedTime, startingTime);
+
+	timerInfo = gmtime(&timer);
+	strftime(timerPtr, 80, "%M:%S", timerInfo);
+
+}
+
+void Gameplay::UpdateHUDText()
 {
 	std::string scoreStringPl1, scoreStringPl2;
 	scoreStringPl1 = std::to_string(_players[0]->GetScore());
 	scoreStringPl2 = std::to_string(_players[1]->GetScore());
 
 	///-------------------------------------------------MEMORY LEAK------------------------------------------------------///
-	renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 90 }); //-->HA D'ANAR AL CONSTRUCTOR
 	VEC2 vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL1, scoreStringPl1, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
 	renderer->LoadRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
 	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL2, scoreStringPl2, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
 	renderer->LoadRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
+
+	//Timer
+	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_TIME, timerPtr, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
+	renderer->LoadRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
+
 }
