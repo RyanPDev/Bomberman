@@ -12,6 +12,7 @@ public:
 
 private:
 	int score;
+	int hp;
 	RECT position;
 	VEC2 newPosition;
 	RECT frame;
@@ -29,13 +30,15 @@ public:
 
 	void Update(InputData*, Map*);
 	void Draw(std::string, Player*);
-	void SetPlayerValues(int, int, int, int, EPlayerType);
+	void SetPlayerValues(int, int, int, int, VEC2, int, EPlayerType);
 	void Move(InputData*);
 	bool UpdatePosition();
 	void UpdateSprite();
 	void ScreenCollision(VEC2&, InputData*);
 	void PlayerWallCollision(Map*);
 	void PlayerCollision();
+	VEC2 GetMapPosition(Map*, EPlayerType);
+	int GetHp(Map*, EPlayerType);
 
 	inline const RECT* GetPosition()const { return &position; }
 	inline const RECT* GetFrame()const { return &frame; }

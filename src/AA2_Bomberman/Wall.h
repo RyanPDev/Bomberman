@@ -12,7 +12,7 @@ public:
 	Wall(RECT);
 	~Wall();
 
-	void SetWallValues(int textWidth, int textHeight, int nCol, int nRow);
+	void SetWallValues(int textWidth, int textHeight, int nCol, int nRow, bool type);
 
 	inline const RECT* GetPosition()const { return &position; }
 	inline const RECT* GetFrame()const { return &frame; }

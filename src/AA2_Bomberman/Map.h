@@ -17,14 +17,6 @@ struct Cell
 	VEC2 wallPosition;
 	bool existWall = false;
 	bool destructibleWall = false;
-	bool player1 = false;
-	bool player2 = false;
-	
-	struct Player
-	{
-		VEC2 position;
-		float hp;
-	}p1, p2;
 };
 
 class Map
@@ -34,6 +26,10 @@ public:
 	std::vector<Wall*> walls;
 
 private:
+	VEC2 player1Position;
+	VEC2 player2Position;
+	int player1Hp;
+	int player2Hp;
 	int numRows = 11, numCols = 14;
 
 public:
@@ -43,4 +39,8 @@ public:
 	void Update();
 	void Draw();
 	void AddWalls();
+	inline const VEC2* GetPlayer1Position()const { return &player1Position; }
+	inline const VEC2* GetPlayer2Position()const { return &player2Position; }
+	inline const int* GetPlayer1Hp()const { return &player1Hp; }
+	inline const int* GetPlayer2Hp()const { return &player2Hp; }
 };

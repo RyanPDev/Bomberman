@@ -11,33 +11,32 @@ Map::Map()
 	doc.parse<0>(&content[0]);
 
 	rapidxml::xml_node<>* pRoot = doc.first_node();
+	rapidxml::xml_node<>* pNode = pRoot->first_node("Level1");
 
-	int i = 0;
-	int j = 0;
-	for (rapidxml::xml_node<>* pNode = pRoot->first_node("Level1"); pNode; pNode = pNode->next_sibling())
+	int i, j;
+
+	//for (rapidxml::xml_node<>* pNode = pRoot->first_node(); pNode; pNode = pNode->next_sibling())
 	{
 		for (rapidxml::xml_node<>* pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
 		{
 			for (rapidxml::xml_node<>* pNodeA = pNodeI->first_node(); pNodeA; pNodeA = pNodeA->next_sibling())
-			{
+			{				
 				std::string str(pNodeA->name());
 				if (str == "Player1")
 				{
 					i = atoi(pNodeA->first_node()->first_attribute()->next_attribute()->value());
 					j = atoi(pNodeA->first_node()->first_attribute()->value());
-					map[i][j].player1 = true;
-					map[i][j].p1.position.x = j;
-					map[i][j].p1.position.y = i;
-					map[i][j].p1.hp = atof(pNodeA->first_attribute()->value());
+					player1Position.x = j * 48 + 48;
+					player1Position.y = i * 48 + 128;
+					player1Hp = atoi(pNodeA->first_attribute()->value());
 				}
 				else if (str == "Player2")
 				{
 					i = atoi(pNodeA->first_node()->first_attribute()->next_attribute()->value());
 					j = atoi(pNodeA->first_node()->first_attribute()->value());
-					map[i][j].player2 = true;
-					map[i][j].p2.position.y = i;
-					map[i][j].p2.position.x = j;
-					map[i][j].p2.hp = atof(pNodeA->first_attribute()->value());
+					player2Position.x = j * 48 + 48;
+					player2Position.y = i * 48 + 128;
+					player2Hp = atoi(pNodeA->first_attribute()->value());
 				}
 				else if (str == "Wall")
 				{
@@ -55,24 +54,6 @@ Map::Map()
 			}
 		}
 	}
-
-	//for (int i = 0; i < numRows; i++)
-	//	for (int j = 0; j < numCols; j++)
-	//	{
-	//		//if (map[i][j].destructibleWall) std::cout << "Destructible wall: true || " << std::endl;
-	//		if (map[i][j].existWall)
-	//		{
-	//			if (!map[i][j].destructibleWall)
-	//			{
-	//				std::cout << "Position: " << i << "|" << j << std::endl;
-	//				std::cout << "Destructible wall: false" << std::endl;
-	//				std::cout << "x: " << map[i][j].wallPosition.x << " y: " << map[i][j].wallPosition.y << std::endl;
-	//				std::cout << "--------------------------------" << std::endl;
-	//			}
-	//		}
-	//	}
-
-	//Renderer::GetInstance()->LoadTexture(T_WALL, "../../res/img/items.png");
 }
 
 Map::~Map()
@@ -103,15 +84,14 @@ void Map::AddWalls()
 				if (map[i][j].destructibleWall == false)
 				{
 					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, 48, 48 });
-					w->SetWallValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2);
+					w->SetWallValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, false);
 					walls.push_back(std::move(w));
 				}
 				else
 				{
-					/*renderer->LoadTexture(T_DESTRUCTIBLE_WALL, "../../res/img/items.png");
 					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, 48, 48 });
-					w->SetWallValues(renderer->GetTextureSize(T_WALL).x, renderer->GetTextureSize(T_WALL).y, 3, 2);
-					walls.push_back(std::move(w));*/
+					w->SetWallValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, true);
+					walls.push_back(std::move(w));
 				}
 			}
 		}

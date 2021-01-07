@@ -8,6 +8,7 @@ Gameplay::Gameplay()
 
 	//Map
 	renderer->LoadTexture(T_WALL, "../../res/img/items.png");
+	renderer->LoadTexture(T_DESTRUCTIBLE_WALL, "../../res/img/items.png");
 	map.AddWalls();
 
 	//Players
@@ -20,7 +21,7 @@ Gameplay::Gameplay()
 	/*if (!AudioManager::GetInstance()->PausedMusic())
 		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/game_theme.mp3" });*/
 
-		//HUD
+	//HUD
 	renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 90 });
 
 	//Player 1
@@ -89,8 +90,8 @@ void Gameplay::Draw()
 
 void Gameplay::AddPlayer(std::string id, Player::EPlayerType type)
 {
-	p = new Player();
-	p->SetPlayerValues(renderer->GetTextureSize(id).x, renderer->GetTextureSize(id).y, 3, 4, type);
+	p = new Player();	
+	p->SetPlayerValues(renderer->GetTextureSize(id).x, renderer->GetTextureSize(id).y, 3, 4, p->GetMapPosition(&map, type), p->GetHp(&map, type), type);
 	_players.push_back(std::move(p));
 }
 

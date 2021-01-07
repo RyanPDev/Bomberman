@@ -8,9 +8,7 @@ Player::Player() : position({ 1, 1, 48, 48 }), frame({ 0, 0, 20, 20 }), type(EPl
 	score = 0;
 	speed = 2;
 	speedMultiplier = 3;
-
-	//Renderer::GetInstance()->LoadTexture(T_PLAYER1, "../../res/img/player1.png");
-	//Renderer::GetInstance()->LoadTexture(T_PLAYER2, "../../res/img/player2.png");
+	hp = 0;
 }
 
 Player::~Player()
@@ -31,7 +29,7 @@ void Player::Draw(std::string id, Player* p)
 	Renderer::GetInstance()->PushSprite(id, p->GetFrame(), p->GetPosition());
 }
 
-void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, EPlayerType _type)
+void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, VEC2 _position, int _hp, EPlayerType _type)
 {
 	type = _type;
 
@@ -47,9 +45,10 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		frame.x = frame.w * initCol;
 		frame.y = frame.h * initRow;
 		score = 100;
+		hp = _hp;
 
-		position.x = 48;
-		position.y = 128;
+		position.x = _position.x;
+		position.y = _position.y;
 		break;
 	case Player::EPlayerType::PL2:
 		initCol = 1;
@@ -59,9 +58,10 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		frame.x = frame.w * initCol;
 		frame.y = frame.h * initRow;
 		score = 200;
+		hp = _hp;
 
-		position.x = 624;
-		position.y = 608;
+		position.x = _position.x;
+		position.y = _position.y;
 		break;
 	default:
 		break;
@@ -191,4 +191,26 @@ void Player::PlayerWallCollision(Map* map)
 void Player::PlayerCollision()
 {
 
+}
+
+VEC2 Player::GetMapPosition(Map* map, EPlayerType type)
+{
+	switch (type)
+	{
+	case EPlayerType::PL1:
+		return *map->GetPlayer1Position();
+	case EPlayerType::PL2:
+		return *map->GetPlayer2Position();
+	}
+}
+
+int Player::GetHp(Map* map, EPlayerType type)
+{
+	switch (type)
+	{
+	case EPlayerType::PL1:
+		return *map->GetPlayer1Hp();
+	case EPlayerType::PL2:
+		return *map->GetPlayer2Hp();
+	}
 }
