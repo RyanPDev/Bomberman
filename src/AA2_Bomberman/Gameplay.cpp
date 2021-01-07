@@ -6,10 +6,13 @@ Gameplay::Gameplay()
 	renderer->LoadTexture(T_BG_INGAME, "../../res/img/bgGame.jpg");
 	renderer->LoadRect(T_BG_INGAME, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 
-	//Map
+	//Walls
 	renderer->LoadTexture(T_WALL, "../../res/img/items.png");
 	renderer->LoadTexture(T_DESTRUCTIBLE_WALL, "../../res/img/items.png");
 	map.AddWalls();
+
+	//Bomb
+	renderer->LoadTexture(T_BOMB, "../../res/img/items.png");
 
 	//Players
 	renderer->LoadTexture(T_PLAYER1, "../../res/img/player1.png");
@@ -21,7 +24,7 @@ Gameplay::Gameplay()
 	/*if (!AudioManager::GetInstance()->PausedMusic())
 		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/game_theme.mp3" });*/
 
-	//HUD
+		//HUD
 	renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 90 });
 
 	//Player 1
@@ -40,13 +43,10 @@ Gameplay::Gameplay()
 	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_TIME, "00:00", {0, 0, 0, 255}, 0, 0 });
 	renderer->LoadRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y });
 
-
 	time(&startingTime);
 }
 
-Gameplay::~Gameplay()
-{
-}
+Gameplay::~Gameplay() {}
 
 void Gameplay::Update(InputData* _input)
 {
@@ -73,16 +73,22 @@ void Gameplay::Draw()
 	renderer->PushImage(T_SC_PL2, T_SC_PL2);
 	renderer->PushImage(T_TIME, T_TIME);
 
-	//Map
+	//Walls
 	for (Wall* w : map.walls)
 	{
 		renderer->PushSprite(T_WALL, w->GetFrame(), w->GetPosition());
 	}
 
+	//Bombs
+	for (Player* p : _players)
+	{
+		p->DrawBomb();
+	}
+
 	//Players
 	for (int i = 0; i < _players.size(); i++)
 	{
-		_players[i]->Draw(T_PLAYER + std::to_string(i + 1), _players[i]);
+		_players[i]->Draw("Player" + std::to_string(i), _players[i]);
 	}
 
 	renderer->Render();
@@ -90,7 +96,7 @@ void Gameplay::Draw()
 
 void Gameplay::AddPlayer(std::string id, Player::EPlayerType type)
 {
-	p = new Player();	
+	p = new Player();
 	p->SetPlayerValues(renderer->GetTextureSize(id).x, renderer->GetTextureSize(id).y, 3, 4, p->GetMapPosition(&map, type), p->GetHp(&map, type), type);
 	_players.push_back(std::move(p));
 }
@@ -108,17 +114,16 @@ void Gameplay::TimerUpdate()
 void Gameplay::UpdateHUDText()
 {
 	std::string scoreStringPl1, scoreStringPl2;
-	scoreStringPl1 = std::to_string(_players[0]->GetScore());
-	scoreStringPl2 = std::to_string(_players[1]->GetScore());
+	scoreStringPl1 = std::to_string(*_players[0]->GetScore());
+	scoreStringPl2 = std::to_string(*_players[1]->GetScore());
 
 	///-------------------------------------------------MEMORY LEAK------------------------------------------------------///
-	VEC2 vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL1, scoreStringPl1, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
-	renderer->LoadRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
-	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL2, scoreStringPl2, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
-	renderer->LoadRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
+	//VEC2 vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL1, scoreStringPl1, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
+	//renderer->LoadRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
+	//vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL2, scoreStringPl2, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
+	//renderer->LoadRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
 
-	//Timer
-	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_TIME, timerPtr, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
-	renderer->LoadRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
-
+	////Timer
+	//vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_TIME, timerPtr, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
+	//renderer->LoadRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
 }

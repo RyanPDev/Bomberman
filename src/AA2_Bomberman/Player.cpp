@@ -9,19 +9,23 @@ Player::Player() : position({ 1, 1, 48, 48 }), frame({ 0, 0, 20, 20 }), type(EPl
 	speed = 2;
 	speedMultiplier = 3;
 	hp = 0;
+	bombUp = false;
+	timer.Start();
 }
 
-Player::~Player()
-{
-
-}
+Player::~Player() {}
 
 void Player::Update(InputData* _input, Map* map)
 {
-	Move(_input);
+	currentTime = timer.ElapsedSeconds();
+	Action(_input);
 	PlayerWallCollision(map);
 	UpdatePosition();
 	UpdateSprite();
+	if (bombUp)
+	{
+		DropBomb();
+	}
 }
 
 void Player::Draw(std::string id, Player* p)
@@ -68,14 +72,12 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 	}
 }
 
-void Player::Move(InputData* _input)
+void Player::Action(InputData* _input)
 {
 	dir = EDirection::NONE;
-	//VEC2 newPosition = { position.x, position.y };
 
 	switch (type) {
 	case Player::EPlayerType::PL1:
-		//std::cout << input.IsPressed(EInputKeys::LEFT);
 		if (_input->IsPressed(EInputKeys::LEFT)) {
 			newPosition.x -= speed; dir = EDirection::LEFT;
 		}
@@ -87,6 +89,9 @@ void Player::Move(InputData* _input)
 		}
 		else if (_input->IsPressed(EInputKeys::DOWN)) {
 			newPosition.y += speed; dir = EDirection::DOWN;
+		}
+		else if (_input->IsPressed(EInputKeys::SPACE) && !bombUp) {
+			bombUp = true;
 		}
 		break;
 	case Player::EPlayerType::PL2:
@@ -102,6 +107,10 @@ void Player::Move(InputData* _input)
 		else if (_input->IsPressed(EInputKeys::S)) {
 			newPosition.y += speed; dir = EDirection::DOWN;
 		}
+		else if (_input->IsPressed(EInputKeys::RIGHT_CTRL) && !bombUp) {
+			bombUp = true;
+
+		}
 		break;
 	default:
 		break;
@@ -109,17 +118,6 @@ void Player::Move(InputData* _input)
 
 	//Check player collisions
 	ScreenCollision(newPosition, _input);
-
-	//Update position
-	//if (newPosition.x != position.x || newPosition.y != position.y) {
-	//	position.x = newPosition.x;
-	//	position.y = newPosition.y;
-	//	return true;
-	//}
-	//else
-	//	frameCount = 0;
-
-	//return false;
 }
 
 bool Player::UpdatePosition()
@@ -131,7 +129,10 @@ bool Player::UpdatePosition()
 		return true;
 	}
 	else
+	{
 		frameCount = 0;
+		dir = EDirection::NONE;
+	}
 
 	return false;
 }
@@ -171,8 +172,8 @@ void Player::UpdateSprite()
 
 void Player::ScreenCollision(VEC2& newPosition, InputData* _input)
 {
-	if (newPosition.x > _input->GetScreenSize()->x - (frame.w * 2) + 10 || newPosition.x < frame.w) newPosition.x = position.x;
-	if (newPosition.y > _input->GetScreenSize()->y - (frame.h * 2) || newPosition.y < _input->GetScreenSize()->y - 601) newPosition.y = position.y;
+	if (newPosition.x > _input->GetScreenSize()->x - (frame.w * 2) || newPosition.x < frame.w) newPosition.x = position.x;
+	if (newPosition.y > _input->GetScreenSize()->y - (frame.h * 2) || newPosition.y < _input->GetScreenSize()->y - 576) newPosition.y = position.y;
 }
 
 void Player::PlayerWallCollision(Map* map)
@@ -212,5 +213,34 @@ int Player::GetHp(Map* map, EPlayerType type)
 		return *map->GetPlayer1Hp();
 	case EPlayerType::PL2:
 		return *map->GetPlayer2Hp();
+	}
+}
+
+void Player::DropBomb()
+{
+	if (tmp <= 0)
+	{
+		tmp = currentTime;
+		Bomb* b = new Bomb({ position.x, position.y, 48, 48 });
+		b->SetValues(Renderer::GetInstance()->GetTextureSize(T_BOMB).x, Renderer::GetInstance()->GetTextureSize(T_BOMB).y, 3, 2);
+		_bombs.push_back(std::move(b));
+	}
+
+	if (currentTime - tmp >= 3)
+	{
+		tmp = 0;
+		for (std::vector<Bomb*>::iterator i = _bombs.begin(); i != _bombs.end(); ++i) {
+			delete* i;
+		}
+		_bombs.clear();
+		bombUp = false;
+	}
+}
+
+void Player::DrawBomb()
+{
+	for (Bomb* b : _bombs)
+	{
+		Renderer::GetInstance()->PushSprite(T_BOMB, b->GetFrame(), b->GetPosition());
 	}
 }

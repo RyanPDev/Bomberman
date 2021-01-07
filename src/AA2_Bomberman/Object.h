@@ -1,5 +1,5 @@
 #pragma once
-#include "Collisions.h"
+#include "Types.h"
 
 class Object
 {
@@ -10,7 +10,7 @@ protected:
 private:
 	
 public:
-	Object();
+	Object(RECT);
 	~Object();
 
 	inline const RECT* GetPosition()const { return &position; }

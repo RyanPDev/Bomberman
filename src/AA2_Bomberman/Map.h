@@ -30,7 +30,7 @@ private:
 	VEC2 player2Position;
 	int player1Hp;
 	int player2Hp;
-	int numRows = 11, numCols = 14;
+	const int NUM_ROWS{ 11 }, NUM_COLS{ 13 };
 
 public:
 	Map();

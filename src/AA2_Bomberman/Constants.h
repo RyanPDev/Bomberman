@@ -22,12 +22,13 @@ const std::string T_BG_MENU = "BackgroundMenu";
 const std::string T_BG_INGAME = "BackgroundInGame";
 const std::string T_BG_RANKING = "BackgroundRanking";
 const std::string T_CURSOR = "Cursor";
-const std::string T_PLAYER = "Player";
-const std::string T_PLAYER1 = "Player1";
-const std::string T_PLAYER2 = "Player2";
+const std::string T_PLAYER1 = "Player0";
+const std::string T_PLAYER2 = "Player1";
 const std::string T_PLAYERS_POS = "PlayersPos";
 const std::string T_WALL = "Wall";
 const std::string T_DESTRUCTIBLE_WALL = "DestructibleWall";
+const std::string T_BOMB = "Bomb";
+
 
 //Font
 const std::string F_GAMEOVER = "FontGameOver";

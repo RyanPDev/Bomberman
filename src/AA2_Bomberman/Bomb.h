@@ -1,10 +1,14 @@
 #pragma once
-class Bomb
+#include "Object.h"
+#include "Types.h"
+
+class Bomb : public Object
 {
 private:
 
-
 public:
-	Bomb();
+	Bomb(RECT);
 	~Bomb();
+
+	void SetValues(int, int, int, int);
 };

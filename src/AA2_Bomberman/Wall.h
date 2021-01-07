@@ -1,19 +1,14 @@
 #pragma once
-#include "Collisions.h"
 #include "Object.h"
+#include "Types.h"
 
-class Wall
+class Wall : public Object
 {
 private:
-	RECT position;
-	RECT frame;
 
 public:
 	Wall(RECT);
 	~Wall();
 
-	void SetWallValues(int textWidth, int textHeight, int nCol, int nRow, bool type);
-
-	inline const RECT* GetPosition()const { return &position; }
-	inline const RECT* GetFrame()const { return &frame; }
+	void SetValues(int textWidth, int textHeight, int nCol, int nRow, bool type);
 };

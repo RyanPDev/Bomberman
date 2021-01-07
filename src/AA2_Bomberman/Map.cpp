@@ -20,7 +20,7 @@ Map::Map()
 		for (rapidxml::xml_node<>* pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
 		{
 			for (rapidxml::xml_node<>* pNodeA = pNodeI->first_node(); pNodeA; pNodeA = pNodeA->next_sibling())
-			{				
+			{
 				std::string str(pNodeA->name());
 				if (str == "Player1")
 				{
@@ -69,30 +69,32 @@ void Map::Update()
 
 }
 
-void Map::Draw() 
+void Map::Draw()
 {
 
 }
 
 void Map::AddWalls()
 {
-	for (int i = 0; i < numRows; i++)
-		for (int j = 0; j < numCols; j++)
+	for (int i = 0; i < NUM_ROWS; i++)
+	{
+		for (int j = 0; j < NUM_COLS; j++)
 		{
 			if (map[i][j].existWall)
 			{
 				if (map[i][j].destructibleWall == false)
 				{
 					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, 48, 48 });
-					w->SetWallValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, false);
+					w->SetValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, false);
 					walls.push_back(std::move(w));
 				}
 				else
 				{
 					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, 48, 48 });
-					w->SetWallValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, true);
+					w->SetValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, true);
 					walls.push_back(std::move(w));
 				}
 			}
 		}
+	}
 }

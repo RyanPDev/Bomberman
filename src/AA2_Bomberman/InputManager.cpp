@@ -30,6 +30,8 @@ void InputManager::Update()
 			if (event.key.keysym.sym == SDLK_d) _input.SetKeyValue(EInputKeys::D, true);
 			if (event.key.keysym.sym == SDLK_w) _input.SetKeyValue(EInputKeys::W, true);
 			if (event.key.keysym.sym == SDLK_s) _input.SetKeyValue(EInputKeys::S, true);
+			if (event.key.keysym.sym == SDLK_SPACE) _input.SetKeyValue(EInputKeys::SPACE, true);
+			if (event.key.keysym.sym == SDLK_RCTRL) _input.SetKeyValue(EInputKeys::RIGHT_CTRL, true);
 			break;
 		case SDL_KEYUP:
 			if (event.key.keysym.sym == SDLK_ESCAPE) _input.SetKeyValue(EInputKeys::ESC, false);
@@ -41,6 +43,8 @@ void InputManager::Update()
 			if (event.key.keysym.sym == SDLK_d) _input.SetKeyValue(EInputKeys::D, false);
 			if (event.key.keysym.sym == SDLK_w) _input.SetKeyValue(EInputKeys::W, false);
 			if (event.key.keysym.sym == SDLK_s) _input.SetKeyValue(EInputKeys::S, false);
+			if (event.key.keysym.sym == SDLK_SPACE) _input.SetKeyValue(EInputKeys::SPACE, false);
+			if (event.key.keysym.sym == SDLK_RCTRL) _input.SetKeyValue(EInputKeys::RIGHT_CTRL, false);
 			break;
 		case SDL_MOUSEMOTION:
 			_input.SetMouseCoords(event.motion.x, event.motion.y);
