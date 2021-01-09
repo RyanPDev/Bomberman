@@ -71,25 +71,33 @@ VEC2 Renderer::LoadTextureText(const std::string& fontId, Text text) {
 	return { tmpSurf->w,tmpSurf->h };
 };
 
-//VEC2 Renderer::UpdateTextureText(const std::string& fontId, Text text) {
-//	SDL_DestroyTexture(m_textureData[text.id]);
-//	m_textureData[text.id] = nullptr;
-//	SDL_Surface* tmpSurf = TTF_RenderText_Blended(m_fontData[fontId], text.text.c_str(), SDL_Color{ text.color.r, text.color.g, text.color.b,text.color.a });
-//	if (tmpSurf == nullptr) throw "Unable to create the SDL text surface";
-//	m_textureData[text.id] = SDL_CreateTextureFromSurface(m_renderer, tmpSurf);
-//	return { tmpSurf->w,tmpSurf->h };
-//};
+VEC2 Renderer::UpdateTextureText(const std::string& fontId, Text text) {
+	std::unordered_map<std::string, SDL_Texture*>::iterator it;
+	it = m_textureData.find(text.id);
+	if (it != m_textureData.end())
+	{
+		SDL_DestroyTexture(it->second);
+		it->second = nullptr;
+	}
+	
+	return LoadTextureText(fontId, text);
+};
 
 void Renderer::LoadRect(const std::string& idRect, const RECT& rect) {
 	m_rects[idRect] = new SDL_Rect{ rect.x,rect.y,rect.w,rect.h };
 };
 
-//void Renderer::UpdateRect(const std::string& idRect, const RECT& rect)
-//{
-//	delete m_rects[idRect];
-//	m_rects[idRect] = nullptr;
-//	m_rects[idRect] = new SDL_Rect{ rect.x,rect.y,rect.w,rect.h };
-//}
+void Renderer::UpdateRect(const std::string& idRect, const RECT& rect)
+{
+	std::unordered_map<std::string, SDL_Rect*>::iterator it;
+	it = m_rects.find(idRect);
+	if (it != m_rects.end())
+	{
+		delete it->second;
+		it->second = nullptr;
+	}
+	return LoadRect(idRect, rect);
+}
 
 RECT Renderer::GetRect(const std::string& idRect)
 {

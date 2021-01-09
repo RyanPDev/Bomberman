@@ -48,7 +48,7 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		lastRow = initRow + 1;
 		frame.x = frame.w * initCol;
 		frame.y = frame.h * initRow;
-		score = 100;
+		score = 0;
 		hp = _hp;
 
 		position.x = _position.x;
@@ -61,7 +61,7 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		lastRow = initRow + 1;
 		frame.x = frame.w * initCol;
 		frame.y = frame.h * initRow;
-		score = 200;
+		score = 0;
 		hp = _hp;
 
 		position.x = _position.x;
@@ -103,6 +103,7 @@ void Player::Action(InputData* _input)
 		}
 		else if (_input->IsPressed(EInputKeys::W)) {
 			newPosition.y -= speed; dir = EDirection::UP;
+			score++;
 		}
 		else if (_input->IsPressed(EInputKeys::S)) {
 			newPosition.y += speed; dir = EDirection::DOWN;

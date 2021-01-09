@@ -15,6 +15,9 @@ private:
 	//struct tm* timerInfo;
 	//char timerPtr[80];
 
+	//Scores
+	std::string scoreStringPl1 = "000", scoreStringPl2 = "000";
+
 	//Lives
 	RECT livesFrame;
 

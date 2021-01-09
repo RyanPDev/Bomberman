@@ -84,14 +84,14 @@ void Gameplay::Draw()
 
 	//Lives
 	//Pl1
-	if(_players[0]->GetHp() > 0)
+	if (_players[0]->GetHp() > 0)
 		renderer->PushSprite(T_LIVES_PL1, &livesFrame, &RECT{ 170, 10, livesFrame.w, livesFrame.h });
-	if(_players[0]->GetHp() > 1)
+	if (_players[0]->GetHp() > 1)
 		renderer->PushSprite(T_LIVES_PL1, &livesFrame, &RECT{ 170 + livesFrame.w, 10, livesFrame.w, livesFrame.h });
 	if (_players[0]->GetHp() > 2)
 		renderer->PushSprite(T_LIVES_PL1, &livesFrame, &RECT{ 170 + livesFrame.w * 2, 10, livesFrame.w, livesFrame.h });
 	//Pl2
-	if(_players[1]->GetHp() > 0)
+	if (_players[1]->GetHp() > 0)
 		renderer->PushSprite(T_LIVES_PL2, &livesFrame, &RECT{ 505, 10, livesFrame.w, livesFrame.h });
 	if (_players[0]->GetHp() > 1)
 		renderer->PushSprite(T_LIVES_PL2, &livesFrame, &RECT{ 505 - livesFrame.w, 10, livesFrame.w, livesFrame.h });
@@ -138,15 +138,21 @@ void Gameplay::TimerUpdate()
 
 void Gameplay::UpdateHUDText()
 {
-	std::string scoreStringPl1, scoreStringPl2;
-	scoreStringPl1 = std::to_string(*_players[0]->GetScore());
-	scoreStringPl2 = std::to_string(*_players[1]->GetScore());
+	
+	//if (*_players[0]->GetScore() > std::stoi(scoreStringPl1))
+	{
+		//scoreStringPl1 = std::to_string(*_players[0]->GetScore());
+		VEC2 vtmp = renderer->UpdateTextureText(F_GAMEOVER, Text{ T_SC_PL1, scoreStringPl1, {0, 0, 0, 255}, 0, 0 });
+		renderer->UpdateRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y });
+	}
+	//if (*_players[1]->GetScore() > std::stoi(scoreStringPl2))
+	{
+		//scoreStringPl2 = std::to_string(*_players[1]->GetScore());
+		VEC2 vtmp = renderer->UpdateTextureText(F_GAMEOVER, Text{ T_SC_PL2, scoreStringPl2, {0, 0, 0, 255}, 0, 0 });
+		renderer->UpdateRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y });
+	}
 
 	///-------------------------------------------------MEMORY LEAK------------------------------------------------------///
-	//VEC2 vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL1, scoreStringPl1, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
-	//renderer->LoadRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
-	//vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL2, scoreStringPl2, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
-	//renderer->LoadRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
 
 	////Timer
 	//vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_TIME, timerPtr, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
