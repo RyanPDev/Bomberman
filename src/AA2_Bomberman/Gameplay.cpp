@@ -43,7 +43,16 @@ Gameplay::Gameplay()
 	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_TIME, "00:00", {0, 0, 0, 255}, 0, 0 });
 	renderer->LoadRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y });
 
-	time(&startingTime);
+	//Lives
+	renderer->LoadTexture(T_LIVES_PL1, "../../res/img/player1.png");
+	renderer->LoadTexture(T_LIVES_PL2, "../../res/img/player2.png");
+	livesFrame.x = renderer->GetTextureSize(T_LIVES_PL1).x / 3;
+	livesFrame.y = (renderer->GetTextureSize(T_LIVES_PL1).y / 4) * 2;
+	livesFrame.w = renderer->GetTextureSize(T_LIVES_PL1).x / 3;
+	livesFrame.h = renderer->GetTextureSize(T_LIVES_PL1).y / 4;
+
+
+	//time(&startingTime);
 }
 
 Gameplay::~Gameplay() {}
@@ -55,7 +64,7 @@ void Gameplay::Update(InputData* _input)
 	for (Player* p : _players)
 		p->Update(_input, &map);
 
-	TimerUpdate();
+	//TimerUpdate();
 	UpdateHUDText();
 }
 
@@ -72,6 +81,22 @@ void Gameplay::Draw()
 	renderer->PushImage(T_SC_NUM_PL2, T_SC_NUM_PL2);
 	renderer->PushImage(T_SC_PL2, T_SC_PL2);
 	renderer->PushImage(T_TIME, T_TIME);
+
+	//Lives
+	//Pl1
+	if(_players[0]->GetHp() > 0)
+		renderer->PushSprite(T_LIVES_PL1, &livesFrame, &RECT{ 170, 10, livesFrame.w, livesFrame.h });
+	if(_players[0]->GetHp() > 1)
+		renderer->PushSprite(T_LIVES_PL1, &livesFrame, &RECT{ 170 + livesFrame.w, 10, livesFrame.w, livesFrame.h });
+	if (_players[0]->GetHp() > 2)
+		renderer->PushSprite(T_LIVES_PL1, &livesFrame, &RECT{ 170 + livesFrame.w * 2, 10, livesFrame.w, livesFrame.h });
+	//Pl2
+	if(_players[1]->GetHp() > 0)
+		renderer->PushSprite(T_LIVES_PL2, &livesFrame, &RECT{ 505, 10, livesFrame.w, livesFrame.h });
+	if (_players[0]->GetHp() > 1)
+		renderer->PushSprite(T_LIVES_PL2, &livesFrame, &RECT{ 505 - livesFrame.w, 10, livesFrame.w, livesFrame.h });
+	if (_players[0]->GetHp() > 2)
+		renderer->PushSprite(T_LIVES_PL2, &livesFrame, &RECT{ 505 - livesFrame.w * 2, 10, livesFrame.w, livesFrame.h });
 
 	//Walls
 	for (Wall* w : map.walls)
@@ -97,17 +122,17 @@ void Gameplay::Draw()
 void Gameplay::AddPlayer(std::string id, Player::EPlayerType type)
 {
 	p = new Player();
-	p->SetPlayerValues(renderer->GetTextureSize(id).x, renderer->GetTextureSize(id).y, 3, 4, p->GetMapPosition(&map, type), p->GetHp(&map, type), type);
+	p->SetPlayerValues(renderer->GetTextureSize(id).x, renderer->GetTextureSize(id).y, 3, 4, p->GetMapPosition(&map, type), p->GetMapHp(&map, type), type);
 	_players.push_back(std::move(p));
 }
 
 void Gameplay::TimerUpdate()
 {
-	time(&updatedTime);
+	/*time(&updatedTime);
 	timer = difftime(updatedTime, startingTime);
 
 	timerInfo = gmtime(&timer);
-	strftime(timerPtr, 80, "%M:%S", timerInfo);
+	strftime(timerPtr, 80, "%M:%S", timerInfo);*/
 
 }
 
