@@ -56,5 +56,6 @@ const std::string T_SC_PL1 = "TxtScPl1";
 const std::string T_SC_PL2 = "TxtScPl2";
 const std::string T_SC_NUM_PL1 = "TxtScNumPl1";
 const std::string T_SC_NUM_PL2 = "TxtScNumPl2";
-const std::string RF_SC_NUM = "FrameScNum";
+const std::string T_LIVES_PL1 = "LivesPl1";
+const std::string T_LIVES_PL2 = "LivesPl2";
 #pragma endregion

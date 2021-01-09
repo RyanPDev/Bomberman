@@ -205,7 +205,7 @@ VEC2 Player::GetMapPosition(Map* map, EPlayerType type)
 	}
 }
 
-int Player::GetHp(Map* map, EPlayerType type)
+int Player::GetMapHp(Map* map, EPlayerType type)
 {
 	switch (type)
 	{

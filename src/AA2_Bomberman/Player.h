@@ -46,12 +46,14 @@ public:
 	void PlayerWallCollision(Map*);
 	void PlayerCollision();
 	VEC2 GetMapPosition(Map*, EPlayerType);
-	int GetHp(Map*, EPlayerType);
-	void DropBomb(Map*);
+	int GetMapHp(Map*, EPlayerType);
+	void DropBomb();
 	void DrawBomb();
 
+	inline const int GetHp()const { return hp; }
 	inline const RECT* GetPosition()const { return &position; }
 	inline const RECT* GetFrame()const { return &frame; }
 	inline const int* GetScore()const { return &score; }
 	const bool GetBomb()const { return bombUp; }
+
 };

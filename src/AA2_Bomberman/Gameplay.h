@@ -8,12 +8,15 @@
 class Gameplay : public Scene
 {
 private:
-	//Timer
-	time_t startingTime;
-	time_t updatedTime;
-	time_t timer;
-	struct tm* timerInfo;
-	char timerPtr[80];
+	////Timer
+	//time_t startingTime;
+	//time_t updatedTime;
+	//time_t timer;
+	//struct tm* timerInfo;
+	//char timerPtr[80];
+
+	//Lives
+	RECT livesFrame;
 
 public:
 	Gameplay();
