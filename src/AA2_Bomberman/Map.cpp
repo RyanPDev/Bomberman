@@ -54,6 +54,12 @@ Map::Map()
 			}
 		}
 	}
+	for (int i = 0; i < NUM_ROWS; i++)
+		for (int j = 0; j < NUM_COLS; j++)
+		{
+			map[i][j].cellPosition.x = j * 48 + 48;
+			map[i][j].cellPosition.y = i * 48 + 128;
+		}
 }
 
 Map::~Map()

@@ -46,7 +46,7 @@
 			<Wall destructible = "false" x="9" y="9"/>
 			<Wall destructible = "false" x="11" y="9"/>
 
-			<Wall destructible = "true" x="2" y="0"/>
+			<!--<Wall destructible = "true" x="2" y="0"/>
 			<Wall destructible = "true" x="3" y="0"/>
 			<Wall destructible = "true" x="4" y="0"/>
 			<Wall destructible = "true" x="7" y="0"/>
@@ -91,9 +91,9 @@
 			<Wall destructible = "true" x="4" y="5"/>
 			<Wall destructible = "true" x="6" y="5"/>
 			<Wall destructible = "true" x="8" y="5"/>
-			<Wall destructible = "true" x="10" y="5"/>
+			<Wall destructible = "true" x="10" y="5"/>-->
 
-			<Wall destructible = "true" x="0" y="6"/>
+			<!--<Wall destructible = "true" x="0" y="6"/>
 			<Wall destructible = "true" x="1" y="6"/>
 			<Wall destructible = "true" x="2" y="6"/>
 			<Wall destructible = "true" x="3" y="6"/>
@@ -133,7 +133,7 @@
 			<Wall destructible = "true" x="7" y="10"/>			
 			<Wall destructible = "true" x="8" y="10"/>			
 			<Wall destructible = "true" x="9" y="10"/>			
-			<Wall destructible = "true" x="10" y="10"/>			
+			<Wall destructible = "true" x="10" y="10"/>-->			
 		</Map>
 	</Level1>
 	<Level2>

@@ -17,6 +17,8 @@ struct Cell
 	VEC2 wallPosition;
 	bool existWall = false;
 	bool destructibleWall = false;
+	VEC2 cellPosition;
+	bool existBomb = false;
 };
 
 class Map
@@ -43,4 +45,5 @@ public:
 	inline const VEC2* GetPlayer2Position()const { return &player2Position; }
 	inline const int* GetPlayer1Hp()const { return &player1Hp; }
 	inline const int* GetPlayer2Hp()const { return &player2Hp; }
+	void SetPlayer1Position(VEC2 _newPos) { player1Position = _newPos; }
 };

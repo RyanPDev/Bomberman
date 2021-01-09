@@ -15,5 +15,5 @@ public:
 	static InputManager* GetInstance() { if (input == nullptr) { input = new InputManager; } return input; }
 
 	void Update();
-	InputData GetInput() { return _input; }
+	InputData* GetInput() { return &_input; }
 };
