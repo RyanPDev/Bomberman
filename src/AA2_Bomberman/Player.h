@@ -20,6 +20,7 @@ private:
 	int tmp = 0;
 	bool bombUp;
 	std::vector<Bomb*> _bombs;
+	Bomb* b;
 	RECT position;
 	VEC2 newPosition;
 	RECT frame;
@@ -38,7 +39,7 @@ public:
 	void Update(InputData*, Map*);
 	void Draw(std::string, Player*);
 	void SetPlayerValues(int, int, int, int, VEC2, int, EPlayerType);
-	void Action(InputData*);
+	void Action(InputData*, Map*);
 	bool UpdatePosition();
 	void UpdateSprite();
 	void ScreenCollision(VEC2&, InputData*);

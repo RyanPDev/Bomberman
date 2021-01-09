@@ -16,7 +16,7 @@ void Game::Run()
 	while (gameScene != EGameScene::EXIT)
 	{
 		InputManager::GetInstance()->Update();
-		_input = &InputManager::GetInstance()->GetInput();
+		_input = InputManager::GetInstance()->GetInput();
 		if (_input->IsPressed(EInputKeys::QUIT)) gameScene = EGameScene::EXIT;
 
 		switch (gameScene)

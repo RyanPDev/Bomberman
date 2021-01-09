@@ -107,7 +107,8 @@ void Gameplay::Draw()
 	//Bombs
 	for (Player* p : _players)
 	{
-		p->DrawBomb();
+		if (p->GetBomb())
+			p->DrawBomb();
 	}
 
 	//Players
