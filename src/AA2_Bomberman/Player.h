@@ -6,7 +6,6 @@
 #include "InputManager.h"
 #include "Bomb.h"
 #include "Explosion.h"
-#include "Timer.h"
 
 class Player
 {
@@ -15,8 +14,6 @@ public:
 	enum class EPlayerType { NONE = -1, PL1, PL2, COUNT };
 	
 private:
-	Timer timer;
-	float currentTime = 0;
 	int score;
 	int hp;
 	float bombTimer = 3.f;
@@ -24,6 +21,7 @@ private:
 	std::vector<Bomb*> _bombs;
 	Bomb* b;
 	std::vector<Explosion> _explosions;
+	VEC2 bombMapPos;
 	RECT position;
 	VEC2 newPosition;
 	RECT frame;

@@ -4,7 +4,7 @@ Explosion::Explosion(RECT _position) : Object(_position) {}
 
 Explosion::~Explosion() {}
 
-void Explosion::SetValues(int textWidth, int textHeight, int nCol, int nRow, const RECT* bombPos, EExplosionDirection _dir, Map* map)
+void Explosion::SetValues(int textWidth, int textHeight, int nCol, int nRow, const RECT* bombPos, EExplosionDirection _dir)
 {
 	dir = _dir;
 
@@ -15,7 +15,7 @@ void Explosion::SetValues(int textWidth, int textHeight, int nCol, int nRow, con
 
 	switch (dir)
 	{
-	case EExplosionDirection::MID:		
+	case EExplosionDirection::MID:
 		position.x = bombPos->x;
 		position.y = bombPos->y;
 		initRow = 0;
@@ -77,7 +77,7 @@ void Explosion::SetValues(int textWidth, int textHeight, int nCol, int nRow, con
 	lastRow = initRow;
 }
 
-void Explosion::UpdateSprite(const float timer)
+void Explosion::UpdateSprite(VEC2 mapPos, const float timer, Map* map)
 {
 	if ((timer <= 1 && timer >= 0.9) || timer < 0.1)
 		frame.x = 0;
@@ -87,4 +87,166 @@ void Explosion::UpdateSprite(const float timer)
 		frame.x = frame.w * 2;
 	else if (timer < 0.7 && timer >= 0.3)
 		frame.x = frame.w * 3;
+}
+
+void Explosion::CheckCollision(VEC2 mapPos, Map* map, int& score)
+{
+	//LES COLISIONS NECESSITEN UN REFER PER LA FASE 3. A MES NO FUNCIONA BÉ. PLUS ELS PLAYERS NO PERDEN VIDA
+
+	if (map->map[mapPos.y][mapPos.x + 2].existWall && !map->map[mapPos.y][mapPos.x + 1].existWall)
+	{
+		if (map->map[mapPos.y][mapPos.x + 2].destructibleWall)
+		{
+			for (int i = 0; i < map->walls.size(); i++)
+			{
+				if (map->walls[i]->GetCoord()->x == mapPos.x + 2 && map->walls[i]->GetCoord()->y == mapPos.y)
+				{
+					map->walls.erase(map->walls.begin() + i);
+					map->map[mapPos.y][mapPos.x + 2].existWall = false;
+					score += 15;
+				} 
+			}
+		}
+	}
+
+	if (map->map[mapPos.y][mapPos.x - 2].existWall)
+	{
+		if (dir == EExplosionDirection::MID_LEFT || dir == EExplosionDirection::LEFT)
+		{
+			frame = RECT{ 0, 0, 0, 0 };
+		}
+		if (map->map[mapPos.y][mapPos.x - 2].destructibleWall)
+		{
+			for (int i = 0; i < map->walls.size(); i++)
+			{
+				if (map->walls[i]->GetCoord()->x == mapPos.x - 2 && map->walls[i]->GetCoord()->y == mapPos.y)
+				{
+					map->walls.erase(map->walls.begin() + i);
+					map->map[mapPos.y][mapPos.x - 2].existWall = false;
+					score += 15;
+				}
+			}
+		}
+	}
+
+	if (map->map[mapPos.y - 2][mapPos.x].existWall)
+	{
+		if (dir == EExplosionDirection::MID_TOP || dir == EExplosionDirection::TOP)
+		{
+			frame = RECT{ 0, 0, 0, 0 };
+		}
+		if (map->map[mapPos.y - 2][mapPos.x].destructibleWall)
+		{
+			for (int i = 0; i < map->walls.size(); i++)
+			{
+				if (map->walls[i]->GetCoord()->x == mapPos.x && map->walls[i]->GetCoord()->y == mapPos.y - 2)
+				{
+					map->walls.erase(map->walls.begin() + i);
+					map->map[mapPos.y - 2][mapPos.x].existWall = false;
+					score += 15;
+				}
+			}
+		}
+	}
+
+	if (map->map[mapPos.y + 2][mapPos.x].existWall)
+	{
+		if (dir == EExplosionDirection::MID_BOTTOM || dir == EExplosionDirection::BOTTOM)
+		{
+			frame = RECT{ 0, 0, 0, 0 };
+		}
+		if (map->map[mapPos.y + 2][mapPos.x].destructibleWall)
+		{
+			for (int i = 0; i < map->walls.size(); i++)
+			{
+				if (map->walls[i]->GetCoord()->x == mapPos.x && map->walls[i]->GetCoord()->y == mapPos.y + 2)
+				{
+					map->walls.erase(map->walls.begin() + i);
+					map->map[mapPos.y + 2][mapPos.x].existWall = false;
+					score += 15;
+				} 
+			}
+		}
+	}
+
+	
+	if (map->map[mapPos.y][mapPos.x + 1].existWall)
+	{
+		if (dir == EExplosionDirection::MID_RIGHT || dir == EExplosionDirection::RIGHT)
+		{
+			frame = RECT{ 0, 0, 0, 0 };
+		}
+		if (map->map[mapPos.y][mapPos.x + 1].destructibleWall)
+		{
+			for (int i = 0; i < map->walls.size(); i++)
+			{
+				if (map->walls[i]->GetCoord()->x == mapPos.x + 1 && map->walls[i]->GetCoord()->y == mapPos.y)
+				{
+					map->walls.erase(map->walls.begin() + i);
+					map->map[mapPos.y][mapPos.x + 1].existWall = false;
+					score += 15;
+				}
+			}
+		}
+	}
+
+	if (map->map[mapPos.y][mapPos.x - 1].existWall)
+	{
+		if (dir == EExplosionDirection::MID_LEFT || dir == EExplosionDirection::LEFT)
+		{
+			frame = RECT{ 0, 0, 0, 0 };
+		}
+		if (map->map[mapPos.y][mapPos.x - 1].destructibleWall)
+		{
+			for (int i = 0; i < map->walls.size(); i++)
+			{
+				if (map->walls[i]->GetCoord()->x == mapPos.x - 1 && map->walls[i]->GetCoord()->y == mapPos.y)
+				{
+					map->walls.erase(map->walls.begin() + i);
+					map->map[mapPos.y][mapPos.x - 1].existWall = false;
+					score += 15;
+				}
+			}
+		}
+	}
+
+	if (map->map[mapPos.y - 1][mapPos.x].existWall)
+	{
+		if (dir == EExplosionDirection::MID_TOP || dir == EExplosionDirection::TOP)
+		{
+			frame = RECT{ 0, 0, 0, 0 };
+		}
+		if (map->map[mapPos.y - 1][mapPos.x].destructibleWall)
+		{
+			for (int i = 0; i < map->walls.size(); i++)
+			{
+				if (map->walls[i]->GetCoord()->x == mapPos.x && map->walls[i]->GetCoord()->y == mapPos.y - 1)
+				{
+					map->walls.erase(map->walls.begin() + i);
+					map->map[mapPos.y - 1][mapPos.x].existWall = false;
+					score += 15;
+				}
+			}
+		}
+	}
+
+	if (map->map[mapPos.y + 1][mapPos.x].existWall)
+	{
+		if (dir == EExplosionDirection::MID_BOTTOM || dir == EExplosionDirection::BOTTOM)
+		{
+			frame = RECT{ 0, 0, 0, 0 };
+		}
+		if (map->map[mapPos.y + 1][mapPos.x].destructibleWall)
+		{
+			for (int i = 0; i < map->walls.size(); i++)
+			{
+				if (map->walls[i]->GetCoord()->x == mapPos.x && map->walls[i]->GetCoord()->y == mapPos.y + 1)
+				{
+					map->walls.erase(map->walls.begin() + i);
+					map->map[mapPos.y + 1][mapPos.x].existWall = false;
+					score += 15;
+				} 
+			}
+		}
+	}
 }

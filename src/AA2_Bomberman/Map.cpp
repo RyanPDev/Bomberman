@@ -15,42 +15,41 @@ Map::Map()
 
 	int i, j;
 
-	//for (rapidxml::xml_node<>* pNode = pRoot->first_node(); pNode; pNode = pNode->next_sibling())
+	//-->NOMÉS ES LLEGEIX EL PRIMER NIVELL
+
+	for (rapidxml::xml_node<>* pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
 	{
-		for (rapidxml::xml_node<>* pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
+		for (rapidxml::xml_node<>* pNodeA = pNodeI->first_node(); pNodeA; pNodeA = pNodeA->next_sibling())
 		{
-			for (rapidxml::xml_node<>* pNodeA = pNodeI->first_node(); pNodeA; pNodeA = pNodeA->next_sibling())
+			std::string str(pNodeA->name());
+			if (str == "Player1")
 			{
-				std::string str(pNodeA->name());
-				if (str == "Player1")
-				{
-					i = atoi(pNodeA->first_node()->first_attribute()->next_attribute()->value());
-					j = atoi(pNodeA->first_node()->first_attribute()->value());
-					player1Position.x = j * 48 + 48;
-					player1Position.y = i * 48 + 128;
-					player1Hp = atoi(pNodeA->first_attribute()->value());
-				}
-				else if (str == "Player2")
-				{
-					i = atoi(pNodeA->first_node()->first_attribute()->next_attribute()->value());
-					j = atoi(pNodeA->first_node()->first_attribute()->value());
-					player2Position.x = j * 48 + 48;
-					player2Position.y = i * 48 + 128;
-					player2Hp = atoi(pNodeA->first_attribute()->value());
-				}
-				else if (str == "Wall")
-				{
-					std::string str2(pNodeA->first_attribute()->value());
-					i = atoi(pNodeA->first_attribute()->next_attribute()->next_attribute()->value());
-					j = atoi(pNodeA->first_attribute()->next_attribute()->value());
+				i = atoi(pNodeA->first_node()->first_attribute()->next_attribute()->value());
+				j = atoi(pNodeA->first_node()->first_attribute()->value());
+				player1Position.x = j * 48 + 48;
+				player1Position.y = i * 48 + 128;
+				player1Hp = atoi(pNodeA->first_attribute()->value());
+			}
+			else if (str == "Player2")
+			{
+				i = atoi(pNodeA->first_node()->first_attribute()->next_attribute()->value());
+				j = atoi(pNodeA->first_node()->first_attribute()->value());
+				player2Position.x = j * 48 + 48;
+				player2Position.y = i * 48 + 128;
+				player2Hp = atoi(pNodeA->first_attribute()->value());
+			}
+			else if (str == "Wall")
+			{
+				std::string str2(pNodeA->first_attribute()->value());
+				i = atoi(pNodeA->first_attribute()->next_attribute()->next_attribute()->value());
+				j = atoi(pNodeA->first_attribute()->next_attribute()->value());
 
-					if (str2 == "false") map[i][j].destructibleWall = false;
-					else if (str2 == "true") map[i][j].destructibleWall = true;
+				if (str2 == "false") map[i][j].destructibleWall = false;
+				else if (str2 == "true") map[i][j].destructibleWall = true;
 
-					map[i][j].existWall = true;
-					map[i][j].wallPosition.x = j * 48 + 48;
-					map[i][j].wallPosition.y = i * 48 + 128;
-				}
+				map[i][j].existWall = true;
+				map[i][j].wallPosition.x = j * 48 + 48;
+				map[i][j].wallPosition.y = i * 48 + 128;
 			}
 		}
 	}
@@ -92,12 +91,14 @@ void Map::AddWalls()
 				{
 					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, 48, 48 });
 					w->SetValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, false);
+					w->SetCoord({ j, i });
 					walls.push_back(std::move(w));
 				}
 				else
 				{
 					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, 48, 48 });
 					w->SetValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, true);
+					w->SetCoord({ j, i });
 					walls.push_back(std::move(w));
 				}
 			}

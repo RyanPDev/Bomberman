@@ -11,7 +11,7 @@ const int SCREEN_HEIGHT{ 704 };
 const int FPS{ 60 };
 
 //Total game time
-const float GAME_TIMER{ 200.f }; //seconds
+const float GAME_TIMER{ 80.f }; //seconds
 
 //Sprite Frame Size (and tiles size)
 const int FRAME_SIZE{48};

@@ -7,8 +7,8 @@ Menu::Menu()
 	renderer->LoadRect(T_BG_MENU, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 
 	//Audio
-	/*if(!AudioManager::GetInstance()->PausedMusic())
-		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/menu.mp3" });*/
+	if(!AudioManager::GetInstance()->PausedMusic())
+		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/menu.mp3" });
 
 	//Title
 	renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 200 });

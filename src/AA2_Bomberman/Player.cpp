@@ -9,7 +9,6 @@ Player::Player() : position({ 1, 1, 48, 48 }), frame({ 0, 0, 20, 20 }), type(EPl
 	speed = 2;
 	speedMultiplier = 3;
 	hp = 0;
-	timer.Start();
 }
 
 Player::~Player() {}
@@ -227,9 +226,9 @@ void Player::DropBomb(Map* map)
 	{
 	case EBombState::PLANTED:
 	{
-		VEC2 mapPos = { (position.x + frame.w / 2) / FRAME_SIZE - 1, ((position.y + frame.h / 2) - (80 + FRAME_SIZE)) / FRAME_SIZE };
-		b = new Bomb({ mapPos.x * 48 + 48, mapPos.y * 48 + 128, 48, 48 });
-		map->map[mapPos.x][mapPos.y].existBomb = true;
+		bombMapPos = { (position.x + frame.w / 2) / FRAME_SIZE - 1, ((position.y + frame.h / 2) - (80 + FRAME_SIZE)) / FRAME_SIZE };
+		b = new Bomb({ bombMapPos.x * 48 + 48, bombMapPos.y * 48 + 128, 48, 48 });
+		map->map[bombMapPos.x][bombMapPos.y].existBomb = true;
 
 		b->SetValues(Renderer::GetInstance()->GetTextureSize(T_BOMB).x, Renderer::GetInstance()->GetTextureSize(T_BOMB).y, 3, 2);
 		bombState = EBombState::COUNTDOWN;
@@ -243,8 +242,9 @@ void Player::DropBomb(Map* map)
 		{
 			Explosion e(RECT{ 0,0,0,0 });
 			Explosion::EExplosionDirection dir = static_cast<Explosion::EExplosionDirection>(i);
-			e.SetValues(Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).x, Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).y, 4, 7, b->GetPosition(), dir, map);
+			e.SetValues(Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).x, Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).y, 4, 7, b->GetPosition(), dir);
 			_explosions.push_back(std::move(e));
+			_explosions[i].CheckCollision(bombMapPos, map, score);
 		}
 		delete b;
 		break;
@@ -252,7 +252,7 @@ void Player::DropBomb(Map* map)
 		//Explosion animation 1s
 		for (int i = 0; i < _explosions.size(); i++)
 		{
-			_explosions[i].UpdateSprite(explosionTimer);
+			_explosions[i].UpdateSprite(bombMapPos, explosionTimer, map);
 		}
 
 		//Explosion ends

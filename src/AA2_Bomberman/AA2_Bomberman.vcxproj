@@ -197,7 +197,6 @@
     <ClCompile Include="Ranking.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -218,7 +217,6 @@
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Timer.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Wall.h" />

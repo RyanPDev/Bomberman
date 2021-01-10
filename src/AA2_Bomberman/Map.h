@@ -28,6 +28,7 @@ public:
 	std::vector<Wall*> walls;
 
 private:
+	std::vector<Map> maps;
 	VEC2 player1Position;
 	VEC2 player2Position;
 	int player1Hp;
