@@ -64,8 +64,9 @@ void Gameplay::Update(InputData* _input)
 		p->Update(_input, &map);
 
 	timeDown -= *_input->GetDeltaTime();
-	TimerUpdate();
 	UpdateHUDText();
+
+	if (timeDown <= 0) SetSceneState(ESceneState::CLICK_RANKING);
 }
 
 void Gameplay::Draw()
@@ -125,12 +126,6 @@ void Gameplay::AddPlayer(std::string id, Player::EPlayerType type)
 	p = new Player();
 	p->SetPlayerValues(renderer->GetTextureSize(id).x, renderer->GetTextureSize(id).y, 3, 4, p->GetMapPosition(&map, type), p->GetMapHp(&map, type), type);
 	_players.push_back(std::move(p));
-}
-
-void Gameplay::TimerUpdate()
-{
-
-
 }
 
 void Gameplay::UpdateHUDText()

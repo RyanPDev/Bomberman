@@ -51,6 +51,11 @@ void Game::Run()
 				delete scene;
 				scene = new Menu();
 				break;
+			case ESceneState::CLICK_RANKING:
+				gameScene = EGameScene::RANKING;
+				delete scene;
+				scene = new Ranking();
+				break;
 			case ESceneState::RUNNING:
 				scene->Update(_input);
 				scene->Draw();

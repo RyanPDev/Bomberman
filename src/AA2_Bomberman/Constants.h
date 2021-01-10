@@ -12,7 +12,7 @@ const int SCREEN_HEIGHT{ 704 };
 const int FPS{ 60 };
 
 //Total game time
-const float GAME_TIMER{ 80.f }; //seconds
+const float GAME_TIMER{ 3.f }; //seconds
 
 //Map to store textures and rects
 using MTextures = std::unordered_map<std::string, SDL_Texture*>;
