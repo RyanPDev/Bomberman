@@ -103,7 +103,6 @@ void Player::Action(InputData* _input, Map* map)
 		}
 		else if (_input->IsPressed(EInputKeys::W)) {
 			newPosition.y -= speed; dir = EDirection::UP;
-			score++;
 		}
 		else if (_input->IsPressed(EInputKeys::S)) {
 			newPosition.y += speed; dir = EDirection::DOWN;

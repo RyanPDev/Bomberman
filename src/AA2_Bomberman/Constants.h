@@ -7,6 +7,7 @@
 const int SCREEN_WIDTH{ 720 };
 const int SCREEN_HEIGHT{ 704 };
 
+
 //FPS
 const int FPS{ 60 };
 

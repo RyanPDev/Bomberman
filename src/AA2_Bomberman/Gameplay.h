@@ -3,17 +3,13 @@
 #include "Scene.h"
 #include "Player.h"
 #include "Map.h"
+#include "Utils.h"
 #include <time.h>
 
 class Gameplay : public Scene
 {
 private:
-	////Timer
-	//time_t startingTime;
-	//time_t updatedTime;
-	//time_t timer;
-	//struct tm* timerInfo;
-	//char timerPtr[80];
+	float timeDown;
 
 	//Scores
 	std::string scoreStringPl1 = "000", scoreStringPl2 = "000";

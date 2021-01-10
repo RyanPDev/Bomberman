@@ -51,8 +51,7 @@ Gameplay::Gameplay()
 	livesFrame.w = renderer->GetTextureSize(T_LIVES_PL1).x / 3;
 	livesFrame.h = renderer->GetTextureSize(T_LIVES_PL1).y / 4;
 
-
-	//time(&startingTime);
+	timeDown = GAME_TIMER;
 }
 
 Gameplay::~Gameplay() {}
@@ -64,7 +63,8 @@ void Gameplay::Update(InputData* _input)
 	for (Player* p : _players)
 		p->Update(_input, &map);
 
-	//TimerUpdate();
+	timeDown -= *_input->GetDeltaTime();
+	TimerUpdate();
 	UpdateHUDText();
 }
 
@@ -93,9 +93,9 @@ void Gameplay::Draw()
 	//Pl2
 	if (_players[1]->GetHp() > 0)
 		renderer->PushSprite(T_LIVES_PL2, &livesFrame, &RECT{ 505, 10, livesFrame.w, livesFrame.h });
-	if (_players[0]->GetHp() > 1)
+	if (_players[1]->GetHp() > 1)
 		renderer->PushSprite(T_LIVES_PL2, &livesFrame, &RECT{ 505 - livesFrame.w, 10, livesFrame.w, livesFrame.h });
-	if (_players[0]->GetHp() > 2)
+	if (_players[1]->GetHp() > 2)
 		renderer->PushSprite(T_LIVES_PL2, &livesFrame, &RECT{ 505 - livesFrame.w * 2, 10, livesFrame.w, livesFrame.h });
 
 	//Walls
@@ -129,33 +129,35 @@ void Gameplay::AddPlayer(std::string id, Player::EPlayerType type)
 
 void Gameplay::TimerUpdate()
 {
-	/*time(&updatedTime);
-	timer = difftime(updatedTime, startingTime);
 
-	timerInfo = gmtime(&timer);
-	strftime(timerPtr, 80, "%M:%S", timerInfo);*/
 
 }
 
 void Gameplay::UpdateHUDText()
 {
-	
-	//if (*_players[0]->GetScore() > std::stoi(scoreStringPl1))
+
+	if (*_players[0]->GetScore() > std::stoi(scoreStringPl1))
 	{
-		//scoreStringPl1 = std::to_string(*_players[0]->GetScore());
+		scoreStringPl1 = std::to_string(*_players[0]->GetScore());
 		VEC2 vtmp = renderer->UpdateTextureText(F_GAMEOVER, Text{ T_SC_PL1, scoreStringPl1, {0, 0, 0, 255}, 0, 0 });
 		renderer->UpdateRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y });
 	}
-	//if (*_players[1]->GetScore() > std::stoi(scoreStringPl2))
+	if (*_players[1]->GetScore() > std::stoi(scoreStringPl2))
 	{
-		//scoreStringPl2 = std::to_string(*_players[1]->GetScore());
+		scoreStringPl2 = std::to_string(*_players[1]->GetScore());
 		VEC2 vtmp = renderer->UpdateTextureText(F_GAMEOVER, Text{ T_SC_PL2, scoreStringPl2, {0, 0, 0, 255}, 0, 0 });
 		renderer->UpdateRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y });
 	}
 
 	///-------------------------------------------------MEMORY LEAK------------------------------------------------------///
 
-	////Timer
-	//vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_TIME, timerPtr, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
-	//renderer->LoadRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
+	//Timer
+	std::string s = F2StrFormat(trunc(timeDown / 60), 0);
+	if(static_cast<int>(timeDown) % 60 >= 10)
+		s += ":" + F2StrFormat(static_cast<int>(timeDown) % 60, 0);
+	else
+		s += ":0" + F2StrFormat(static_cast<int>(timeDown) % 60, 0);
+
+	VEC2 vtmp = renderer->UpdateTextureText(F_GAMEOVER, Text{ T_TIME, s, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
+	renderer->UpdateRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
 }

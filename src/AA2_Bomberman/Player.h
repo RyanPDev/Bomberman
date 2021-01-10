@@ -47,7 +47,7 @@ public:
 	void PlayerCollision();
 	VEC2 GetMapPosition(Map*, EPlayerType);
 	int GetMapHp(Map*, EPlayerType);
-	void DropBomb();
+	void DropBomb(Map* map);
 	void DrawBomb();
 
 	inline const int GetHp()const { return hp; }
