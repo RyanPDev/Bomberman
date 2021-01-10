@@ -111,8 +111,7 @@ void Gameplay::Draw()
 	//Bombs
 	for (Player* p : _players)
 	{
-		if (p->GetBomb())
-			p->DrawBomb();
+		p->DrawBomb();
 		p->DrawExplosion();
 	}
 
@@ -134,7 +133,6 @@ void Gameplay::AddPlayer(std::string id, Player::EPlayerType type)
 
 void Gameplay::UpdateHUDText()
 {
-
 	if (*_players[0]->GetScore() > std::stoi(scoreStringPl1))
 	{
 		scoreStringPl1 = std::to_string(*_players[0]->GetScore());
@@ -148,15 +146,13 @@ void Gameplay::UpdateHUDText()
 		renderer->UpdateRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y });
 	}
 
-	///-------------------------------------------------MEMORY LEAK------------------------------------------------------///
-
 	//Timer
 	std::string s = F2StrFormat(trunc(timeDown / 60), 0);
-	if(static_cast<int>(timeDown) % 60 >= 10)
+	if (static_cast<int>(timeDown) % 60 >= 10)
 		s += ":" + F2StrFormat(static_cast<int>(timeDown) % 60, 0);
 	else
 		s += ":0" + F2StrFormat(static_cast<int>(timeDown) % 60, 0);
 
-	VEC2 vtmp = renderer->UpdateTextureText(F_GAMEOVER, Text{ T_TIME, s, {0, 0, 0, 255}, 0, 0 }); //-->HA D'ANAR AL CONSTRUCTOR
-	renderer->UpdateRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y }); //-->HA D'ANAR AL CONSTRUCTOR
+	VEC2 vtmp = renderer->UpdateTextureText(F_GAMEOVER, Text{ T_TIME, s, {0, 0, 0, 255}, 0, 0 });
+	renderer->UpdateRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y });
 }

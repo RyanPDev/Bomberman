@@ -14,8 +14,7 @@ void Bomb::SetValues(int textWidth, int textHeight, int nCol, int nRow)
 
 void Bomb::Explode(const RECT* bombPos, int textWidth, int textHeight)
 {
-	e = new Explosion(RECT{ bombPos->x, bombPos->y, bombPos->w, bombPos->h });
-	e->SetValues(textWidth, textHeight, 4, 7);
+
 }
 
 void Bomb::DrawExplosion()

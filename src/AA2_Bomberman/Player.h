@@ -11,6 +11,7 @@
 class Player
 {
 public:
+	enum class EBombState { NONE = -1, PLANTED, COUNTDOWN, FLICKERING, EXPLOSION, EXPLOSION_COUNTDOWN, COUNT };
 	enum class EPlayerType { NONE = -1, PL1, PL2, COUNT };
 	
 private:
@@ -18,15 +19,16 @@ private:
 	float currentTime = 0;
 	int score;
 	int hp;
-	float bombTimer = 0;
-	bool bombUp;
-	bool explosionActive;
+	float bombTimer = 3.f;
+	float explosionTimer = 1.f;
 	std::vector<Bomb*> _bombs;
 	Bomb* b;
+	std::vector<Explosion> _explosions;
 	RECT position;
 	VEC2 newPosition;
 	RECT frame;
 	EPlayerType type;
+	EBombState bombState = EBombState::NONE;
 	EDirection dir = EDirection::NONE;
 
 	int initCol, lastCol;
@@ -57,6 +59,5 @@ public:
 	inline const RECT* GetPosition()const { return &position; }
 	inline const RECT* GetFrame()const { return &frame; }
 	inline const int* GetScore()const { return &score; }
-	const bool GetBomb()const { return bombUp; }
-
+	const EBombState GetBomb()const { return bombState; }
 };

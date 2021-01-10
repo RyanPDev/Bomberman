@@ -4,6 +4,7 @@ Game::Game()
 {
 	gameScene = EGameScene::MENU;
 	scene = new Menu();
+	_input = InputManager::GetInstance()->GetInput();
 }
 
 Game::~Game()
