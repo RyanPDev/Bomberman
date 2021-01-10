@@ -67,7 +67,7 @@
 			<Wall destructible = "true" x="9" y="2"/>
 			<Wall destructible = "true" x="10" y="2"/>
 			<Wall destructible = "true" x="11" y="2"/>
-			<Wall destructible = "true" x="12" y="2"/>
+			<Wall destructible = "true" x="12" y="2"/>-->
 
 			<Wall destructible = "true" x="0" y="3"/>
 			<Wall destructible = "true" x="4" y="3"/>
@@ -91,9 +91,9 @@
 			<Wall destructible = "true" x="4" y="5"/>
 			<Wall destructible = "true" x="6" y="5"/>
 			<Wall destructible = "true" x="8" y="5"/>
-			<Wall destructible = "true" x="10" y="5"/>-->
+			<Wall destructible = "true" x="10" y="5"/>
 
-			<!--<Wall destructible = "true" x="0" y="6"/>
+			<Wall destructible = "true" x="0" y="6"/>
 			<Wall destructible = "true" x="1" y="6"/>
 			<Wall destructible = "true" x="2" y="6"/>
 			<Wall destructible = "true" x="3" y="6"/>
@@ -109,7 +109,7 @@
 			<Wall destructible = "true" x="0" y="7"/>
 			<Wall destructible = "true" x="12" y="7"/>
 
-			<Wall destructible = "true" x="0" y="8"/>
+			<!--<Wall destructible = "true" x="0" y="8"/>
 			<Wall destructible = "true" x="1" y="8"/>
 			<Wall destructible = "true" x="2" y="8"/>
 			<Wall destructible = "true" x="4" y="8"/>

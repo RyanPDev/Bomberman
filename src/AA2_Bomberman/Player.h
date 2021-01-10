@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "InputManager.h"
 #include "Bomb.h"
+#include "Explosion.h"
 #include "Timer.h"
 
 class Player
@@ -14,11 +15,12 @@ public:
 	
 private:
 	Timer timer;
-	int currentTime = 0;
+	float currentTime = 0;
 	int score;
 	int hp;
-	int tmp = 0;
+	float bombTimer = 0;
 	bool bombUp;
+	bool explosionActive;
 	std::vector<Bomb*> _bombs;
 	Bomb* b;
 	RECT position;
@@ -49,6 +51,7 @@ public:
 	int GetMapHp(Map*, EPlayerType);
 	void DropBomb(Map* map);
 	void DrawBomb();
+	void DrawExplosion();
 
 	inline const int GetHp()const { return hp; }
 	inline const RECT* GetPosition()const { return &position; }

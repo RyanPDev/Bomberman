@@ -14,6 +14,9 @@ Gameplay::Gameplay()
 	//Bomb
 	renderer->LoadTexture(T_BOMB, "../../res/img/items.png");
 
+	//Explosion
+	renderer->LoadTexture(T_EXPLOSION, "../../res/img/explosion.png");
+
 	//Players
 	renderer->LoadTexture(T_PLAYER1, "../../res/img/player1.png");
 	renderer->LoadTexture(T_PLAYER2, "../../res/img/player2.png");
@@ -110,6 +113,7 @@ void Gameplay::Draw()
 	{
 		if (p->GetBomb())
 			p->DrawBomb();
+		p->DrawExplosion();
 	}
 
 	//Players

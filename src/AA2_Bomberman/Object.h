@@ -6,6 +6,11 @@ class Object
 protected:
 	RECT position;
 	RECT frame;
+	int initCol;
+	int initRow;
+	int lastCol;
+	int lastRow;
+	float frameCount = 0;
 
 private:
 	

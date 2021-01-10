@@ -7,12 +7,14 @@
 const int SCREEN_WIDTH{ 720 };
 const int SCREEN_HEIGHT{ 704 };
 
-
 //FPS
 const int FPS{ 60 };
 
 //Total game time
-const float GAME_TIMER{ 3.f }; //seconds
+const float GAME_TIMER{ 200.f }; //seconds
+
+//Sprite Frame Size (and tiles size)
+const int FRAME_SIZE{48};
 
 //Map to store textures and rects
 using MTextures = std::unordered_map<std::string, SDL_Texture*>;
@@ -29,7 +31,7 @@ const std::string T_PLAYERS_POS = "PlayersPos";
 const std::string T_WALL = "Wall";
 const std::string T_DESTRUCTIBLE_WALL = "DestructibleWall";
 const std::string T_BOMB = "Bomb";
-
+const std::string T_EXPLOSION = "Explosion";
 
 //Font
 const std::string F_GAMEOVER = "FontGameOver";

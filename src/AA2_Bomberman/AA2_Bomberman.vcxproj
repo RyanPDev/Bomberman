@@ -183,6 +183,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Collisions.cpp" />
+    <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Explosion.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gameplay.h" />
     <ClInclude Include="InputManager.h" />

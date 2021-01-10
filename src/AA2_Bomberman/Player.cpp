@@ -77,7 +77,7 @@ void Player::Action(InputData* _input, Map* map)
 	dir = EDirection::NONE;
 
 	switch (type) {
-	case Player::EPlayerType::PL1:
+	case Player::EPlayerType::PL2:
 		if (_input->IsPressed(EInputKeys::LEFT)) {
 			newPosition.x -= speed; dir = EDirection::LEFT;
 		}
@@ -90,11 +90,12 @@ void Player::Action(InputData* _input, Map* map)
 		else if (_input->IsPressed(EInputKeys::DOWN)) {
 			newPosition.y += speed; dir = EDirection::DOWN;
 		}
-		if (_input->IsPressed(EInputKeys::SPACE) && !bombUp) {
+		if (_input->IsPressed(EInputKeys::RIGHT_CTRL) && !bombUp) {
 			bombUp = true;
+			explosionActive = false;
 		}
 		break;
-	case Player::EPlayerType::PL2:
+	case Player::EPlayerType::PL1:
 		if (_input->IsPressed(EInputKeys::A)) {
 			newPosition.x -= speed; dir = EDirection::LEFT;
 		}
@@ -107,8 +108,9 @@ void Player::Action(InputData* _input, Map* map)
 		else if (_input->IsPressed(EInputKeys::S)) {
 			newPosition.y += speed; dir = EDirection::DOWN;
 		}
-		if (_input->IsPressed(EInputKeys::RIGHT_CTRL) && !bombUp) {
+		if (_input->IsPressed(EInputKeys::SPACE) && !bombUp) {
 			bombUp = true;
+			explosionActive = false;
 
 		}
 		break;
@@ -181,7 +183,7 @@ void Player::PlayerWallCollision(Map* map)
 	for (Wall* w : map->walls)
 	{
 		if (Collisions::ExistCollision(RECT(newPosition.x, newPosition.y, position.w - 10, position.h - 5),
-			RECT(w->GetPosition()->x, w->GetPosition()->y, w->GetPosition()->w - 10, w->GetPosition()->h - 5)))
+			RECT(w->GetPosition()->x, w->GetPosition()->y, w->GetPosition()->w - 10, w->GetPosition()->h - 10)))
 		{
 			newPosition.x = position.x;
 			newPosition.y = position.y;
@@ -218,24 +220,22 @@ int Player::GetMapHp(Map* map, EPlayerType type)
 
 void Player::DropBomb(Map* map)
 {
-	if (tmp <= 0)
+	if (bombTimer <= 0)
 	{
-		b = new Bomb({ position.x, position.y, 48, 48 });
-		map->map[position.x / 48 - 1][position.y / 100 - 1].existBomb = true;
-		for (int i = 0; i < 11; i++)
-			for (int j = 0; j < 13; j++)
-			{
-				if (map->map[i][j].existBomb)
-					std::cout << i << ' ' << j << std::endl;
-			}
-		
-		tmp = currentTime;
+		int mapX = (position.x + frame.w / 2) / 48 - 1;
+		int mapY = ((position.y + frame.h / 2) - 128) / 48;
+		b = new Bomb({ mapX * 48 + 48, mapY * 48 + 128, 48, 48 });
+		map->map[mapX][mapY].existBomb = true;
+
+		bombTimer = currentTime;
 		b->SetValues(Renderer::GetInstance()->GetTextureSize(T_BOMB).x, Renderer::GetInstance()->GetTextureSize(T_BOMB).y, 3, 2);
 	}
 
-	if (currentTime - tmp >= 3)
+	if (currentTime - bombTimer >= 3)
 	{
-		tmp = 0;
+		bombTimer = 0;
+		b->Explode(b->GetPosition(),Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).x, Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).y);
+		explosionActive = true;
 		delete b;
 		bombUp = false;
 	}
@@ -244,4 +244,9 @@ void Player::DropBomb(Map* map)
 void Player::DrawBomb()
 {
 	Renderer::GetInstance()->PushSprite(T_BOMB, b->GetFrame(), b->GetPosition());
+}
+
+void Player::DrawExplosion()
+{
+	if (explosionActive) b->DrawExplosion();
 }
