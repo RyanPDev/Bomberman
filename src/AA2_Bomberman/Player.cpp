@@ -193,11 +193,6 @@ void Player::PlayerWallCollision(Map* map)
 	}
 }
 
-void Player::PlayerCollision()
-{
-
-}
-
 VEC2 Player::GetMapPosition(Map* map, EPlayerType type)
 {
 	switch (type)
@@ -244,7 +239,7 @@ void Player::DropBomb(Map* map)
 			Explosion::EExplosionDirection dir = static_cast<Explosion::EExplosionDirection>(i);
 			e.SetValues(Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).x, Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).y, 4, 7, b->GetPosition(), dir);
 			_explosions.push_back(std::move(e));
-			_explosions[i].CheckCollision(bombMapPos, map, score);
+			//_explosions[i].CheckCollision(bombMapPos, map, score);
 		}
 		delete b;
 		break;
@@ -280,13 +275,44 @@ void Player::DrawBomb()
 	}
 }
 
-void Player::DrawExplosion()
+void Player::DrawExplosion(Map* map)
 {
 	if (bombState == EBombState::EXPLOSION_COUNTDOWN)
 	{
-		for (Explosion e : _explosions)
+		//for (int i = 0; i < _explosions.size(); i++)
+		//{
+		//	for (int j = 0; j < map->walls.size(); j++)
+		//	{
+		//		if (!Collisions::ExistCollision(*map->walls[j]->GetPosition(), *_explosions[i].GetPosition()))
+		//		{
+		//			//std::cout << "COLISION   " << map->walls[j]->GetPosition()->x << ' ' << _explosions[i].GetPosition()->x << std::endl;
+		//			Renderer::GetInstance()->PushSprite(T_EXPLOSION, _explosions[i].GetFrame(), _explosions[i].GetPosition());
+		//			//map->walls.erase(map->walls.begin() + i);
+		//			//break;
+		//		}
+		//		else
+		//		{
+		//		}
+		//	}
+		//}
+
+		for (int i = 0; i < _explosions.size(); i++)
 		{
-			Renderer::GetInstance()->PushSprite(T_EXPLOSION, e.GetFrame(), e.GetPosition());
+			for (int j = 0; j < map->walls.size(); j++)
+			{
+				if (_explosions[i].GetPosition()->x < SCREEN_WIDTH - FRAME_SIZE && _explosions[i].GetPosition()->y < SCREEN_HEIGHT - FRAME_SIZE &&
+					_explosions[i].GetPosition()->x >= FRAME_SIZE && _explosions[i].GetPosition()->y >= SCREEN_HEIGHT - 576)
+				{
+					if (map->walls[j]->GetPosition()->x != _explosions[i].GetPosition()->x && map->walls[j]->GetPosition()->y != _explosions[i].GetPosition()->y)
+					{
+						std::cout << map->walls[j]->GetPosition()->x << std::endl;
+						std::cout << map->walls[j]->GetPosition()->y << std::endl;
+						std::cout << _explosions[i].GetPosition()->x << std::endl;
+						std::cout << _explosions[i].GetPosition()->y << std::endl;
+						Renderer::GetInstance()->PushSprite(T_EXPLOSION, _explosions[i].GetFrame(), _explosions[i].GetPosition());
+					}
+				}
+			}
 		}
 	}
 }

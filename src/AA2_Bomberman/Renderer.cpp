@@ -53,26 +53,12 @@ void Renderer::Clear() { SDL_RenderClear(m_renderer); };
 void Renderer::Render() { SDL_RenderPresent(m_renderer); };
 
 void Renderer::LoadFont(const Font& font) {
-	//std::unordered_map<std::string, TTF_Font*>::iterator it;
-	//it = m_fontData.find(font.id);
-	//if (it != m_fontData.end())
-	//{
-	//	TTF_CloseFont(it->second);
-	//	it->second = nullptr;
-	//}
 	TTF_Font* ttfFont{ TTF_OpenFont(font.path.c_str(), font.size) };
 	if (ttfFont == nullptr) throw"No es pot inicialitzar TTF_Font";
 	m_fontData[font.id] = ttfFont;
 };
 
 void Renderer::LoadTexture(const std::string& id, const std::string& path) {
-	//std::unordered_map<std::string, SDL_Texture*>::iterator it;
-	//it = m_textureData.find(id);
-	//if (it != m_textureData.end())
-	//{
-	//	SDL_DestroyTexture(it->second);
-	//	it->second = nullptr;
-	//}
 	SDL_Texture* texture{ IMG_LoadTexture(m_renderer, path.c_str()) };
 	if (texture == nullptr) throw "No s'han pogut crear les textures";
 	m_textureData[id] = texture;

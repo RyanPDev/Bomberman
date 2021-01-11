@@ -24,8 +24,8 @@ Gameplay::Gameplay()
 	AddPlayer(T_PLAYER2, Player::EPlayerType::PL2);
 
 	//Audio
-	if (!AudioManager::GetInstance()->PausedMusic())
-		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/game_theme.mp3" });
+	/*if (!AudioManager::GetInstance()->PausedMusic())
+		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/game_theme.mp3" });*/
 
 		//HUD
 	renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 90 });
@@ -112,7 +112,7 @@ void Gameplay::Draw()
 	for (Player* p : _players)
 	{
 		p->DrawBomb();
-		p->DrawExplosion();
+		p->DrawExplosion(&map);
 	}
 
 	//Players

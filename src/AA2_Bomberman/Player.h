@@ -46,12 +46,11 @@ public:
 	void UpdateSprite();
 	void ScreenCollision(VEC2&, InputData*);
 	void PlayerWallCollision(Map*);
-	void PlayerCollision();
 	VEC2 GetMapPosition(Map*, EPlayerType);
 	int GetMapHp(Map*, EPlayerType);
 	void DropBomb(Map* map);
 	void DrawBomb();
-	void DrawExplosion();
+	void DrawExplosion(Map*);
 
 	inline const int GetHp()const { return hp; }
 	inline const RECT* GetPosition()const { return &position; }
