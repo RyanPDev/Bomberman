@@ -233,13 +233,17 @@ void Player::DropBomb(Map* map)
 		bombTimer = 3;
 		bombState = EBombState::EXPLOSION_COUNTDOWN;
 		//Create Explosion
-		for (int i = 0; i < static_cast<int>(Explosion::EExplosionDirection::COUNT); i++)
 		{
-			Explosion e(RECT{ 0,0,0,0 });
-			Explosion::EExplosionDirection dir = static_cast<Explosion::EExplosionDirection>(i);
-			e.SetValues(Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).x, Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).y, 4, 7, b->GetPosition(), dir);
-			_explosions.push_back(std::move(e));
-			//_explosions[i].CheckCollision(bombMapPos, map, score);
+			bool isValid, stopDirection = false;
+
+			for (int i = 0; i < static_cast<int>(Explosion::EExplosionDirection::COUNT); i++)
+			{
+				Explosion e(RECT{ 0,0,0,0 });
+				Explosion::EExplosionDirection dir = static_cast<Explosion::EExplosionDirection>(i);
+
+				e.SetValues(Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).x, Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).y, 4, 7, b->GetPosition(), dir, map, stopDirection, score);
+				_explosions.push_back(std::move(e));
+			}
 		}
 		delete b;
 		break;
@@ -248,6 +252,10 @@ void Player::DropBomb(Map* map)
 		for (int i = 0; i < _explosions.size(); i++)
 		{
 			_explosions[i].UpdateSprite(bombMapPos, explosionTimer, map);
+			if (Collisions::ExistCollision(*_explosions[i].GetPosition(), position))
+			{
+				//Take Damage
+			}
 		}
 
 		//Explosion ends
@@ -279,40 +287,10 @@ void Player::DrawExplosion(Map* map)
 {
 	if (bombState == EBombState::EXPLOSION_COUNTDOWN)
 	{
-		//for (int i = 0; i < _explosions.size(); i++)
-		//{
-		//	for (int j = 0; j < map->walls.size(); j++)
-		//	{
-		//		if (!Collisions::ExistCollision(*map->walls[j]->GetPosition(), *_explosions[i].GetPosition()))
-		//		{
-		//			//std::cout << "COLISION   " << map->walls[j]->GetPosition()->x << ' ' << _explosions[i].GetPosition()->x << std::endl;
-		//			Renderer::GetInstance()->PushSprite(T_EXPLOSION, _explosions[i].GetFrame(), _explosions[i].GetPosition());
-		//			//map->walls.erase(map->walls.begin() + i);
-		//			//break;
-		//		}
-		//		else
-		//		{
-		//		}
-		//	}
-		//}
-
 		for (int i = 0; i < _explosions.size(); i++)
 		{
-			for (int j = 0; j < map->walls.size(); j++)
-			{
-				if (_explosions[i].GetPosition()->x < SCREEN_WIDTH - FRAME_SIZE && _explosions[i].GetPosition()->y < SCREEN_HEIGHT - FRAME_SIZE &&
-					_explosions[i].GetPosition()->x >= FRAME_SIZE && _explosions[i].GetPosition()->y >= SCREEN_HEIGHT - 576)
-				{
-					if (map->walls[j]->GetPosition()->x != _explosions[i].GetPosition()->x && map->walls[j]->GetPosition()->y != _explosions[i].GetPosition()->y)
-					{
-						std::cout << map->walls[j]->GetPosition()->x << std::endl;
-						std::cout << map->walls[j]->GetPosition()->y << std::endl;
-						std::cout << _explosions[i].GetPosition()->x << std::endl;
-						std::cout << _explosions[i].GetPosition()->y << std::endl;
-						Renderer::GetInstance()->PushSprite(T_EXPLOSION, _explosions[i].GetFrame(), _explosions[i].GetPosition());
-					}
-				}
-			}
+			if (_explosions[i].GetVisibility())
+				Renderer::GetInstance()->PushSprite(T_EXPLOSION, _explosions[i].GetFrame(), _explosions[i].GetPosition());
 		}
 	}
 }

@@ -4,7 +4,7 @@ Explosion::Explosion(RECT _position) : Object(_position) {}
 
 Explosion::~Explosion() {}
 
-void Explosion::SetValues(int textWidth, int textHeight, int nCol, int nRow, const RECT* bombPos, EExplosionDirection _dir)
+void Explosion::SetValues(int textWidth, int textHeight, int nCol, int nRow, const RECT* bombPos, EExplosionDirection _dir, Map* map, bool& stopDirection, int& score)
 {
 	dir = _dir;
 
@@ -75,6 +75,40 @@ void Explosion::SetValues(int textWidth, int textHeight, int nCol, int nRow, con
 	initCol = 0;
 	lastCol = 3;
 	lastRow = initRow;
+
+	if (!stopDirection)
+	{
+		visible = true;
+
+		if (position.x < SCREEN_WIDTH - FRAME_SIZE && position.y < SCREEN_HEIGHT - FRAME_SIZE &&
+			position.x >= FRAME_SIZE && position.y >= SCREEN_HEIGHT - 576)
+		{
+			for (int j = 0; j < map->walls.size(); j++)
+			{
+				if (map->walls[j]->GetPosition()->x == position.x && map->walls[j]->GetPosition()->y == position.y)
+				{
+					visible = false;
+					stopDirection = true; 
+					if (map->map[((position.y + frame.h / 2) - (80 + FRAME_SIZE)) / FRAME_SIZE][(position.x + frame.w / 2) / FRAME_SIZE - 1].destructibleWall)
+					{
+						map->walls.erase(map->walls.begin() + j);
+						score += 15;
+					}
+					break;
+				}
+			}
+		}
+
+		else
+		{
+			visible = false;
+		}
+	}
+	else
+		visible = false;
+
+	if (dir == EExplosionDirection::LEFT || dir == EExplosionDirection::RIGHT || dir == EExplosionDirection::TOP || dir == EExplosionDirection::BOTTOM)
+		stopDirection = false;
 }
 
 void Explosion::UpdateSprite(VEC2 mapPos, const float timer, Map* map)
@@ -104,7 +138,7 @@ void Explosion::CheckCollision(VEC2 mapPos, Map* map, int& score)
 					map->walls.erase(map->walls.begin() + i);
 					map->map[mapPos.y][mapPos.x + 2].existWall = false;
 					score += 15;
-				} 
+				}
 			}
 		}
 	}
@@ -164,12 +198,12 @@ void Explosion::CheckCollision(VEC2 mapPos, Map* map, int& score)
 					map->walls.erase(map->walls.begin() + i);
 					map->map[mapPos.y + 2][mapPos.x].existWall = false;
 					score += 15;
-				} 
+				}
 			}
 		}
 	}
 
-	
+
 	if (map->map[mapPos.y][mapPos.x + 1].existWall)
 	{
 		if (dir == EExplosionDirection::MID_RIGHT || dir == EExplosionDirection::RIGHT)
@@ -245,7 +279,7 @@ void Explosion::CheckCollision(VEC2 mapPos, Map* map, int& score)
 					map->walls.erase(map->walls.begin() + i);
 					map->map[mapPos.y + 1][mapPos.x].existWall = false;
 					score += 15;
-				} 
+				}
 			}
 		}
 	}

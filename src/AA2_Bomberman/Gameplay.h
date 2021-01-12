@@ -21,7 +21,6 @@ public:
 	Gameplay();
 	~Gameplay();
 
-	//std::vector<Player*> _players;
 	void Update(InputData*);
 	void Draw();
 	void AddPlayer(std::string id, Player::EPlayerType type);
