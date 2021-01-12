@@ -66,6 +66,8 @@ void Gameplay::Update(InputData* _input)
 	for (Player* p : _players)
 		p->Update(_input, &map);
 
+	TakeDamage(_input);
+
 	timeDown -= *_input->GetDeltaTime();
 	UpdateHUDText();
 
@@ -129,6 +131,52 @@ void Gameplay::AddPlayer(std::string id, Player::EPlayerType type)
 	p = new Player();
 	p->SetPlayerValues(renderer->GetTextureSize(id).x, renderer->GetTextureSize(id).y, 3, 4, p->GetMapPosition(&map, type), p->GetMapHp(&map, type), type);
 	_players.push_back(std::move(p));
+}
+
+void Gameplay::TakeDamage(InputData* _input)
+{
+	if (_players[0]->GetImmunity())
+	{
+		_players[0]->SetImmunityTimer(_players[0]->GetImmunityTimer() - *_input->GetDeltaTime());
+	}
+	if (_players[1]->GetImmunity())
+	{
+		_players[1]->SetImmunityTimer(_players[1]->GetImmunityTimer() - *_input->GetDeltaTime());
+	}
+
+	for (Player* p : _players)
+	{
+		for (int i = 0; i < p->_explosions.size(); i++)
+		{
+			if (Collisions::ExistCollision(*_players[0]->GetPosition(), *p->_explosions[i].GetPosition()))
+			{
+				if (_players[0]->GetImmunityTimer() >= 2)
+				{
+					_players[0]->SetHp(_players[0]->GetHp() - 1);
+					_players[0]->SetImmunity(true);
+				}
+				else if (_players[0]->GetImmunityTimer() <= 0)
+				{
+					_players[0]->SetImmunityTimer(2);
+					_players[0]->SetImmunity(false);
+				}
+			}
+
+			if (Collisions::ExistCollision(*_players[1]->GetPosition(), *p->_explosions[i].GetPosition()))
+			{
+				if (_players[1]->GetImmunityTimer() >= 2)
+				{
+					_players[1]->SetHp(_players[1]->GetHp() - 1);
+					_players[1]->SetImmunity(true);
+				}
+				else if (_players[1]->GetImmunityTimer() <= 0)
+				{
+					_players[1]->SetImmunityTimer(2);
+					_players[1]->SetImmunity(false);
+				}
+			}
+		}
+	}
 }
 
 void Gameplay::UpdateHUDText()

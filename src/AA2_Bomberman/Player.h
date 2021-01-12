@@ -12,15 +12,17 @@ class Player
 public:
 	enum class EBombState { NONE = -1, PLANTED, COUNTDOWN, FLICKERING, EXPLOSION, EXPLOSION_COUNTDOWN, COUNT };
 	enum class EPlayerType { NONE = -1, PL1, PL2, COUNT };
+	std::vector<Explosion> _explosions;
 	
 private:
 	int score;
 	int hp;
 	float bombTimer = 3.f;
 	float explosionTimer = 1.f;
+	float immunityTimer = 2.f;
+	bool immunity = false;
 	std::vector<Bomb*> _bombs;
 	Bomb* b;
-	std::vector<Explosion> _explosions;
 	VEC2 bombMapPos;
 	RECT position;
 	VEC2 newPosition;
@@ -52,9 +54,16 @@ public:
 	void DrawBomb();
 	void DrawExplosion(Map*);
 
+	const void SetHp(int _hp) { hp = _hp; }
 	inline const int GetHp()const { return hp; }
 	inline const RECT* GetPosition()const { return &position; }
 	inline const RECT* GetFrame()const { return &frame; }
 	inline const int* GetScore()const { return &score; }
-	const EBombState GetBomb()const { return bombState; }
+	inline const EBombState GetBomb()const { return bombState; }
+
+	inline const bool GetImmunity() const { return immunity; }
+	const void SetImmunity(bool _immunity) { immunity = _immunity; }
+
+	const void SetImmunityTimer(float _timer) { immunityTimer = _timer; }
+	inline const float GetImmunityTimer()const { return immunityTimer; }
 };
