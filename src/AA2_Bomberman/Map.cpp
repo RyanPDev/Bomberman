@@ -17,7 +17,7 @@ Map::Map()
 
 	//-->NOMÉS ES LLEGEIX EL PRIMER NIVELL
 
-	for (rapidxml::xml_node<>* pNodeI = pNode->first_node(); pNodeI; pNodeI = pNodeI->next_sibling())
+	for (rapidxml::xml_node<>* pNodeI = pNode->first_node("Players"); pNodeI; pNodeI = pNodeI->next_sibling())
 	{
 		for (rapidxml::xml_node<>* pNodeA = pNodeI->first_node(); pNodeA; pNodeA = pNodeA->next_sibling())
 		{
@@ -26,16 +26,14 @@ Map::Map()
 			{
 				i = atoi(pNodeA->first_node()->first_attribute()->next_attribute()->value());
 				j = atoi(pNodeA->first_node()->first_attribute()->value());
-				player1Position.x = j * 48 + 48;
-				player1Position.y = i * 48 + 128;
+				initialPlPos.push_back({ j * 48 + 48, i * 48 + 128 });
 				player1Hp = atoi(pNodeA->first_attribute()->value());
 			}
 			else if (str == "Player2")
 			{
 				i = atoi(pNodeA->first_node()->first_attribute()->next_attribute()->value());
 				j = atoi(pNodeA->first_node()->first_attribute()->value());
-				player2Position.x = j * 48 + 48;
-				player2Position.y = i * 48 + 128;
+				initialPlPos.push_back({ j * 48 + 48, i * 48 + 128 });
 				player2Hp = atoi(pNodeA->first_attribute()->value());
 			}
 			else if (str == "Wall")
@@ -67,6 +65,8 @@ Map::~Map()
 		delete* i;
 	}
 	walls.clear();
+
+	initialPlPos.clear();
 }
 
 void Map::Update()

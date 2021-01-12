@@ -31,6 +31,7 @@ void Player::Update(InputData* _input, Map* map)
 		if (bombTimer <= 0) bombState = EBombState::EXPLOSION;
 		else if (bombTimer <= 1) bombState = EBombState::FLICKERING;
 	}
+	DeathManagement(_input);
 }
 
 void Player::Draw(std::string id, Player* p)
@@ -38,12 +39,17 @@ void Player::Draw(std::string id, Player* p)
 	Renderer::GetInstance()->PushSprite(id, p->GetFrame(), p->GetPosition());
 }
 
-void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, VEC2 _position, int _hp, EPlayerType _type)
+void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, int _hp, EPlayerType _type, VEC2 _initialPos)
 {
 	type = _type;
 
 	frame.w = textWidth / nCol;
 	frame.h = textHeight / nRow;
+	initialPos = _initialPos;
+	position.x = initialPos.x;
+	position.y = initialPos.y;
+	hp = _hp;
+	score = 0;
 
 	switch (_type) {
 	case Player::EPlayerType::PL1:
@@ -53,11 +59,6 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		lastRow = initRow + 1;
 		frame.x = frame.w * initCol;
 		frame.y = frame.h * initRow;
-		score = 0;
-		hp = _hp;
-
-		position.x = _position.x;
-		position.y = _position.y;
 		break;
 	case Player::EPlayerType::PL2:
 		initCol = 1;
@@ -66,11 +67,6 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 		lastRow = initRow + 1;
 		frame.x = frame.w * initCol;
 		frame.y = frame.h * initRow;
-		score = 0;
-		hp = _hp;
-
-		position.x = _position.x;
-		position.y = _position.y;
 		break;
 	default:
 		break;
@@ -193,17 +189,6 @@ void Player::PlayerWallCollision(Map* map)
 	}
 }
 
-VEC2 Player::GetMapPosition(Map* map, EPlayerType type)
-{
-	switch (type)
-	{
-	case EPlayerType::PL1:
-		return *map->GetPlayer1Position();
-	case EPlayerType::PL2:
-		return *map->GetPlayer2Position();
-	}
-}
-
 int Player::GetMapHp(Map* map, EPlayerType type)
 {
 	switch (type)
@@ -253,10 +238,6 @@ void Player::DropBomb(Map* map)
 		for (int i = 0; i < _explosions.size(); i++)
 		{
 			_explosions[i].UpdateSprite(bombMapPos, explosionTimer);
-			//if (Collisions::ExistCollision(*_explosions[i].GetPosition(), position))
-			//{
-			//	//-->TAKE DAMAGE()
-			//}
 		}
 
 		//Explosion ends
@@ -293,6 +274,29 @@ void Player::DrawExplosion(Map* map)
 		{
 			if (_explosions[i].GetVisibility())
 				Renderer::GetInstance()->PushSprite(T_EXPLOSION, _explosions[i].GetFrame(), _explosions[i].GetPosition());
+		}
+	}
+}
+
+void Player::DeathManagement(InputData* _input)
+{
+	if (immunity)
+	{
+		immunityTimer -= *_input->GetDeltaTime();
+		if (immunityTimer <= 0)
+		{
+			immunity = false;
+			immunityTimer = 2;
+		}
+	}
+
+	if (dead)
+	{
+		deathTimer -= *_input->GetDeltaTime();
+		if (deathTimer <= 0)
+		{
+			dead = false;
+			deathTimer = 1;
 		}
 	}
 }

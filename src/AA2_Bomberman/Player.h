@@ -17,10 +17,13 @@ public:
 private:
 	int score;
 	int hp;
+	VEC2 initialPos;
 	float bombTimer = 3.f;
 	float explosionTimer = 1.f;
 	float immunityTimer = 2.f;
+	float deathTimer = 1.f;
 	bool immunity = false;
+	bool dead = false;
 	std::vector<Bomb*> _bombs;
 	Bomb* b;
 	VEC2 bombMapPos;
@@ -42,28 +45,40 @@ public:
 
 	void Update(InputData*, Map*);
 	void Draw(std::string, Player*);
-	void SetPlayerValues(int, int, int, int, VEC2, int, EPlayerType);
+	void SetPlayerValues(int, int, int, int, int, EPlayerType, VEC2);
 	void Action(InputData*, Map*);
 	bool UpdatePosition();
 	void UpdateSprite();
 	void ScreenCollision(VEC2&, InputData*);
 	void PlayerWallCollision(Map*);
-	VEC2 GetMapPosition(Map*, EPlayerType);
 	int GetMapHp(Map*, EPlayerType);
 	void DropBomb(Map* map);
 	void DrawBomb();
 	void DrawExplosion(Map*);
+	void DeathManagement(InputData*);
 
-	const void SetHp(int _hp) { hp = _hp; }
-	inline const int GetHp()const { return hp; }
-	inline const RECT* GetPosition()const { return &position; }
 	inline const RECT* GetFrame()const { return &frame; }
-	inline const int* GetScore()const { return &score; }
 	inline const EBombState GetBomb()const { return bombState; }
 
+	const void SetHp(int _hp) { hp -= _hp; }
+	inline const int GetHp()const { return hp; }
+
+	inline const VEC2 GetInitialPosition() const { return initialPos; }
+	inline const RECT* GetPosition()const { return &position; }
+	const void SetPosition(VEC2 _pos) { newPosition.x = _pos.x; newPosition.y = _pos.y; }
+
+	inline const int* GetScore()const { return &score; }
+	const void SetScore(int _score) { score += _score; }
+
 	inline const bool GetImmunity() const { return immunity; }
-	const void SetImmunity(bool _immunity) { immunity = _immunity; }
+	const void SetDeathImmunity(bool _immunity) { immunity = _immunity; }
 
 	const void SetImmunityTimer(float _timer) { immunityTimer = _timer; }
 	inline const float GetImmunityTimer()const { return immunityTimer; }
+
+	const void SetDeathTimer(float _timer) { deathTimer = _timer; }
+	inline const float GetDeathTimer()const { return deathTimer; }
+
+	const void SetDeath(bool _death) { dead = _death; }
+	inline const bool GetDeath() { return dead; }
 };

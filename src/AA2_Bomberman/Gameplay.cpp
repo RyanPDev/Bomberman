@@ -19,9 +19,14 @@ Gameplay::Gameplay()
 
 	//Players
 	renderer->LoadTexture(T_PLAYER1, "../../res/img/player1.png");
+	textureVector.push_back(T_PLAYER1);
 	renderer->LoadTexture(T_PLAYER2, "../../res/img/player2.png");
-	AddPlayer(T_PLAYER1, Player::EPlayerType::PL1);
-	AddPlayer(T_PLAYER2, Player::EPlayerType::PL2);
+	textureVector.push_back(T_PLAYER2);
+	for (int i = 0; i < static_cast<int>(Player::EPlayerType::COUNT); i++)
+	{
+		Player::EPlayerType type = static_cast<Player::EPlayerType>(i);
+		AddPlayer(textureVector[i], type, map.initialPlPos[i]);
+	}
 
 	//Audio
 	/*if (!AudioManager::GetInstance()->PausedMusic())
@@ -57,16 +62,21 @@ Gameplay::Gameplay()
 	timeDown = GAME_TIMER;
 }
 
-Gameplay::~Gameplay() {}
+Gameplay::~Gameplay() { textureVector.clear(); }
 
 void Gameplay::Update(InputData* _input)
 {
 	if (_input->IsPressed(EInputKeys::ESC)) SetSceneState(ESceneState::CLICK_EXIT);
 
 	for (Player* p : _players)
+	{
 		p->Update(_input, &map);
+		if (p->GetHp() <= 0)
+			SetSceneState(ESceneState::CLICK_RANKING);
+		//p->DeathManagement(_input);
+	}
 
-	TakeDamage(_input);
+	TakeDamageBehaviour(_input);
 
 	timeDown -= *_input->GetDeltaTime();
 	UpdateHUDText();
@@ -120,59 +130,38 @@ void Gameplay::Draw()
 	//Players
 	for (int i = 0; i < _players.size(); i++)
 	{
-		_players[i]->Draw("Player" + std::to_string(i), _players[i]);
+		if (!_players[i]->GetDeath())
+			_players[i]->Draw("Player" + std::to_string(i), _players[i]);
 	}
 
 	renderer->Render();
 }
 
-void Gameplay::AddPlayer(std::string id, Player::EPlayerType type)
+void Gameplay::AddPlayer(std::string id, Player::EPlayerType type, VEC2 initPos)
 {
 	p = new Player();
-	p->SetPlayerValues(renderer->GetTextureSize(id).x, renderer->GetTextureSize(id).y, 3, 4, p->GetMapPosition(&map, type), p->GetMapHp(&map, type), type);
+	p->SetPlayerValues(renderer->GetTextureSize(id).x, renderer->GetTextureSize(id).y, 3, 4, p->GetMapHp(&map, type), type, initPos);
 	_players.push_back(std::move(p));
 }
 
-void Gameplay::TakeDamage(InputData* _input)
+void Gameplay::TakeDamageBehaviour(InputData* _input)
 {
-	if (_players[0]->GetImmunity())
-	{
-		_players[0]->SetImmunityTimer(_players[0]->GetImmunityTimer() - *_input->GetDeltaTime());
-	}
-	if (_players[1]->GetImmunity())
-	{
-		_players[1]->SetImmunityTimer(_players[1]->GetImmunityTimer() - *_input->GetDeltaTime());
-	}
-
 	for (Player* p : _players)
 	{
-		for (int i = 0; i < p->_explosions.size(); i++)
+		for (Explosion e : p->_explosions)
 		{
-			if (Collisions::ExistCollision(*_players[0]->GetPosition(), *p->_explosions[i].GetPosition()))
+			if (e.GetVisibility())
 			{
-				if (_players[0]->GetImmunityTimer() >= 2)
+				for (Player* pl : _players)
 				{
-					_players[0]->SetHp(_players[0]->GetHp() - 1);
-					_players[0]->SetImmunity(true);
-				}
-				else if (_players[0]->GetImmunityTimer() <= 0)
-				{
-					_players[0]->SetImmunityTimer(2);
-					_players[0]->SetImmunity(false);
-				}
-			}
-
-			if (Collisions::ExistCollision(*_players[1]->GetPosition(), *p->_explosions[i].GetPosition()))
-			{
-				if (_players[1]->GetImmunityTimer() >= 2)
-				{
-					_players[1]->SetHp(_players[1]->GetHp() - 1);
-					_players[1]->SetImmunity(true);
-				}
-				else if (_players[1]->GetImmunityTimer() <= 0)
-				{
-					_players[1]->SetImmunityTimer(2);
-					_players[1]->SetImmunity(false);
+					if (Collisions::ExistCollision(*pl->GetPosition(), *e.GetPosition()) && !pl->GetImmunity() && !pl->GetDeath())
+					{
+						if (pl != p) p->SetScore(100);
+						pl->SetHp(1);
+						pl->SetDeath(true);
+						pl->SetDeathImmunity(true);
+						pl->SetPosition(pl->GetInitialPosition());
+					}
 				}
 			}
 		}

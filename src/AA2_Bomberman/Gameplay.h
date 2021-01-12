@@ -11,6 +11,7 @@ class Gameplay : public Scene
 {
 private:
 	float timeDown;
+	std::vector<std::string> textureVector;
 
 	//Scores
 	std::string scoreStringPl1 = "000", scoreStringPl2 = "000";
@@ -24,7 +25,7 @@ public:
 
 	void Update(InputData*);
 	void Draw();
-	void AddPlayer(std::string id, Player::EPlayerType type);
-	void TakeDamage(InputData*);
+	void AddPlayer(std::string id, Player::EPlayerType type, VEC2);
+	void TakeDamageBehaviour(InputData*);
 	void UpdateHUDText();
 };

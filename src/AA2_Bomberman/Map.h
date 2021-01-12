@@ -26,11 +26,10 @@ class Map
 public:
 	Cell map[11][14];
 	std::vector<Wall*> walls;
+	std::vector<VEC2> initialPlPos;
 
 private:
 	std::vector<Map> maps;
-	VEC2 player1Position;
-	VEC2 player2Position;
 	int player1Hp;
 	int player2Hp;
 	const int NUM_ROWS{ 11 }, NUM_COLS{ 13 };
@@ -42,9 +41,6 @@ public:
 	void Update();
 	void Draw();
 	void AddWalls();
-	inline const VEC2* GetPlayer1Position()const { return &player1Position; }
-	inline const VEC2* GetPlayer2Position()const { return &player2Position; }
 	inline const int* GetPlayer1Hp()const { return &player1Hp; }
 	inline const int* GetPlayer2Hp()const { return &player2Hp; }
-	void SetPlayer1Position(VEC2 _newPos) { player1Position = _newPos; }
 };
