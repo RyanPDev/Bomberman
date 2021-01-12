@@ -241,7 +241,8 @@ void Player::DropBomb(Map* map)
 				Explosion e(RECT{ 0,0,0,0 });
 				Explosion::EExplosionDirection dir = static_cast<Explosion::EExplosionDirection>(i);
 
-				e.SetValues(Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).x, Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).y, 4, 7, b->GetPosition(), dir, map, stopDirection, score);
+				e.SetValues(Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).x, Renderer::GetInstance()->GetTextureSize(T_EXPLOSION).y, 4, 7, b->GetPosition(), dir);
+				e.CheckCollision(stopDirection, map, score);
 				_explosions.push_back(std::move(e));
 			}
 		}
@@ -251,11 +252,11 @@ void Player::DropBomb(Map* map)
 		//Explosion animation 1s
 		for (int i = 0; i < _explosions.size(); i++)
 		{
-			_explosions[i].UpdateSprite(bombMapPos, explosionTimer, map);
-			if (Collisions::ExistCollision(*_explosions[i].GetPosition(), position))
-			{
-				//Take Damage
-			}
+			_explosions[i].UpdateSprite(bombMapPos, explosionTimer);
+			//if (Collisions::ExistCollision(*_explosions[i].GetPosition(), position))
+			//{
+			//	//-->TAKE DAMAGE()
+			//}
 		}
 
 		//Explosion ends
@@ -274,6 +275,7 @@ void Player::DropBomb(Map* map)
 void Player::DrawBomb()
 {
 	if (bombState == EBombState::COUNTDOWN)	Renderer::GetInstance()->PushSprite(T_BOMB, b->GetFrame(), b->GetPosition());
+
 	else if (bombState == EBombState::FLICKERING)
 	{
 		if (bombTimer <= 0.875f && bombTimer >= 0.75f || bombTimer <= 0.625f && bombTimer >= 0.5f || bombTimer <= 0.375f && bombTimer >= 0.25f)

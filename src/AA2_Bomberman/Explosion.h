@@ -16,8 +16,8 @@ public:
 	Explosion(RECT);
 	~Explosion();
 
-	void SetValues(int, int, int, int, const RECT*, EExplosionDirection, Map*, bool&, int&);
-	void UpdateSprite(VEC2, const float, Map*);
-	void CheckCollision(VEC2, Map*, int&);
+	void SetValues(int, int, int, int, const RECT*, EExplosionDirection);
+	void UpdateSprite(VEC2, const float);
+	void CheckCollision(bool&, Map*, int&);
 	bool GetVisibility()const { return visible; }
 };

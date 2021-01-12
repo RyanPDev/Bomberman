@@ -7,8 +7,6 @@ InputManager::~InputManager() {}
 
 void InputManager::Update()
 {
-	//if (_input.IsPressed(EInputKeys::QUIT)) _gameScene = EGameScene::EXIT;
-
 	_input.SetFalseKeyDown();
 
 #pragma region INPUT HANDLER

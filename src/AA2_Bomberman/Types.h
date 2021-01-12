@@ -9,21 +9,10 @@ struct VEC2
 	int x, y;
 
 	VEC2() : x(0), y(0) {};
-	//VEC2(int _xy) : x(_xy), y(_xy) {};
+
 	VEC2(int _x, int _y) : x(_x), y(_y) {};
 
 	const VEC2 operator- (const VEC2& v) { return VEC2(x - v.x, y - v.y); };
-
-	//inline bool operator== (const VEC2& v) const { return (x == v.x && y == v.y); }; //inline?
-	//const VEC2 operator+ (const VEC2& v) { return VEC2(x + v.x, y + v.y); };
-	//VEC2 operator+= (const VEC2& v) { x += v.x; y += v.y; return *this; }; //this?
-	//const VEC2 operator/ (const VEC2& v) { return VEC2(x / v.x, y / v.y); };
-	//const VEC2 operator/ (float a) const { return VEC2(static_cast<int>(x) / a, static_cast<int>(y) / a); };
-	//const VEC2 operator* (const VEC2& v) { return VEC2(x * v.x, y * v.y); };
-	//const VEC2 operator* (float a) const { return VEC2(static_cast<int>(x) * a, static_cast<int>(y) * a); };
-	//const VEC2 operator* (int a) const { return VEC2(x * a, y * a); };
-	//const VEC2 operator*= (const VEC2& v) { return VEC2(x * v.x, y * v.y); };
-	//const VEC2 operator*= (const int& i) { return VEC2(x * i, y * i); };
 
 	//Magnitude
 	float mod() { return sqrt(x * x + y * y); };
@@ -34,7 +23,7 @@ struct RECT
 	int x, y, w, h;
 
 	RECT() : x(0), y(0), w(0), h(0) {};
-	//RECT(int _x, int _y) : x(_x), y(_y), w(0), h(0) {};
+
 	RECT(int _x, int _y, int _w, int _h) : x(_x), y(_y), w(_w), h(_h) {};
 };
 

@@ -13,6 +13,5 @@ public:
 	~Bomb();
 
 	void SetValues(int, int, int, int);
-	void Explode(const RECT* bombFrame, int textWidth, int textHeight);
 	void DrawExplosion();
 };
