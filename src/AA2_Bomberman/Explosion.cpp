@@ -92,7 +92,7 @@ void Explosion::UpdateSprite(VEC2 mapPos, const float timer)
 }
 
 //CHECKS COLLISIONS BETWEEN EXPLOSIONS AND WALLS AND ACTS ACCORDING TO IT
-VEC2 Explosion::CheckCollision(bool& stopDirection, Map* map, int& score)
+void Explosion::CheckCollision(bool& stopDirection, Map* map, int& score)
 {
 	if (!stopDirection)
 	{
@@ -127,6 +127,4 @@ VEC2 Explosion::CheckCollision(bool& stopDirection, Map* map, int& score)
 
 	if (dir == EExplosionDirection::LEFT || dir == EExplosionDirection::RIGHT || dir == EExplosionDirection::TOP || dir == EExplosionDirection::BOTTOM)
 		stopDirection = false;
-
-	return { position.x, position.y };
 }

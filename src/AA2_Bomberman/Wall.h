@@ -8,7 +8,6 @@ public:
 	enum class EWallType { NONE = -1, WALL, DESTRUCTIBLE_WALL, DESTROYED_WALL, COUNT };
 
 private:
-	//VEC2 coord;
 	EWallType type;
 
 public:
@@ -18,8 +17,4 @@ public:
 	void SetValues(int, int, int, int, EWallType);
 
 	const EWallType GetType() { return type; }
-
-	//inline const VEC2* GetCoord()const { return &coord; }
-
-	//void SetCoord(VEC2 _coord) { coord = _coord; }
 };

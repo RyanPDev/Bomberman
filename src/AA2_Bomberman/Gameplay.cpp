@@ -122,20 +122,6 @@ void Gameplay::Draw()
 		_players[i]->DrawHp(hpTexture[i], &livesFrame, type);
 	}
 
-	//if (_players[0]->GetHp() > 0)
-	//	renderer->PushSprite(T_LIVES_PL1, &livesFrame, &RECT{ 170, 10, livesFrame.w, livesFrame.h });
-	//if (_players[0]->GetHp() > 1)
-	//	renderer->PushSprite(T_LIVES_PL1, &livesFrame, &RECT{ 170 + livesFrame.w, 10, livesFrame.w, livesFrame.h });
-	//if (_players[0]->GetHp() > 2)
-	//	renderer->PushSprite(T_LIVES_PL1, &livesFrame, &RECT{ 170 + livesFrame.w * 2, 10, livesFrame.w, livesFrame.h });
-	////Pl2
-	//if (_players[1]->GetHp() > 0)
-	//	renderer->PushSprite(T_LIVES_PL2, &livesFrame, &RECT{ 505, 10, livesFrame.w, livesFrame.h });
-	//if (_players[1]->GetHp() > 1)
-	//	renderer->PushSprite(T_LIVES_PL2, &livesFrame, &RECT{ 505 - livesFrame.w, 10, livesFrame.w, livesFrame.h });
-	//if (_players[1]->GetHp() > 2)
-	//	renderer->PushSprite(T_LIVES_PL2, &livesFrame, &RECT{ 505 - livesFrame.w * 2, 10, livesFrame.w, livesFrame.h });
-
 	//WALLS
 	for (Wall* w : map.walls)
 	{

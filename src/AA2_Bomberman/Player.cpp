@@ -275,6 +275,8 @@ void Player::DropBomb(Map* map)
 				if (map->walls[i]->GetType() == Wall::EWallType::DESTROYED_WALL)
 				{
 					map->walls.erase(map->walls.begin() + i);
+
+					//-->POWERS UPS HERE
 					i--;
 				}
 			}
