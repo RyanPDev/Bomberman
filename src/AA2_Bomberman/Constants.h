@@ -49,6 +49,8 @@ const std::string T_WALL = "Wall";
 const std::string T_DESTRUCTIBLE_WALL = "DestructibleWall";
 const std::string T_DESTROYED_WALL = "DestroyedWall";
 const std::string T_BOMB = "Bomb";
+const std::string T_ROLLERS = "Rollers";
+const std::string T_SHIELD = "Shield";
 const std::string T_EXPLOSION = "Explosion";
 
 //FONT

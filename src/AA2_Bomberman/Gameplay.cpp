@@ -15,6 +15,10 @@ Gameplay::Gameplay()
 	//BOMB
 	renderer->LoadTexture(T_BOMB, "../../res/img/items.png");
 
+	//POWERUPS
+	renderer->LoadTexture(T_ROLLERS, "../../res/img/items.png");
+	renderer->LoadTexture(T_SHIELD, "../../res/img/items.png");
+
 	//EXPLOSION
 	renderer->LoadTexture(T_EXPLOSION, "../../res/img/explosion.png");
 
