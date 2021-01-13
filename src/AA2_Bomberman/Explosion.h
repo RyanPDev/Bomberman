@@ -2,6 +2,7 @@
 #include "Object.h"
 #include "Map.h"
 #include "Collisions.h"
+#include "Utils.h"
 
 class Explosion : public Object
 {

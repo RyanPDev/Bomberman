@@ -18,12 +18,12 @@ private:
 	int score;
 	int hp;
 	VEC2 initialPos;
-	float bombTimer = 3.f;
-	float explosionTimer = 1.f;
-	float immunityTimer = 2.f;
-	float deathTimer = 1.f;
-	bool immunity = false;
-	bool dead = false;
+	float bombTimer;
+	float explosionTimer;
+	float immunityTimer;
+	float deathTimer;
+	bool immunity;
+	bool dead;
 	std::vector<Bomb*> _bombs;
 	Bomb* b;
 	VEC2 bombMapPos;
@@ -45,6 +45,7 @@ public:
 
 	void Update(InputData*, Map*);
 	void Draw(std::string, Player*);
+	void DrawHp(std::string, RECT*, EPlayerType);
 	void SetPlayerValues(int, int, int, int, int, EPlayerType, VEC2);
 	void Action(InputData*, Map*);
 	bool UpdatePosition();

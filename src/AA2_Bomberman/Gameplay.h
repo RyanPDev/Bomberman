@@ -4,14 +4,11 @@
 #include "Player.h"
 #include "Map.h"
 #include "Explosion.h"
-#include "Utils.h"
-#include <time.h>
 
 class Gameplay : public Scene
 {
 private:
 	float timeDown;
-	std::vector<std::string> textureVector;
 
 	//Scores
 	std::string scoreStringPl1 = "000", scoreStringPl2 = "000";

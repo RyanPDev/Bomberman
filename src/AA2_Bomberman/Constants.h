@@ -3,20 +3,37 @@
 #include <map>
 #include <unordered_map>
 
-//Screen measurements
+//SCREEN MEASUREMENTS
 const int SCREEN_WIDTH{ 720 };
 const int SCREEN_HEIGHT{ 704 };
+const int VERTICAL_SCREEN_OFFSET{ 576 };
+
+#pragma region TIMERS
+
+//TOTAL GAME TIME
+const float GAME_TIMER{ 500.f }; //seconds
+
+//BOMB TIMER
+const float BOMB_TIMER{ 3.f };
+
+//EXPLOSION TIMER
+const float EXPLOSION_TIMER{ 1.f };
+
+//IMMUNITY TIMER
+const float IMMUNITY_TIMER{ 2.f };
+
+//DEATH TIMER
+const float DEATH_TIMER{ 1.f };
+
+#pragma endregion
 
 //FPS
 const int FPS{ 60 };
 
-//Total game time
-const float GAME_TIMER{ 500.f }; //seconds
-
-//Sprite Frame Size (and tiles size)
+//SPRITE AND TILE SIZE)
 const int FRAME_SIZE{48};
 
-//Map to store textures and rects
+//MAP FOR TEXTURES AND RECTS
 using MTextures = std::unordered_map<std::string, SDL_Texture*>;
 using MRects = std::unordered_map<std::string, SDL_Rect>;
 
@@ -30,13 +47,14 @@ const std::string T_PLAYER2 = "Player1";
 const std::string T_PLAYERS_POS = "PlayersPos";
 const std::string T_WALL = "Wall";
 const std::string T_DESTRUCTIBLE_WALL = "DestructibleWall";
+const std::string T_DESTROYED_WALL = "DestroyedWall";
 const std::string T_BOMB = "Bomb";
 const std::string T_EXPLOSION = "Explosion";
 
-//Font
+//FONT
 const std::string F_GAMEOVER = "FontGameOver";
 
-//Menu
+//MENU
 const std::string T_TITLE = "TxtTitle";
 const std::string T_PLAY = "BtnPlay";
 const std::string T_PLAY_N = "BtnPlayN";
@@ -53,7 +71,7 @@ const std::string T_EXIT = "BtnExit";
 const std::string T_EXIT_N = "BtnExitN";
 const std::string T_EXIT_H = "BtnExitH";
 
-//Game
+//GAME
 const std::string T_TIME = "TxtTime";
 const std::string T_SC_PL1 = "TxtScPl1";
 const std::string T_SC_PL2 = "TxtScPl2";

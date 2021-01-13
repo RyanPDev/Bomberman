@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player() : position({ 1, 1, 48, 48 }), frame({ 0, 0, 20, 20 }), type(EPlayerType::NONE)
+Player::Player() : position({ 1, 1, FRAME_SIZE, FRAME_SIZE }), frame({ 0, 0, 20, 20 }), type(EPlayerType::NONE)
 {
 	initCol = lastCol = 0;
 	initRow = lastRow = 0;
@@ -9,10 +9,17 @@ Player::Player() : position({ 1, 1, 48, 48 }), frame({ 0, 0, 20, 20 }), type(EPl
 	speed = 2;
 	speedMultiplier = 3;
 	hp = 0;
+	immunity = false;
+	dead = false;
+	bombTimer = BOMB_TIMER;
+	explosionTimer = EXPLOSION_TIMER;
+	immunityTimer = IMMUNITY_TIMER;
+	deathTimer = DEATH_TIMER;
 }
 
 Player::~Player() {}
 
+//UPDATES PLAYERS' MOVEMENT/COLLISIONS/SPRITES/BOMBS/DEATHS
 void Player::Update(InputData* _input, Map* map)
 {
 	Action(_input, map);
@@ -39,6 +46,24 @@ void Player::Draw(std::string id, Player* p)
 	Renderer::GetInstance()->PushSprite(id, p->GetFrame(), p->GetPosition());
 }
 
+void Player::DrawHp(std::string hpTexture, RECT* r2, EPlayerType type)
+{
+	switch (type)
+	{
+	case EPlayerType::PL1:
+		if (hp > 0) Renderer::GetInstance()->PushSprite(hpTexture, r2, &RECT(170, 10, r2->w, r2->h));
+		if (hp > 1) Renderer::GetInstance()->PushSprite(hpTexture, r2, &RECT(170 + r2->w, 10, r2->w, r2->h));
+		if (hp > 2) Renderer::GetInstance()->PushSprite(hpTexture, r2, &RECT(170 + r2->w * 2, 10, r2->w, r2->h));
+		break;
+	case EPlayerType::PL2:
+		if (hp > 0) Renderer::GetInstance()->PushSprite(hpTexture, r2, &RECT(505, 10, r2->w, r2->h));
+		if (hp > 1) Renderer::GetInstance()->PushSprite(hpTexture, r2, &RECT(505 - r2->w, 10, r2->w, r2->h));
+		if (hp > 2) Renderer::GetInstance()->PushSprite(hpTexture, r2, &RECT(505 - r2->w * 2, 10, r2->w, r2->h));
+		break;
+	}
+}
+
+//SETS INITIAL VALUES TO THE PLAYERS AND THEIR RESPECTIVE SPRITES
 void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, int _hp, EPlayerType _type, VEC2 _initialPos)
 {
 	type = _type;
@@ -73,6 +98,7 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 	}
 }
 
+//ALL ACTIONS PLAYERS CAN EXECUTE
 void Player::Action(InputData* _input, Map* map)
 {
 	dir = EDirection::NONE;
@@ -172,8 +198,8 @@ void Player::UpdateSprite()
 
 void Player::ScreenCollision(VEC2& newPosition, InputData* _input)
 {
-	if (newPosition.x > _input->GetScreenSize()->x - (frame.w * 2) || newPosition.x < frame.w) newPosition.x = position.x;
-	if (newPosition.y > _input->GetScreenSize()->y - (frame.h * 2) || newPosition.y < _input->GetScreenSize()->y - 576) newPosition.y = position.y;
+	if (newPosition.x > SCREEN_WIDTH - (frame.w * 2) || newPosition.x < frame.w) newPosition.x = position.x;
+	if (newPosition.y > SCREEN_HEIGHT - (frame.h * 2) || newPosition.y < SCREEN_HEIGHT - VERTICAL_SCREEN_OFFSET) newPosition.y = position.y;
 }
 
 void Player::PlayerWallCollision(Map* map)
@@ -200,14 +226,15 @@ int Player::GetMapHp(Map* map, EPlayerType type)
 	}
 }
 
+//STATE MACHINE OF EACH PLAYERS' BOMB
 void Player::DropBomb(Map* map)
 {
 	switch (bombState)
 	{
 	case EBombState::PLANTED:
 	{
-		bombMapPos = { (position.x + frame.w / 2) / FRAME_SIZE - 1, ((position.y + frame.h / 2) - (80 + FRAME_SIZE)) / FRAME_SIZE };
-		b = new Bomb({ bombMapPos.x * 48 + 48, bombMapPos.y * 48 + 128, 48, 48 });
+		bombMapPos = MapToScreen(position, frame);
+		b = new Bomb({ bombMapPos.x * FRAME_SIZE + FRAME_SIZE, bombMapPos.y * FRAME_SIZE + 80 + FRAME_SIZE, FRAME_SIZE, FRAME_SIZE });
 		map->map[bombMapPos.x][bombMapPos.y].existBomb = true;
 
 		b->SetValues(Renderer::GetInstance()->GetTextureSize(T_BOMB).x, Renderer::GetInstance()->GetTextureSize(T_BOMB).y, 3, 2);
@@ -215,7 +242,7 @@ void Player::DropBomb(Map* map)
 		break;
 	}
 	case EBombState::EXPLOSION:
-		bombTimer = 3;
+		bombTimer = BOMB_TIMER;
 		bombState = EBombState::EXPLOSION_COUNTDOWN;
 		//Create Explosion
 		{
@@ -245,7 +272,7 @@ void Player::DropBomb(Map* map)
 		{
 			_explosions.clear();
 			bombState = EBombState::NONE;
-			explosionTimer = 1;
+			explosionTimer = EXPLOSION_TIMER;
 		}
 		break;
 	default:
@@ -278,6 +305,7 @@ void Player::DrawExplosion(Map* map)
 	}
 }
 
+//INTERACTIONS WHEN PLAYER DIE-------->MAY NEED BALANCE
 void Player::DeathManagement(InputData* _input)
 {
 	if (immunity)
@@ -286,7 +314,7 @@ void Player::DeathManagement(InputData* _input)
 		if (immunityTimer <= 0)
 		{
 			immunity = false;
-			immunityTimer = 2;
+			immunityTimer = IMMUNITY_TIMER;
 		}
 	}
 
@@ -296,7 +324,7 @@ void Player::DeathManagement(InputData* _input)
 		if (deathTimer <= 0)
 		{
 			dead = false;
-			deathTimer = 1;
+			deathTimer = DEATH_TIMER;
 		}
 	}
 }

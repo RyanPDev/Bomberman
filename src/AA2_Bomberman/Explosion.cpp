@@ -4,6 +4,7 @@ Explosion::Explosion(RECT _position) : Object(_position) {}
 
 Explosion::~Explosion() {}
 
+//SETS INITIAL VALUES FOR EACH FRAME OF THE EXPLOSION DEPENDING ON THE DIRECTION
 void Explosion::SetValues(int textWidth, int textHeight, int nCol, int nRow, const RECT* bombPos, EExplosionDirection _dir)
 {
 	dir = _dir;
@@ -77,6 +78,7 @@ void Explosion::SetValues(int textWidth, int textHeight, int nCol, int nRow, con
 	lastRow = initRow;
 }
 
+//UPDATES EXPLOSION SPRITES THROUGH 1S OF TIME
 void Explosion::UpdateSprite(VEC2 mapPos, const float timer)
 {
 	if ((timer <= 1 && timer >= 0.9) || timer < 0.1)
@@ -89,6 +91,7 @@ void Explosion::UpdateSprite(VEC2 mapPos, const float timer)
 		frame.x = frame.w * 3;
 }
 
+//CHECKS COLLISIONS BETWEEN EXPLOSIONS AND WALLS AND ACTS ACCORDING TO IT
 void Explosion::CheckCollision(bool& stopDirection, Map* map, int& score)
 {
 	if (!stopDirection)
@@ -104,7 +107,7 @@ void Explosion::CheckCollision(bool& stopDirection, Map* map, int& score)
 				{
 					visible = false;
 					stopDirection = true;
-					if (map->map[((position.y + frame.h / 2) - (80 + FRAME_SIZE)) / FRAME_SIZE][(position.x + frame.w / 2) / FRAME_SIZE - 1].destructibleWall)
+					if (map->map[MapToScreen(position, frame).y][MapToScreen(position, frame).x].destructibleWall)
 					{
 						map->walls.erase(map->walls.begin() + j);
 						score += 15;

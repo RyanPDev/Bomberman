@@ -2,7 +2,7 @@
 
 Ranking::Ranking()
 {
-	//Background
+	//BACKGROUND
 	renderer->LoadTexture(T_BG_RANKING, "../../res/img/bgGame.jpg");
 	renderer->LoadRect(T_BG_RANKING, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 }
@@ -21,7 +21,7 @@ void Ranking::Draw()
 {
 	renderer->Clear();
 
-	//Background
+	//BACKGROUND
 	renderer->PushImage(T_BG_RANKING, T_BG_RANKING);
 
 	renderer->Render();

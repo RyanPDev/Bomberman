@@ -1,5 +1,6 @@
 #include "Map.h"
 
+//READS CONFIG FILE AND SAVES MAP/PLAYER INFO
 Map::Map()
 {
 	rapidxml::xml_document<> doc;
@@ -26,14 +27,14 @@ Map::Map()
 			{
 				i = atoi(pNodeA->first_node()->first_attribute()->next_attribute()->value());
 				j = atoi(pNodeA->first_node()->first_attribute()->value());
-				initialPlPos.push_back({ j * 48 + 48, i * 48 + 128 });
+				initialPlPos.push_back({ j * FRAME_SIZE + FRAME_SIZE, i * FRAME_SIZE + 80 + FRAME_SIZE });
 				player1Hp = atoi(pNodeA->first_attribute()->value());
 			}
 			else if (str == "Player2")
 			{
 				i = atoi(pNodeA->first_node()->first_attribute()->next_attribute()->value());
 				j = atoi(pNodeA->first_node()->first_attribute()->value());
-				initialPlPos.push_back({ j * 48 + 48, i * 48 + 128 });
+				initialPlPos.push_back({ j * FRAME_SIZE + FRAME_SIZE, i * FRAME_SIZE + 80 + FRAME_SIZE });
 				player2Hp = atoi(pNodeA->first_attribute()->value());
 			}
 			else if (str == "Wall")
@@ -46,16 +47,16 @@ Map::Map()
 				else if (str2 == "true") map[i][j].destructibleWall = true;
 
 				map[i][j].existWall = true;
-				map[i][j].wallPosition.x = j * 48 + 48;
-				map[i][j].wallPosition.y = i * 48 + 128;
+				map[i][j].wallPosition.x = j * FRAME_SIZE + FRAME_SIZE;
+				map[i][j].wallPosition.y = i * FRAME_SIZE + 80 + FRAME_SIZE;
 			}
 		}
 	}
 	for (int i = 0; i < NUM_ROWS; i++)
 		for (int j = 0; j < NUM_COLS; j++)
 		{
-			map[i][j].cellPosition.x = j * 48 + 48;
-			map[i][j].cellPosition.y = i * 48 + 128;
+			map[i][j].cellPosition.x = j * FRAME_SIZE + FRAME_SIZE;
+			map[i][j].cellPosition.y = i * FRAME_SIZE + 80 + FRAME_SIZE;
 		}
 }
 
@@ -69,16 +70,11 @@ Map::~Map()
 	initialPlPos.clear();
 }
 
-void Map::Update()
-{
+void Map::Update() {}
 
-}
+void Map::Draw() {}
 
-void Map::Draw()
-{
-
-}
-
+//INITIALIZES WALLS WITH THEIR POSITION IN THE MAP AND PUSHES THEM INTO A VECTOR
 void Map::AddWalls()
 {
 	for (int i = 0; i < NUM_ROWS; i++)
@@ -89,14 +85,14 @@ void Map::AddWalls()
 			{
 				if (map[i][j].destructibleWall == false)
 				{
-					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, 48, 48 });
+					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, FRAME_SIZE, FRAME_SIZE });
 					w->SetValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, false);
 					w->SetCoord({ j, i });
 					walls.push_back(std::move(w));
 				}
 				else
 				{
-					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, 48, 48 });
+					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, FRAME_SIZE, FRAME_SIZE });
 					w->SetValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, true);
 					w->SetCoord({ j, i });
 					walls.push_back(std::move(w));
