@@ -111,9 +111,9 @@ void Explosion::CheckCollision(bool& stopDirection, Map* map, int& score)
 					{
 						map->walls.erase(map->walls.begin() + j);
 						score += 15;
-						Wall* w = new Wall({ position.x, position.y, FRAME_SIZE, FRAME_SIZE });
+						/*Wall* w = new Wall({ position.x, position.y, FRAME_SIZE, FRAME_SIZE });
 						w->SetValues(Renderer::GetInstance()->GetTextureSize(T_DESTROYED_WALL).x, Renderer::GetInstance()->GetTextureSize(T_DESTROYED_WALL).y, 3, 2, Wall::EWallType::DESTROYED_WALL);
-						map->walls.push_back(w);
+						map->walls.push_back(w);*/
 					}
 					break;
 				}
