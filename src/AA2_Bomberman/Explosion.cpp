@@ -92,7 +92,7 @@ void Explosion::UpdateSprite(VEC2 mapPos, const float timer)
 }
 
 //CHECKS COLLISIONS BETWEEN EXPLOSIONS AND WALLS AND ACTS ACCORDING TO IT
-void Explosion::CheckCollision(bool& stopDirection, Map* map, int& score)
+VEC2 Explosion::CheckCollision(bool& stopDirection, Map* map, int& score)
 {
 	if (!stopDirection)
 	{
@@ -107,24 +107,26 @@ void Explosion::CheckCollision(bool& stopDirection, Map* map, int& score)
 				{
 					visible = false;
 					stopDirection = true;
-					if (map->map[MapToScreen(position, frame).y][MapToScreen(position, frame).x].destructibleWall)
+					if (map->map[ScreenToMap(position, frame).y][ScreenToMap(position, frame).x].destructibleWall)
 					{
 						map->walls.erase(map->walls.begin() + j);
 						score += 15;
+						Wall* w = new Wall({ position.x, position.y, FRAME_SIZE, FRAME_SIZE });
+						w->SetValues(Renderer::GetInstance()->GetTextureSize(T_DESTROYED_WALL).x, Renderer::GetInstance()->GetTextureSize(T_DESTROYED_WALL).y, 3, 2, Wall::EWallType::DESTROYED_WALL);
+						map->walls.push_back(w);
 					}
 					break;
 				}
 			}
 		}
-
-		else
-		{
+		else 
 			visible = false;
-		}
 	}
-	else
+	else 
 		visible = false;
 
 	if (dir == EExplosionDirection::LEFT || dir == EExplosionDirection::RIGHT || dir == EExplosionDirection::TOP || dir == EExplosionDirection::BOTTOM)
 		stopDirection = false;
+
+	return { position.x, position.y };
 }

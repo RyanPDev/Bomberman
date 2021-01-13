@@ -24,7 +24,6 @@ private:
 	float deathTimer;
 	bool immunity;
 	bool dead;
-	std::vector<Bomb*> _bombs;
 	Bomb* b;
 	VEC2 bombMapPos;
 	RECT position;

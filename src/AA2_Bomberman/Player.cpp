@@ -233,7 +233,7 @@ void Player::DropBomb(Map* map)
 	{
 	case EBombState::PLANTED:
 	{
-		bombMapPos = MapToScreen(position, frame);
+		bombMapPos = ScreenToMap(position, frame);
 		b = new Bomb({ bombMapPos.x * FRAME_SIZE + FRAME_SIZE, bombMapPos.y * FRAME_SIZE + 80 + FRAME_SIZE, FRAME_SIZE, FRAME_SIZE });
 		map->map[bombMapPos.x][bombMapPos.y].existBomb = true;
 
@@ -270,6 +270,14 @@ void Player::DropBomb(Map* map)
 		//Explosion ends
 		if (explosionTimer <= 0)
 		{
+			for (int i = 0; i < map->walls.size(); i++)
+			{
+				if (map->walls[i]->GetType() == Wall::EWallType::DESTROYED_WALL)
+				{
+					map->walls.erase(map->walls.begin() + i);
+					i--;
+				}
+			}
 			_explosions.clear();
 			bombState = EBombState::NONE;
 			explosionTimer = EXPLOSION_TIMER;
@@ -295,12 +303,11 @@ void Player::DrawBomb()
 
 void Player::DrawExplosion(Map* map)
 {
-	if (bombState == EBombState::EXPLOSION_COUNTDOWN)
+	for (int i = 0; i < _explosions.size(); i++)
 	{
-		for (int i = 0; i < _explosions.size(); i++)
+		if (_explosions[i].GetVisibility())
 		{
-			if (_explosions[i].GetVisibility())
-				Renderer::GetInstance()->PushSprite(T_EXPLOSION, _explosions[i].GetFrame(), _explosions[i].GetPosition());
+			Renderer::GetInstance()->PushSprite(T_EXPLOSION, _explosions[i].GetFrame(), _explosions[i].GetPosition());
 		}
 	}
 }

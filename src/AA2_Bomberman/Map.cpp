@@ -86,15 +86,15 @@ void Map::AddWalls()
 				if (map[i][j].destructibleWall == false)
 				{
 					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, FRAME_SIZE, FRAME_SIZE });
-					w->SetValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, false);
-					w->SetCoord({ j, i });
+					w->SetValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, Wall::EWallType::WALL);
+					//w->SetCoord({ j, i });
 					walls.push_back(std::move(w));
 				}
 				else
 				{
 					Wall* w = new Wall({ map[i][j].wallPosition.x, map[i][j].wallPosition.y, FRAME_SIZE, FRAME_SIZE });
-					w->SetValues(Renderer::GetInstance()->GetTextureSize(T_WALL).x, Renderer::GetInstance()->GetTextureSize(T_WALL).y, 3, 2, true);
-					w->SetCoord({ j, i });
+					w->SetValues(Renderer::GetInstance()->GetTextureSize(T_DESTRUCTIBLE_WALL).x, Renderer::GetInstance()->GetTextureSize(T_DESTRUCTIBLE_WALL).y, 3, 2, Wall::EWallType::DESTRUCTIBLE_WALL);
+					//w->SetCoord({ j, i });
 					walls.push_back(std::move(w));
 				}
 			}

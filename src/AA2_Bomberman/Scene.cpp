@@ -7,4 +7,6 @@ Scene::~Scene()
 		delete* i;
 	}
 	_players.clear();
+	playerTexture.clear();
+	hpTexture.clear();
 }

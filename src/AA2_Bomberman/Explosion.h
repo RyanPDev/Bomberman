@@ -19,6 +19,6 @@ public:
 
 	void SetValues(int, int, int, int, const RECT*, EExplosionDirection);
 	void UpdateSprite(VEC2, const float);
-	void CheckCollision(bool&, Map*, int&);
+	VEC2 CheckCollision(bool&, Map*, int&);
 	bool GetVisibility()const { return visible; }
 };

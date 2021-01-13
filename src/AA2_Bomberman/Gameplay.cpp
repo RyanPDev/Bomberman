@@ -70,7 +70,7 @@ Gameplay::Gameplay()
 	timeDown = GAME_TIMER;
 }
 
-Gameplay::~Gameplay() { playerTexture.clear(); }
+Gameplay::~Gameplay() {}
 
 void Gameplay::Update(InputData* _input)
 {
