@@ -38,3 +38,8 @@ int AudioManager::PausedMusic()
 {
 	return Mix_PausedMusic();
 }
+
+void AudioManager::StopMusic()
+{
+	Mix_HaltMusic();
+}

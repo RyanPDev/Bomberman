@@ -7,15 +7,14 @@ Menu::Menu()
 	renderer->LoadRect(T_BG_MENU, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 
 	//AUDIO
-	if(!AudioManager::GetInstance()->PausedMusic())
-		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/menu.mp3" });
+	AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/menu.mp3" });
 
 	//TITLE
 	renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 200 });
 	VEC2 vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_TITLE, "BOMBERMAN", {0, 0, 0, 255}, 0, 0 });
 	renderer->LoadRect(T_TITLE, { SCREEN_WIDTH / 2 - vtmp.x / 2, 130, vtmp.x, vtmp.y });
 
-	#pragma region BUTTONS
+#pragma region BUTTONS
 
 	renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 150 });
 	//PLAY BUTTON
@@ -44,7 +43,7 @@ Menu::Menu()
 	textureExit = T_EXIT_N;
 	renderer->LoadRect(T_EXIT, { SCREEN_WIDTH / 2 - vtmp.x / 2, 550, vtmp.x, vtmp.y });
 
-	#pragma endregion
+#pragma endregion
 }
 
 Menu::~Menu() {}

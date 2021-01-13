@@ -17,4 +17,5 @@ public:
 	void PauseMusic();
 	void ResumeMusic();
 	int PausedMusic();
+	void StopMusic();
 };

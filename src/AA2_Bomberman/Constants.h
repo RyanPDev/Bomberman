@@ -11,7 +11,7 @@ const int VERTICAL_SCREEN_OFFSET{ 576 };
 #pragma region TIMERS
 
 //TOTAL GAME TIME
-const float GAME_TIMER{ 500.f }; //seconds
+const float GAME_TIMER{ 80.f }; //seconds
 
 //BOMB TIMER
 const float BOMB_TIMER{ 3.f };
