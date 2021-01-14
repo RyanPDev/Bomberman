@@ -177,7 +177,7 @@ void Gameplay::TakeDamageBehaviour(InputData* _input)
 			{
 				for (Player* pl : _players)
 				{
-					if (Collisions::ExistCollision(*pl->GetPosition(), *e.GetPosition()) && !pl->GetImmunity() && !pl->GetDeath())
+					if (Collisions::ExistCollision(*pl->GetPosition(), *e.GetPosition()) && !pl->GetDeathImmunity() && !pl->GetDeath() && !pl->GetShieldImmunity())
 					{
 						if (pl != p) p->SetScore(100);
 						pl->SetHp(1);

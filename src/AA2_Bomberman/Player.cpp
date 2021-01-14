@@ -6,15 +6,16 @@ Player::Player() : position({ 1, 1, FRAME_SIZE, FRAME_SIZE }), frame({ 0, 0, 20,
 	initRow = lastRow = 0;
 	frameCount = 0;
 	score = 0;
-	speed = 2;
-	speedMultiplier = 3;
+	speed = BASE_SPEED;
+	speedMultiplier = 1;
 	hp = 0;
-	immunity = false;
+	deathImmunity = false;
 	dead = false;
 	bombTimer = BOMB_TIMER;
 	explosionTimer = EXPLOSION_TIMER;
 	immunityTimer = IMMUNITY_TIMER;
 	deathTimer = DEATH_TIMER;
+	powerUpTimer = POWER_UP_TIMER;
 }
 
 Player::~Player() {}
@@ -24,8 +25,27 @@ void Player::Update(InputData* _input, Map* map, std::vector<PowerUp>& _powerUp)
 {
 	Action(_input, map);
 	PlayerWallCollision(map);
+	PlayerPowerUpCollision(_powerUp);
 	UpdatePosition();
 	UpdateSprite();
+
+	if (shieldImmunity || speedBoost)
+	{
+		powerUpTimer -= *_input->GetDeltaTime();
+	}
+
+	if (speedBoost) speed = SPEED_MULTIPLIER;
+	else speed = BASE_SPEED;
+
+
+	if (powerUpTimer <= 0)
+	{
+		if (shieldImmunity)	shieldImmunity = false;
+		else if (speedBoost)
+		{
+			speedBoost = false;
+		}
+	}
 
 	if (bombState != EBombState::NONE)
 	{
@@ -276,7 +296,7 @@ void Player::DropBomb(Map* map, std::vector<PowerUp>& _powerUp)
 				if (map->walls[i]->GetType() == Wall::EWallType::DESTROYED_WALL)
 				{
 					int rnd = rand() % 100;
-					if (rnd < 20)
+					//if (rnd < 20)
 					{
 						PowerUp powerUp(*map->walls[i]->GetPosition());
 						powerUp.SetValues(Renderer::GetInstance()->GetTextureSize(T_ROLLERS).x, Renderer::GetInstance()->GetTextureSize(T_ROLLERS).y, 3, 2, powerUp.GeneratePowerUp());
@@ -321,20 +341,15 @@ void Player::DrawExplosion(Map* map)
 	}
 }
 
-//void Player::DrawPoweUps()
-//{
-//	
-//}
-
 //INTERACTIONS WHEN PLAYER DIE-------->MAY NEED BALANCE
 void Player::DeathManagement(InputData* _input)
 {
-	if (immunity)
+	if (deathImmunity)
 	{
 		immunityTimer -= *_input->GetDeltaTime();
 		if (immunityTimer <= 0)
 		{
-			immunity = false;
+			deathImmunity = false;
 			immunityTimer = IMMUNITY_TIMER;
 		}
 	}
@@ -346,6 +361,30 @@ void Player::DeathManagement(InputData* _input)
 		{
 			dead = false;
 			deathTimer = DEATH_TIMER;
+		}
+	}
+}
+
+void Player::PlayerPowerUpCollision(std::vector<PowerUp>& _powerUp)
+{
+	for (int i = 0; i < _powerUp.size(); i++)
+	{
+		if (Collisions::ExistCollision(RECT(position.x, position.y, position.w - 10, position.h - 10),
+			RECT(_powerUp[i].GetPosition()->x, _powerUp[i].GetPosition()->y, _powerUp[i].GetPosition()->w, _powerUp[i].GetPosition()->h)))
+		{
+			powerUpTimer = POWER_UP_TIMER;
+			if (_powerUp[i].GetType() == PowerUp::EPowerUpType::SHIELD)
+			{
+				shieldImmunity = true;
+				speedBoost = false;
+				_powerUp.erase(_powerUp.begin() + i);
+			}
+			else if (_powerUp[i].GetType() == PowerUp::EPowerUpType::ROLLERS)
+			{
+				speedBoost = true;
+				shieldImmunity = false;
+				_powerUp.erase(_powerUp.begin() + i);
+			}
 		}
 	}
 }

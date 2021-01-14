@@ -15,7 +15,7 @@
 			<Wall destructible = "false" x="3" y="1"/>
 			<Wall destructible = "false" x="5" y="1"/>
 			<Wall destructible = "false" x="7" y="1"/>
-			<Wall destructible = "true" x="9" y="1"/>
+			<Wall destructible = "false" x="9" y="1"/>
 			<Wall destructible = "false" x="11" y="1"/>
 
 			<Wall destructible = "false" x="1" y="3"/>

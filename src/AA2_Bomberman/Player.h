@@ -23,7 +23,12 @@ private:
 	float explosionTimer;
 	float immunityTimer;
 	float deathTimer;
-	bool immunity;
+	float powerUpTimer;
+	bool deathImmunity;
+	bool shieldImmunity;
+	bool speedBoost;
+	const float SPEED_MULTIPLIER = 3.6f;
+	const float BASE_SPEED = 2;
 	bool dead;
 	
 	Bomb* b;
@@ -37,7 +42,8 @@ private:
 
 	int initCol, lastCol;
 	int initRow, lastRow;
-	int speed, speedMultiplier;
+	int speed;
+	float speedMultiplier;
 	float frameCount;
 
 public:
@@ -53,6 +59,7 @@ public:
 	void UpdateSprite();
 	void ScreenCollision(VEC2&, InputData*);
 	void PlayerWallCollision(Map*);
+	void PlayerPowerUpCollision(std::vector<PowerUp>& _powerUp);
 	int GetMapHp(Map*, EPlayerType);
 	void DropBomb(Map*, std::vector<PowerUp>&);
 	void DrawBomb();
@@ -72,8 +79,8 @@ public:
 	inline const int* GetScore()const { return &score; }
 	const void SetScore(int _score) { score += _score; }
 
-	inline const bool GetImmunity() const { return immunity; }
-	const void SetDeathImmunity(bool _immunity) { immunity = _immunity; }
+	inline const bool GetDeathImmunity() const { return deathImmunity; }
+	const void SetDeathImmunity(bool _immunity) { deathImmunity = _immunity; }
 
 	const void SetImmunityTimer(float _timer) { immunityTimer = _timer; }
 	inline const float GetImmunityTimer()const { return immunityTimer; }
@@ -83,4 +90,6 @@ public:
 
 	const void SetDeath(bool _death) { dead = _death; }
 	inline const bool GetDeath() { return dead; }
+
+	inline const bool GetShieldImmunity() { return shieldImmunity; }
 };

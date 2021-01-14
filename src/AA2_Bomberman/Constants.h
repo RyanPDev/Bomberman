@@ -25,6 +25,10 @@ const float IMMUNITY_TIMER{ 2.f };
 //DEATH TIMER
 const float DEATH_TIMER{ 1.f };
 
+//POWER UP TIMER
+const float POWER_UP_TIMER{ 10.f };
+
+
 #pragma endregion
 
 //FPS
