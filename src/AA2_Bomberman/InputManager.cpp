@@ -1,7 +1,5 @@
 #include "InputManager.h"
 
-InputManager* InputManager::input = nullptr;
-
 InputManager::InputManager() {}
 InputManager::~InputManager() {}
 

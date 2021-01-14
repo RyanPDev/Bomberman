@@ -4,7 +4,6 @@ Game::Game()
 {
 	gameScene = EGameScene::MENU;
 	scene = new Menu();
-	_input = InputManager::GetInstance()->GetInput();
 }
 
 Game::~Game()
@@ -16,8 +15,8 @@ void Game::Run()
 {
 	while (gameScene != EGameScene::EXIT)
 	{
-		InputManager::GetInstance()->Update();
-		_input = InputManager::GetInstance()->GetInput();
+		input.Update();
+		_input = input.GetInput();
 		if (_input->IsPressed(EInputKeys::QUIT)) gameScene = EGameScene::EXIT;
 
 		switch (gameScene)

@@ -102,44 +102,46 @@ void Player::SetPlayerValues(int textWidth, int textHeight, int nCol, int nRow, 
 void Player::Action(InputData* _input, Map* map)
 {
 	dir = EDirection::NONE;
-
-	switch (type) {
-	case Player::EPlayerType::PL2:
-		if (_input->IsPressed(EInputKeys::LEFT)) {
-			newPosition.x -= speed; dir = EDirection::LEFT;
+	if (!dead)
+	{
+		switch (type) {
+		case Player::EPlayerType::PL2:
+			if (_input->IsPressed(EInputKeys::LEFT)) {
+				newPosition.x -= speed; dir = EDirection::LEFT;
+			}
+			else if (_input->IsPressed(EInputKeys::RIGHT)) {
+				newPosition.x += speed; dir = EDirection::RIGHT;
+			}
+			else if (_input->IsPressed(EInputKeys::UP)) {
+				newPosition.y -= speed; dir = EDirection::UP;
+			}
+			else if (_input->IsPressed(EInputKeys::DOWN)) {
+				newPosition.y += speed; dir = EDirection::DOWN;
+			}
+			if (_input->IsPressed(EInputKeys::RIGHT_CTRL)) {
+				if (bombState == EBombState::NONE) bombState = EBombState::PLANTED;
+			}
+			break;
+		case Player::EPlayerType::PL1:
+			if (_input->IsPressed(EInputKeys::A)) {
+				newPosition.x -= speed; dir = EDirection::LEFT;
+			}
+			else if (_input->IsPressed(EInputKeys::D)) {
+				newPosition.x += speed; dir = EDirection::RIGHT;
+			}
+			else if (_input->IsPressed(EInputKeys::W)) {
+				newPosition.y -= speed; dir = EDirection::UP;
+			}
+			else if (_input->IsPressed(EInputKeys::S)) {
+				newPosition.y += speed; dir = EDirection::DOWN;
+			}
+			if (_input->IsPressed(EInputKeys::SPACE)) {
+				if (bombState == EBombState::NONE) bombState = EBombState::PLANTED;
+			}
+			break;
+		default:
+			break;
 		}
-		else if (_input->IsPressed(EInputKeys::RIGHT)) {
-			newPosition.x += speed; dir = EDirection::RIGHT;
-		}
-		else if (_input->IsPressed(EInputKeys::UP)) {
-			newPosition.y -= speed; dir = EDirection::UP;
-		}
-		else if (_input->IsPressed(EInputKeys::DOWN)) {
-			newPosition.y += speed; dir = EDirection::DOWN;
-		}
-		if (_input->IsPressed(EInputKeys::RIGHT_CTRL)) {
-			if (bombState == EBombState::NONE) bombState = EBombState::PLANTED;
-		}
-		break;
-	case Player::EPlayerType::PL1:
-		if (_input->IsPressed(EInputKeys::A)) {
-			newPosition.x -= speed; dir = EDirection::LEFT;
-		}
-		else if (_input->IsPressed(EInputKeys::D)) {
-			newPosition.x += speed; dir = EDirection::RIGHT;
-		}
-		else if (_input->IsPressed(EInputKeys::W)) {
-			newPosition.y -= speed; dir = EDirection::UP;
-		}
-		else if (_input->IsPressed(EInputKeys::S)) {
-			newPosition.y += speed; dir = EDirection::DOWN;
-		}
-		if (_input->IsPressed(EInputKeys::SPACE)) {
-			if (bombState == EBombState::NONE) bombState = EBombState::PLANTED;
-		}
-		break;
-	default:
-		break;
 	}
 
 	//Check player collisions

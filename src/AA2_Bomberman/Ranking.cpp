@@ -3,8 +3,8 @@
 Ranking::Ranking()
 {
 	//BACKGROUND
-	renderer->LoadTexture(T_BG_RANKING, "../../res/img/bgGame.jpg");
-	renderer->LoadRect(T_BG_RANKING, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
+	Renderer::GetInstance()->LoadTexture(T_BG_RANKING, "../../res/img/bgGame.jpg");
+	Renderer::GetInstance()->LoadRect(T_BG_RANKING, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 }
 
 Ranking::~Ranking()
@@ -18,10 +18,10 @@ void Ranking::Update(InputData* _input)
 
 void Ranking::Draw()
 {
-	renderer->Clear();
+	Renderer::GetInstance()->Clear();
 
 	//BACKGROUND
-	renderer->PushImage(T_BG_RANKING, T_BG_RANKING);
+	Renderer::GetInstance()->PushImage(T_BG_RANKING, T_BG_RANKING);
 
-	renderer->Render();
+	Renderer::GetInstance()->Render();
 }

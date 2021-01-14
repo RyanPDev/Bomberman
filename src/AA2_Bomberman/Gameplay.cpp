@@ -3,30 +3,30 @@
 Gameplay::Gameplay()
 {
 	//BACKGROUND
-	renderer->LoadTexture(T_BG_INGAME, "../../res/img/bgGame.jpg");
-	renderer->LoadRect(T_BG_INGAME, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
+	Renderer::GetInstance()->LoadTexture(T_BG_INGAME, "../../res/img/bgGame.jpg");
+	Renderer::GetInstance()->LoadRect(T_BG_INGAME, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 
 	//WALLS
-	renderer->LoadTexture(T_WALL, "../../res/img/items.png");
-	renderer->LoadTexture(T_DESTRUCTIBLE_WALL, "../../res/img/items.png");
-	renderer->LoadTexture(T_DESTROYED_WALL, "../../res/img/items.png");
+	Renderer::GetInstance()->LoadTexture(T_WALL, "../../res/img/items.png");
+	Renderer::GetInstance()->LoadTexture(T_DESTRUCTIBLE_WALL, "../../res/img/items.png");
+	Renderer::GetInstance()->LoadTexture(T_DESTROYED_WALL, "../../res/img/items.png");
 	map.AddWalls();
 
 	//BOMB
-	renderer->LoadTexture(T_BOMB, "../../res/img/items.png");
+	Renderer::GetInstance()->LoadTexture(T_BOMB, "../../res/img/items.png");
 
 	//POWERUPS
-	renderer->LoadTexture(T_ROLLERS, "../../res/img/items.png");
-	renderer->LoadTexture(T_SHIELD, "../../res/img/items.png");
+	Renderer::GetInstance()->LoadTexture(T_ROLLERS, "../../res/img/items.png");
+	Renderer::GetInstance()->LoadTexture(T_SHIELD, "../../res/img/items.png");
 
 	//EXPLOSION
-	renderer->LoadTexture(T_EXPLOSION, "../../res/img/explosion.png");
+	Renderer::GetInstance()->LoadTexture(T_EXPLOSION, "../../res/img/explosion.png");
 
 	//PLAYERS
-	renderer->LoadTexture(T_PLAYER1, "../../res/img/player1.png");
+	Renderer::GetInstance()->LoadTexture(T_PLAYER1, "../../res/img/player1.png");
 	playerTexture.push_back(T_PLAYER1);
 
-	renderer->LoadTexture(T_PLAYER2, "../../res/img/player2.png");
+	Renderer::GetInstance()->LoadTexture(T_PLAYER2, "../../res/img/player2.png");
 	playerTexture.push_back(T_PLAYER2);
 
 	for (int i = 0; i < static_cast<int>(Player::EPlayerType::COUNT); i++)
@@ -40,35 +40,35 @@ Gameplay::Gameplay()
 		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/game_theme.mp3" });
 
 	//HUD
-	renderer->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 90 });
+	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 90 });
 
 	//PLAYER 1
-	VEC2 vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_NUM_PL1, "PL1: ", {0, 0, 0, 255}, 0, 0 });
-	renderer->LoadRect(T_SC_NUM_PL1, { 30, 5, vtmp.x, vtmp.y });
-	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL1, "000", {0, 0, 0, 255}, 0, 0 });
-	renderer->LoadRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y });
+	VEC2 vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_SC_NUM_PL1, "PL1: ", {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->LoadRect(T_SC_NUM_PL1, { 30, 5, vtmp.x, vtmp.y });
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL1, "000", {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->LoadRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y });
 
 	//PLAYER 2
-	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_NUM_PL2, "PL2: ", {0, 0, 0, 255}, 0, 0 });
-	renderer->LoadRect(T_SC_NUM_PL2, { 550, 5, vtmp.x, vtmp.y });
-	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL2, "000", {0, 0, 0, 255}, 0, 0 });
-	renderer->LoadRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y });
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_SC_NUM_PL2, "PL2: ", {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->LoadRect(T_SC_NUM_PL2, { 550, 5, vtmp.x, vtmp.y });
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_SC_PL2, "000", {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->LoadRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y });
 
 	//TIMER
-	vtmp = renderer->LoadTextureText(F_GAMEOVER, Text{ T_TIME, "00:00", {0, 0, 0, 255}, 0, 0 });
-	renderer->LoadRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y });
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_TIME, "00:00", {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->LoadRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y });
 
 	//HP
-	renderer->LoadTexture(T_LIVES_PL1, "../../res/img/player1.png");
+	Renderer::GetInstance()->LoadTexture(T_LIVES_PL1, "../../res/img/player1.png");
 	hpTexture.push_back(T_LIVES_PL1);
 
-	renderer->LoadTexture(T_LIVES_PL2, "../../res/img/player2.png");
+	Renderer::GetInstance()->LoadTexture(T_LIVES_PL2, "../../res/img/player2.png");
 	hpTexture.push_back(T_LIVES_PL2);
 
-	livesFrame.x = renderer->GetTextureSize(T_LIVES_PL1).x / 3;
-	livesFrame.y = (renderer->GetTextureSize(T_LIVES_PL1).y / 4) * 2;
-	livesFrame.w = renderer->GetTextureSize(T_LIVES_PL1).x / 3;
-	livesFrame.h = renderer->GetTextureSize(T_LIVES_PL1).y / 4;
+	livesFrame.x = Renderer::GetInstance()->GetTextureSize(T_LIVES_PL1).x / 3;
+	livesFrame.y = (Renderer::GetInstance()->GetTextureSize(T_LIVES_PL1).y / 4) * 2;
+	livesFrame.w = Renderer::GetInstance()->GetTextureSize(T_LIVES_PL1).x / 3;
+	livesFrame.h = Renderer::GetInstance()->GetTextureSize(T_LIVES_PL1).y / 4;
 
 	//INITIALIZE GAME TIMER
 	timeDown = GAME_TIMER;
@@ -102,17 +102,17 @@ void Gameplay::Update(InputData* _input)
 
 void Gameplay::Draw()
 {
-	renderer->Clear();
+	Renderer::GetInstance()->Clear();
 
 	//BACKGROUND
-	renderer->PushImage(T_BG_INGAME, T_BG_INGAME);
+	Renderer::GetInstance()->PushImage(T_BG_INGAME, T_BG_INGAME);
 
 	//HUD
-	renderer->PushImage(T_SC_NUM_PL1, T_SC_NUM_PL1);
-	renderer->PushImage(T_SC_PL1, T_SC_PL1);
-	renderer->PushImage(T_SC_NUM_PL2, T_SC_NUM_PL2);
-	renderer->PushImage(T_SC_PL2, T_SC_PL2);
-	renderer->PushImage(T_TIME, T_TIME);
+	Renderer::GetInstance()->PushImage(T_SC_NUM_PL1, T_SC_NUM_PL1);
+	Renderer::GetInstance()->PushImage(T_SC_PL1, T_SC_PL1);
+	Renderer::GetInstance()->PushImage(T_SC_NUM_PL2, T_SC_NUM_PL2);
+	Renderer::GetInstance()->PushImage(T_SC_PL2, T_SC_PL2);
+	Renderer::GetInstance()->PushImage(T_TIME, T_TIME);
 
 	//HP
 	for (int i = 0; i < static_cast<int>(Player::EPlayerType::COUNT); i++)
@@ -124,7 +124,7 @@ void Gameplay::Draw()
 	//WALLS
 	for (Wall* w : map.walls)
 	{
-		renderer->PushSprite(T_WALL, w->GetFrame(), w->GetPosition());
+		Renderer::GetInstance()->PushSprite(T_WALL, w->GetFrame(), w->GetPosition());
 	}
 
 	//BOMBS
@@ -141,14 +141,14 @@ void Gameplay::Draw()
 			_players[i]->Draw(playerTexture[i], _players[i]);
 	}
 
-	renderer->Render();
+	Renderer::GetInstance()->Render();
 }
 
 //ADDS PLAYERS TO THE GAME
 void Gameplay::AddPlayer(std::string id, Player::EPlayerType type, VEC2 initPos)
 {
 	p = new Player();
-	p->SetPlayerValues(renderer->GetTextureSize(id).x, renderer->GetTextureSize(id).y, 3, 4, p->GetMapHp(&map, type), type, initPos);
+	p->SetPlayerValues(Renderer::GetInstance()->GetTextureSize(id).x, Renderer::GetInstance()->GetTextureSize(id).y, 3, 4, p->GetMapHp(&map, type), type, initPos);
 	_players.push_back(std::move(p));
 }
 
@@ -183,14 +183,14 @@ void Gameplay::UpdateHUDText()
 	if (*_players[0]->GetScore() > std::stoi(scoreStringPl1))
 	{
 		scoreStringPl1 = std::to_string(*_players[0]->GetScore());
-		VEC2 vtmp = renderer->UpdateTextureText(F_GAMEOVER, Text{ T_SC_PL1, scoreStringPl1, {0, 0, 0, 255}, 0, 0 });
-		renderer->UpdateRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y });
+		VEC2 vtmp = Renderer::GetInstance()->UpdateTextureText(F_GAMEOVER, Text{ T_SC_PL1, scoreStringPl1, {0, 0, 0, 255}, 0, 0 });
+		Renderer::GetInstance()->UpdateRect(T_SC_PL1, { 100, 5, vtmp.x, vtmp.y });
 	}
 	if (*_players[1]->GetScore() > std::stoi(scoreStringPl2))
 	{
 		scoreStringPl2 = std::to_string(*_players[1]->GetScore());
-		VEC2 vtmp = renderer->UpdateTextureText(F_GAMEOVER, Text{ T_SC_PL2, scoreStringPl2, {0, 0, 0, 255}, 0, 0 });
-		renderer->UpdateRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y });
+		VEC2 vtmp = Renderer::GetInstance()->UpdateTextureText(F_GAMEOVER, Text{ T_SC_PL2, scoreStringPl2, {0, 0, 0, 255}, 0, 0 });
+		Renderer::GetInstance()->UpdateRect(T_SC_PL2, { 627, 5, vtmp.x, vtmp.y });
 	}
 
 	//Timer
@@ -200,6 +200,6 @@ void Gameplay::UpdateHUDText()
 	else
 		s += ":0" + F2StrFormat(static_cast<int>(timeDown) % 60, 0);
 
-	VEC2 vtmp = renderer->UpdateTextureText(F_GAMEOVER, Text{ T_TIME, s, {0, 0, 0, 255}, 0, 0 });
-	renderer->UpdateRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y });
+	VEC2 vtmp = Renderer::GetInstance()->UpdateTextureText(F_GAMEOVER, Text{ T_TIME, s, {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->UpdateRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y });
 }

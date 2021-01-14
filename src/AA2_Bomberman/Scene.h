@@ -15,7 +15,6 @@ protected:
 	std::string textureRanking;
 	std::vector<std::string> playerTexture;
 	std::vector<std::string> hpTexture;
-	Renderer* renderer = Renderer::GetInstance();
 	std::vector<Player*> _players;
 	Player* p;
 	Map map;

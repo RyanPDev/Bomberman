@@ -14,6 +14,7 @@ private:
 	Scene* scene;
 	EGameScene gameScene;
 	InputData* _input;
+	InputManager input;
 
 public:
 	Game();
