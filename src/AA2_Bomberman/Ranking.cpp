@@ -5,7 +5,6 @@ Ranking::Ranking()
 	//BACKGROUND
 	renderer->LoadTexture(T_BG_RANKING, "../../res/img/bgGame.jpg");
 	renderer->LoadRect(T_BG_RANKING, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
-	AudioManager::GetInstance()->StopMusic();
 }
 
 Ranking::~Ranking()
