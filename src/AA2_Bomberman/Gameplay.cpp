@@ -86,7 +86,6 @@ void Gameplay::Update(InputData* _input)
 		p->Update(_input, &map);
 		if (p->GetHp() <= 0)
 			SetSceneState(ESceneState::CLICK_RANKING);
-		//p->DeathManagement(_input);
 	}
 
 	//BEHAVIOUR IN THE GAME WHEN PLAYERS TAKE DAMAGE
