@@ -17,7 +17,9 @@ Gameplay::Gameplay()
 
 	//POWERUPS
 	Renderer::GetInstance()->LoadTexture(T_ROLLERS, "../../res/img/items.png");
+	powerUpsTexture.push_back(T_ROLLERS);
 	Renderer::GetInstance()->LoadTexture(T_SHIELD, "../../res/img/items.png");
+	powerUpsTexture.push_back(T_SHIELD);
 
 	//EXPLOSION
 	Renderer::GetInstance()->LoadTexture(T_EXPLOSION, "../../res/img/explosion.png");
@@ -83,7 +85,7 @@ void Gameplay::Update(InputData* _input)
 	//UPDATE PLAYERS
 	for (Player* p : _players)
 	{
-		p->Update(_input, &map);
+		p->Update(_input, &map, _powerUps);
 		if (p->GetHp() <= 0)
 			SetSceneState(ESceneState::CLICK_RANKING);
 	}
@@ -132,6 +134,12 @@ void Gameplay::Draw()
 	{
 		p->DrawBomb();
 		p->DrawExplosion(&map);
+
+	}
+
+	for (PowerUp powerUp : _powerUps)
+	{
+		powerUp.Draw(powerUp.GetType());
 	}
 
 	//PLAYERS
@@ -139,6 +147,12 @@ void Gameplay::Draw()
 	{
 		if (!_players[i]->GetDeath())
 			_players[i]->Draw(playerTexture[i], _players[i]);
+
+		/*	_players[i]->DrawBomb();
+
+			_players[i]->DrawExplosion(&map);
+
+			_players[i]->DrawPoweUps();*/
 	}
 
 	Renderer::GetInstance()->Render();

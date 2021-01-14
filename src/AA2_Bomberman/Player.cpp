@@ -20,7 +20,7 @@ Player::Player() : position({ 1, 1, FRAME_SIZE, FRAME_SIZE }), frame({ 0, 0, 20,
 Player::~Player() {}
 
 //UPDATES PLAYERS' MOVEMENT/COLLISIONS/SPRITES/BOMBS/DEATHS
-void Player::Update(InputData* _input, Map* map)
+void Player::Update(InputData* _input, Map* map, std::vector<PowerUp>& _powerUp)
 {
 	Action(_input, map);
 	PlayerWallCollision(map);
@@ -34,7 +34,7 @@ void Player::Update(InputData* _input, Map* map)
 		else if (bombState == EBombState::EXPLOSION_COUNTDOWN)
 			explosionTimer -= *_input->GetDeltaTime();
 
-		DropBomb(map);
+		DropBomb(map, _powerUp);
 		if (bombTimer <= 0) bombState = EBombState::EXPLOSION;
 		else if (bombTimer <= 1) bombState = EBombState::FLICKERING;
 	}
@@ -150,7 +150,6 @@ void Player::Action(InputData* _input, Map* map)
 
 bool Player::UpdatePosition()
 {
-	//Update position
 	if (newPosition.x != position.x || newPosition.y != position.y) {
 		position.x = newPosition.x;
 		position.y = newPosition.y;
@@ -229,7 +228,7 @@ int Player::GetMapHp(Map* map, EPlayerType type)
 }
 
 //STATE MACHINE OF EACH PLAYERS' BOMB
-void Player::DropBomb(Map* map)
+void Player::DropBomb(Map* map, std::vector<PowerUp>& _powerUp)
 {
 	switch (bombState)
 	{
@@ -276,9 +275,15 @@ void Player::DropBomb(Map* map)
 			{
 				if (map->walls[i]->GetType() == Wall::EWallType::DESTROYED_WALL)
 				{
-					map->walls.erase(map->walls.begin() + i);
+					int rnd = rand() % 100;
+					if (rnd < 20)
+					{
+						PowerUp powerUp(*map->walls[i]->GetPosition());
+						powerUp.SetValues(Renderer::GetInstance()->GetTextureSize(T_ROLLERS).x, Renderer::GetInstance()->GetTextureSize(T_ROLLERS).y, 3, 2, powerUp.GeneratePowerUp());
+						_powerUp.push_back(powerUp);
+					}
 
-					//-->POWERS UPS HERE
+					map->walls.erase(map->walls.begin() + i);
 					i--;
 				}
 			}
@@ -315,6 +320,11 @@ void Player::DrawExplosion(Map* map)
 		}
 	}
 }
+
+//void Player::DrawPoweUps()
+//{
+//	
+//}
 
 //INTERACTIONS WHEN PLAYER DIE-------->MAY NEED BALANCE
 void Player::DeathManagement(InputData* _input)

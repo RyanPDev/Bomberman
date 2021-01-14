@@ -6,6 +6,7 @@
 #include "InputManager.h"
 #include "Bomb.h"
 #include "Explosion.h"
+#include "PowerUp.h"
 
 class Player
 {
@@ -24,6 +25,7 @@ private:
 	float deathTimer;
 	bool immunity;
 	bool dead;
+	
 	Bomb* b;
 	VEC2 bombMapPos;
 	RECT position;
@@ -42,7 +44,7 @@ public:
 	Player();
 	~Player();
 
-	void Update(InputData*, Map*);
+	void Update(InputData*, Map*, std::vector<PowerUp>&);
 	void Draw(std::string, Player*);
 	void DrawHp(std::string, RECT*, EPlayerType);
 	void SetPlayerValues(int, int, int, int, int, EPlayerType, VEC2);
@@ -52,7 +54,7 @@ public:
 	void ScreenCollision(VEC2&, InputData*);
 	void PlayerWallCollision(Map*);
 	int GetMapHp(Map*, EPlayerType);
-	void DropBomb(Map* map);
+	void DropBomb(Map*, std::vector<PowerUp>&);
 	void DrawBomb();
 	void DrawExplosion(Map*);
 	void DeathManagement(InputData*);

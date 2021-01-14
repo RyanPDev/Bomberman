@@ -29,7 +29,7 @@ public:
 	std::vector<VEC2> initialPlPos;
 
 private:
-	std::vector<Map> maps;
+	//std::vector<Map> maps;
 	int player1Hp;
 	int player2Hp;
 	const int NUM_ROWS{ 11 }, NUM_COLS{ 13 };

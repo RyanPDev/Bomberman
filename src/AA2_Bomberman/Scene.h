@@ -15,6 +15,7 @@ protected:
 	std::string textureRanking;
 	std::vector<std::string> playerTexture;
 	std::vector<std::string> hpTexture;
+	std::vector<std::string> powerUpsTexture;
 	std::vector<Player*> _players;
 	Player* p;
 	Map map;
