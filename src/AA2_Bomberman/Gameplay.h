@@ -8,6 +8,8 @@
 class Gameplay : public Scene
 {
 private:
+	Map map;
+	Player* p;
 	float timeDown;
 	std::vector<PowerUp> _powerUps;
 

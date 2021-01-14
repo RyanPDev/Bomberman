@@ -12,7 +12,7 @@ Map::Map()
 	doc.parse<0>(&content[0]);
 
 	rapidxml::xml_node<>* pRoot = doc.first_node();
-	rapidxml::xml_node<>* pNode = pRoot->first_node("Level1");
+	rapidxml::xml_node<>* pNode = pRoot->first_node("Level");
 
 	int i, j;
 
