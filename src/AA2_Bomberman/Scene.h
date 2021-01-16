@@ -19,7 +19,7 @@ protected:
 	std::vector<std::string> powerUpsTexture;
 	std::vector<Player*> _players;
 	std::vector<PowerUp> _powerUps;
-	//Map map;
+	Map map;
 	
 public:
 	~Scene();

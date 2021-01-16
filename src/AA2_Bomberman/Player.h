@@ -16,33 +16,25 @@ public:
 	std::vector<Explosion> _explosions;
 	
 private:
-	int score;
-	int hp;
 	VEC2 initialPos;
-	float bombTimer;
-	float explosionTimer;
-	float immunityTimer;
-	float deathTimer;
-	float powerUpTimer;
-	bool deathImmunity;
-	bool shieldImmunity;
-	bool speedBoost;
+	int score, hp;
+	int speed;
+	float bombTimer, explosionTimer, immunityTimer, deathTimer, powerUpTimer;
+	bool deathImmunity, shieldImmunity, speedBoost;
 	const float SPEED_MULTIPLIER = 3.6f;
 	const float BASE_SPEED = 2;
 	bool dead;
 	
 	Bomb* b;
 	VEC2 bombMapPos;
-	RECT position;
 	VEC2 newPosition;
-	RECT frame;
+	RECT position, frame;
 	EPlayerType type;
 	EBombState bombState = EBombState::NONE;
 	EDirection dir = EDirection::NONE;
 
 	int initCol, lastCol;
 	int initRow, lastRow;
-	int speed;
 	float speedMultiplier;
 	float frameCount;
 
