@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Scene.h"
+#include "Menu.h"
 #include "Player.h"
 #include "Map.h"
 #include "Explosion.h"
