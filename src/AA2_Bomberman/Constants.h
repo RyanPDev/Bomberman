@@ -60,6 +60,12 @@ const std::string T_EXPLOSION = "Explosion";
 //FONT
 const std::string F_GAMEOVER = "FontGameOver";
 
+//RANKING
+const std::string T_RANKING_TITLE = "TxtRankingTitle";
+const std::string T_RANK = "TxtRank";
+const std::string T_SCORE = "TxtScore";
+const std::string T_NAME = "TxtName";
+
 //MENU
 const std::string T_TITLE = "TxtTitle";
 const std::string T_LEVEL1 = "BtnLevel1";
