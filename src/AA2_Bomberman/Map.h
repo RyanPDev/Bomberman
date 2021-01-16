@@ -36,6 +36,7 @@ private:
 
 public:
 	Map();
+	Map(std::string);
 	~Map();
 
 	void Update();

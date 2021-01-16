@@ -18,7 +18,8 @@ protected:
 	std::vector<std::string> hpTexture;
 	std::vector<std::string> powerUpsTexture;
 	std::vector<Player*> _players;
-	std::vector<PowerUp> _powerUps;	
+	std::vector<PowerUp> _powerUps;
+	//Map map;
 	
 public:
 	~Scene();

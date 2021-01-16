@@ -146,7 +146,7 @@
 			</Player2>
 		</Players>
 		<Map>
-			<Wall destructible = "false" x="1" y="1"/>
+			<!--<Wall destructible = "false" x="1" y="1"/>
 			<Wall destructible = "false" x="3" y="1"/>
 			<Wall destructible = "false" x="5" y="1"/>
 			<Wall destructible = "false" x="7" y="1"/>
@@ -268,7 +268,7 @@
 			<Wall destructible = "true" x="7" y="10"/>			
 			<Wall destructible = "true" x="8" y="10"/>			
 			<Wall destructible = "true" x="9" y="10"/>			
-			<Wall destructible = "true" x="10" y="10"/>
+			<Wall destructible = "true" x="10" y="10"/>-->
 		</Map>
 	</Level2>
 </Game>

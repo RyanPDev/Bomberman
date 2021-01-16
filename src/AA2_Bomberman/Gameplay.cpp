@@ -1,6 +1,6 @@
 #include "Gameplay.h"
 
-Gameplay::Gameplay()
+Gameplay::Gameplay() : map("Level2")
 {
 	//BACKGROUND
 	Renderer::GetInstance()->LoadTexture(T_BG_INGAME, "../../res/img/bgGame.jpg");

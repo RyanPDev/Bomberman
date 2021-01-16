@@ -1,7 +1,9 @@
 #include "Map.h"
 
+Map::Map() {}
+
 //READS CONFIG FILE AND SAVES MAP/PLAYER INFO
-Map::Map()
+Map::Map(std::string _level)
 {
 	rapidxml::xml_document<> doc;
 	std::ifstream file("../../res/files/config.xml");
@@ -12,7 +14,7 @@ Map::Map()
 	doc.parse<0>(&content[0]);
 
 	rapidxml::xml_node<>* pRoot = doc.first_node();
-	rapidxml::xml_node<>* pNode = pRoot->first_node("Level1");
+	rapidxml::xml_node<>* pNode = pRoot->first_node(_level.c_str());
 
 	int i, j;
 

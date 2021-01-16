@@ -7,12 +7,10 @@
 
 class Gameplay : public Scene
 {
-private:
-	Map map;
+private:	
 	Player* p;
-	float timeDown;
-	
-
+	float timeDown;	
+	Map map;
 	//Scores
 	std::string scoreStringPl1 = "000", scoreStringPl2 = "000";
 
