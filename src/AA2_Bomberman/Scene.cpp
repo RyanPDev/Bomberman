@@ -9,4 +9,5 @@ Scene::~Scene()
 	_players.clear();
 	playerTexture.clear();
 	hpTexture.clear();
+	_powerUps.clear();
 }

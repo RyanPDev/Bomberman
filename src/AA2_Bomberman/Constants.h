@@ -62,9 +62,12 @@ const std::string F_GAMEOVER = "FontGameOver";
 
 //MENU
 const std::string T_TITLE = "TxtTitle";
-const std::string T_PLAY = "BtnPlay";
-const std::string T_PLAY_N = "BtnPlayN";
-const std::string T_PLAY_H = "BtnPlayH";
+const std::string T_LEVEL1 = "BtnLevel1";
+const std::string T_LEVEL1_N = "BtnLevel1N";
+const std::string T_LEVEL1_H = "BtnLevel1H";
+const std::string T_LEVEL2 = "BtnLevel2";
+const std::string T_LEVEL2_N = "BtnLevel2N";
+const std::string T_LEVEL2_H = "BtnLevel2H";
 const std::string T_RANKING = "BtnRanking";
 const std::string T_RANKING_N = "BtnRankingN";
 const std::string T_RANKING_H = "BtnRankingH";

@@ -9,7 +9,8 @@ class Scene
 {
 protected:
 	ESceneState sceneState = ESceneState::RUNNING;
-	std::string texturePlay;
+	std::string textureLevel1;
+	std::string textureLevel2;
 	std::string textureExit;
 	std::string textureSound;
 	std::string textureRanking;
@@ -17,13 +18,14 @@ protected:
 	std::vector<std::string> hpTexture;
 	std::vector<std::string> powerUpsTexture;
 	std::vector<Player*> _players;
-	
+	std::vector<PowerUp> _powerUps;	
 	
 public:
 	~Scene();
 	virtual void Update(InputData*) = 0;
 	virtual void Draw() = 0;
-	virtual void SetTexturePlay(std::string id) { texturePlay = id; }
+	virtual void SetTextureLevel1(std::string id) { textureLevel1 = id; }
+	virtual void SetTextureLevel2(std::string id) { textureLevel2 = id; }
 	virtual void SetTextureExit(std::string id) { textureExit = id; }
 	virtual void SetTextureSound(std::string id) { textureSound = id; }
 	virtual void SetTextureRanking(std::string id) { textureRanking = id; }

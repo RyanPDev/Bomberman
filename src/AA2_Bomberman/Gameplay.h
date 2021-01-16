@@ -11,7 +11,7 @@ private:
 	Map map;
 	Player* p;
 	float timeDown;
-	std::vector<PowerUp> _powerUps;
+	
 
 	//Scores
 	std::string scoreStringPl1 = "000", scoreStringPl2 = "000";

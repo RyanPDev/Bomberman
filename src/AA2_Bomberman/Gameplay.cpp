@@ -123,36 +123,27 @@ void Gameplay::Draw()
 		_players[i]->DrawHp(hpTexture[i], &livesFrame, type);
 	}
 
+	//POWER UPS
+	for (PowerUp powerUp : _powerUps)
+	{
+		powerUp.Draw(powerUp.GetType());
+	}
+
 	//WALLS
 	for (Wall* w : map.walls)
 	{
 		Renderer::GetInstance()->PushSprite(T_WALL, w->GetFrame(), w->GetPosition());
 	}
 
-	//BOMBS
-	for (Player* p : _players)
-	{
-		p->DrawBomb();
-		p->DrawExplosion(&map);
-
-	}
-
-	for (PowerUp powerUp : _powerUps)
-	{
-		powerUp.Draw(powerUp.GetType());
-	}
-
 	//PLAYERS
 	for (int i = 0; i < _players.size(); i++)
 	{
+		//BOMBS
+		_players[i]->DrawBomb();
+		_players[i]->DrawExplosion(&map);
+
 		if (!_players[i]->GetDeath())
 			_players[i]->Draw(playerTexture[i], _players[i]);
-
-		/*	_players[i]->DrawBomb();
-
-			_players[i]->DrawExplosion(&map);
-
-			_players[i]->DrawPoweUps();*/
 	}
 
 	Renderer::GetInstance()->Render();

@@ -61,10 +61,12 @@ public:
 	void PlayerWallCollision(Map*);
 	void PlayerPowerUpCollision(std::vector<PowerUp>& _powerUp);
 	int GetMapHp(Map*, EPlayerType);
-	void DropBomb(Map*, std::vector<PowerUp>&);
+	void BombState(Map*, std::vector<PowerUp>&);
 	void DrawBomb();
 	void DrawExplosion(Map*);
 	void DeathManagement(InputData*);
+	void PowerUpManagement(InputData*);
+	void BombManager(InputData*);
 
 	inline const RECT* GetFrame()const { return &frame; }
 	inline const EBombState GetBomb()const { return bombState; }

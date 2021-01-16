@@ -28,37 +28,10 @@ void Player::Update(InputData* _input, Map* map, std::vector<PowerUp>& _powerUp)
 	PlayerPowerUpCollision(_powerUp);
 	UpdatePosition();
 	UpdateSprite();
-
-	if (shieldImmunity || speedBoost)
-	{
-		powerUpTimer -= *_input->GetDeltaTime();
-	}
-
-	if (speedBoost) speed = SPEED_MULTIPLIER;
-	else speed = BASE_SPEED;
-
-
-	if (powerUpTimer <= 0)
-	{
-		if (shieldImmunity)	shieldImmunity = false;
-		else if (speedBoost)
-		{
-			speedBoost = false;
-		}
-	}
-
-	if (bombState != EBombState::NONE)
-	{
-		if (bombState != EBombState::EXPLOSION && bombState != EBombState::EXPLOSION_COUNTDOWN)
-			bombTimer -= *_input->GetDeltaTime();
-		else if (bombState == EBombState::EXPLOSION_COUNTDOWN)
-			explosionTimer -= *_input->GetDeltaTime();
-
-		DropBomb(map, _powerUp);
-		if (bombTimer <= 0) bombState = EBombState::EXPLOSION;
-		else if (bombTimer <= 1) bombState = EBombState::FLICKERING;
-	}
+	BombState(map, _powerUp);
+	BombManager(_input);	
 	DeathManagement(_input);
+	PowerUpManagement(_input);
 }
 
 void Player::Draw(std::string id, Player* p)
@@ -248,7 +221,7 @@ int Player::GetMapHp(Map* map, EPlayerType type)
 }
 
 //STATE MACHINE OF EACH PLAYERS' BOMB
-void Player::DropBomb(Map* map, std::vector<PowerUp>& _powerUp)
+void Player::BombState(Map* map, std::vector<PowerUp>& _powerUp)
 {
 	switch (bombState)
 	{
@@ -264,7 +237,6 @@ void Player::DropBomb(Map* map, std::vector<PowerUp>& _powerUp)
 	}
 	case EBombState::EXPLOSION:
 		bombTimer = BOMB_TIMER;
-		bombState = EBombState::EXPLOSION_COUNTDOWN;
 		//Create Explosion
 		{
 			bool isValid, stopDirection = false;
@@ -280,6 +252,7 @@ void Player::DropBomb(Map* map, std::vector<PowerUp>& _powerUp)
 			}
 		}
 		delete b;
+		bombState = EBombState::EXPLOSION_COUNTDOWN;
 		break;
 	case EBombState::EXPLOSION_COUNTDOWN:
 		//Explosion animation 1s
@@ -296,7 +269,7 @@ void Player::DropBomb(Map* map, std::vector<PowerUp>& _powerUp)
 				if (map->walls[i]->GetType() == Wall::EWallType::DESTROYED_WALL)
 				{
 					int rnd = rand() % 100;
-					//if (rnd < 20)
+					if (rnd < 20)
 					{
 						PowerUp powerUp(*map->walls[i]->GetPosition());
 						powerUp.SetValues(Renderer::GetInstance()->GetTextureSize(T_ROLLERS).x, Renderer::GetInstance()->GetTextureSize(T_ROLLERS).y, 3, 2, powerUp.GeneratePowerUp());
@@ -386,5 +359,40 @@ void Player::PlayerPowerUpCollision(std::vector<PowerUp>& _powerUp)
 				_powerUp.erase(_powerUp.begin() + i);
 			}
 		}
+	}
+}
+
+void Player::PowerUpManagement(InputData* _input)
+{
+	if (shieldImmunity || speedBoost)
+	{
+		powerUpTimer -= *_input->GetDeltaTime();
+	}
+
+	if (speedBoost) speed = SPEED_MULTIPLIER;
+	else speed = BASE_SPEED;
+
+
+	if (powerUpTimer <= 0 || dead)
+	{
+		if (shieldImmunity)	shieldImmunity = false;
+		else if (speedBoost)
+		{
+			speedBoost = false;
+		}
+	}
+}
+
+void Player::BombManager(InputData* _input)
+{
+	if (bombState != EBombState::NONE)
+	{
+		if (bombState != EBombState::EXPLOSION && bombState != EBombState::EXPLOSION_COUNTDOWN)
+			bombTimer -= *_input->GetDeltaTime();
+		else if (bombState == EBombState::EXPLOSION_COUNTDOWN)
+			explosionTimer -= *_input->GetDeltaTime();
+
+		if (bombTimer <= 0) bombState = EBombState::EXPLOSION;
+		else if (bombTimer <= 1) bombState = EBombState::FLICKERING;
 	}
 }
