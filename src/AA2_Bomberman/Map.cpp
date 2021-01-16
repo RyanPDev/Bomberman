@@ -14,7 +14,9 @@ Map::Map(std::string _level)
 	doc.parse<0>(&content[0]);
 
 	rapidxml::xml_node<>* pRoot = doc.first_node();
-	rapidxml::xml_node<>* pNode = pRoot->first_node(_level.c_str());
+
+	std::string level = "Level" + _level;
+	rapidxml::xml_node<>* pNode = pRoot->first_node(level.c_str());
 
 	int i, j;
 

@@ -66,14 +66,14 @@ void Menu::Update(InputData* _input)
 	if (Collisions::ExistCollision(_input->GetMouseCoords(), Renderer::GetInstance()->GetRect(T_LEVEL1)))
 	{
 		SetTextureLevel1(T_LEVEL1_H);
-		if (_input->JustPressed(EInputKeys::MOUSE_LEFT)) { SetSceneState(ESceneState::CLICK_PLAY); SetCurrentLevel("Level1"); }
+		if (_input->JustPressed(EInputKeys::MOUSE_LEFT)) { SetSceneState(ESceneState::CLICK_PLAY); SetCurrentLevel("1"); }
 	}
 	else SetTextureLevel1(T_LEVEL1_N);
 
 	if (Collisions::ExistCollision(_input->GetMouseCoords(), Renderer::GetInstance()->GetRect(T_LEVEL2)))
 	{
 		SetTextureLevel2(T_LEVEL2_H);
-		if (_input->JustPressed(EInputKeys::MOUSE_LEFT)) { SetSceneState(ESceneState::CLICK_PLAY); SetCurrentLevel("Level2");
+		if (_input->JustPressed(EInputKeys::MOUSE_LEFT)) { SetSceneState(ESceneState::CLICK_PLAY); SetCurrentLevel("2");
 		}
 	}
 	else SetTextureLevel2(T_LEVEL2_N);
