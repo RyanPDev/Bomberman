@@ -99,7 +99,7 @@ void Ranking::ReadFile()
 	while (fentrada)
 	{
 		fentrada.read(reinterpret_cast<char*>(&aux.score), sizeof(int));
-		size_t len;
+		size_t len = aux.name.size();
 		fentrada.read(reinterpret_cast<char*>(&len), sizeof(size_t));
 		char* temp = new char[len + 1];
 		fentrada.read(temp, len);
