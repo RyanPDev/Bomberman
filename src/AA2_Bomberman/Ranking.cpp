@@ -98,7 +98,7 @@ void Ranking::ReadFile()
 
 	if (fentrada.is_open())
 	{
-		while (fentrada)
+		while (!fentrada.eof())
 		{
 			fentrada.read(reinterpret_cast<char*>(&aux.score), sizeof(int));
 			size_t len;
