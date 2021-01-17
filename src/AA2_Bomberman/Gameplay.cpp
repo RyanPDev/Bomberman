@@ -87,7 +87,11 @@ void Gameplay::Update(InputData* _input)
 	{
 		p->Update(_input, &map, _powerUps);
 		if (p->GetHp() <= 0)
+		{
+			UpdateRanking();
 			SetSceneState(ESceneState::CLICK_RANKING);
+			break;
+		}
 	}
 
 	//BEHAVIOUR IN THE GAME WHEN PLAYERS TAKE DAMAGE
@@ -99,7 +103,11 @@ void Gameplay::Update(InputData* _input)
 	//UPDATE HUD
 	UpdateHUDText();
 
-	if (timeDown <= 0) SetSceneState(ESceneState::CLICK_RANKING);
+	if (timeDown <= 0)
+	{
+		UpdateRanking();
+		SetSceneState(ESceneState::CLICK_RANKING);
+	}
 }
 
 void Gameplay::Draw()
@@ -115,13 +123,6 @@ void Gameplay::Draw()
 	Renderer::GetInstance()->PushImage(T_SC_NUM_PL2, T_SC_NUM_PL2);
 	Renderer::GetInstance()->PushImage(T_SC_PL2, T_SC_PL2);
 	Renderer::GetInstance()->PushImage(T_TIME, T_TIME);
-
-	//HP
-	for (int i = 0; i < static_cast<int>(Player::EPlayerType::COUNT); i++)
-	{
-		Player::EPlayerType type = static_cast<Player::EPlayerType>(i);
-		_players[i]->DrawHp(hpTexture[i], &livesFrame, type);
-	}
 
 	//POWER UPS
 	for (PowerUp powerUp : _powerUps)
@@ -144,6 +145,13 @@ void Gameplay::Draw()
 
 		if (!_players[i]->GetDeath())
 			_players[i]->Draw(playerTexture[i], _players[i]);
+	}
+
+	//HP
+	for (int i = 0; i < static_cast<int>(Player::EPlayerType::COUNT); i++)
+	{
+		Player::EPlayerType type = static_cast<Player::EPlayerType>(i);
+		_players[i]->DrawHp(hpTexture[i], &livesFrame, type);
 	}
 
 	Renderer::GetInstance()->Render();
@@ -207,4 +215,31 @@ void Gameplay::UpdateHUDText()
 
 	VEC2 vtmp = Renderer::GetInstance()->UpdateTextureText(F_GAMEOVER, Text{ T_TIME, s, {0, 0, 0, 255}, 0, 0 });
 	Renderer::GetInstance()->UpdateRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y });
+}
+
+void Gameplay::UpdateRanking()
+{
+	std::string name;
+	int score = 0;
+	std::cout << "Enter your name: " << std::endl;
+	std::getline(std::cin, name);
+
+	for (Player* p : _players)
+	{
+		if (p->GetHp() > 0)
+		{
+			if (*p->GetScore() > score)
+			{
+				score = *p->GetScore();
+			}
+		}
+	}
+
+	std::ofstream fsalida("../../res/files/ranking.bin", std::ios::out | std::ios::binary | std::ios::app);
+	fsalida.write(reinterpret_cast<char*>(&score), sizeof(int));
+	size_t len = name.size();
+	fsalida.write(reinterpret_cast<char*>(&len), sizeof(size_t)); //se guarda el size
+	fsalida.write(name.c_str(), name.size()); //se guarda el string
+
+	fsalida.close();
 }

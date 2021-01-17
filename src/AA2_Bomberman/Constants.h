@@ -11,7 +11,7 @@ const int VERTICAL_SCREEN_OFFSET{ 576 };
 #pragma region TIMERS
 
 //TOTAL GAME TIME
-const float GAME_TIMER{ 80.f }; //seconds
+const float GAME_TIMER{ 5.f }; //seconds
 
 //BOMB TIMER
 const float BOMB_TIMER{ 3.f };
@@ -65,6 +65,9 @@ const std::string T_RANKING_TITLE = "TxtRankingTitle";
 const std::string T_RANK = "TxtRank";
 const std::string T_SCORE = "TxtScore";
 const std::string T_NAME = "TxtName";
+const std::string T_PL_NAMES = "TxtPlayerNames";
+const std::string T_PL_SCORES = "TxtPlayerScores";
+const std::string T_PL_RANK = "TxtPlayerRank";
 
 //MENU
 const std::string T_TITLE = "TxtTitle";

@@ -28,4 +28,5 @@ public:
 	void AddPlayer(std::string id, Player::EPlayerType type, VEC2);
 	void TakeDamageBehaviour(InputData*);
 	void UpdateHUDText();
+	void UpdateRanking();
 };

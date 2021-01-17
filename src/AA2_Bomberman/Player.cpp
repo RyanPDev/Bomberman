@@ -372,7 +372,6 @@ void Player::PowerUpManagement(InputData* _input)
 	if (speedBoost) speed = SPEED_MULTIPLIER;
 	else speed = BASE_SPEED;
 
-
 	if (powerUpTimer <= 0 || dead)
 	{
 		if (shieldImmunity)	shieldImmunity = false;
