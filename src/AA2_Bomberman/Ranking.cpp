@@ -96,24 +96,23 @@ void Ranking::ReadFile()
 	std::ifstream fentrada;
 	fentrada.open(P_RANKING, std::ios::in | std::ios::binary);
 
-	if (fentrada.is_open())
+	while (fentrada)
 	{
-		while (!fentrada.eof())
-		{
-			fentrada.read(reinterpret_cast<char*>(&aux.score), sizeof(int));
-			size_t len;
-			fentrada.read(reinterpret_cast<char*>(&len), sizeof(size_t));
-			char* temp = new char[len + 1];
-			fentrada.read(temp, len);
-			temp[len] = '\0';
-			aux.name = temp;
-			delete[]temp;
-			rank.push_back(aux);
-		}
+		fentrada.read(reinterpret_cast<char*>(&aux.score), sizeof(int));
+		size_t len;
+		fentrada.read(reinterpret_cast<char*>(&len), sizeof(size_t));
+		char* temp = new char[len + 1];
+		fentrada.read(temp, len);
+		temp[len] = '\0';
+		aux.name = temp;
+		delete[]temp;
+		rank.push_back(aux);
 	}
 	if (!rank.empty())
+	{
 		rank.pop_back();
-	std::sort(rank.begin(), rank.end(), std::greater<Winner>());
+		std::sort(rank.begin(), rank.end(), std::greater<Winner>());
+	}
 	/*auto last = std::unique(rank.begin(), rank.end());
 	rank.erase(last, rank.end());*/
 	//std::erase(std::unique(myvec.begin(), myvec.end()), myvec.end());
