@@ -29,7 +29,7 @@ Ranking::Ranking()
 	ReadFile();
 
 	//NAMES VALUES
-	std::string tmp = "";
+	//std::string tmp = "";
 	/*for (int i = 0; i < rank.size(); i++)
 	{
 		tmp += rank[i].name;
@@ -107,7 +107,8 @@ void Ranking::ReadFile()
 		delete[]temp;
 		rank.push_back(aux);
 	}
-	rank.pop_back();
+	if (!rank.empty())
+		rank.pop_back();
 	std::sort(rank.begin(), rank.end(), std::greater<Winner>());
 	/*auto last = std::unique(rank.begin(), rank.end());
 	rank.erase(last, rank.end());*/

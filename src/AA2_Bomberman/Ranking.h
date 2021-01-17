@@ -14,7 +14,7 @@ private:
 	//std::priority_queue<Winner> rank;
 	//std::priority_queue<Winner> rank;
 	std::vector<Winner> rank;
-	Winner results[10];
+	//Winner results[10];
 
 	//Winner rank[10];
 
