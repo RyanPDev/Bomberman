@@ -94,12 +94,12 @@ void Ranking::ReadFile()
 {
 	Winner aux;
 	std::ifstream fentrada;
-	fentrada.open(P_RANKING, std::ios::in | std::ios::binary);
+	fentrada.open(P_RANKING, std::ios::binary);
 
 	while (fentrada)
 	{
 		fentrada.read(reinterpret_cast<char*>(&aux.score), sizeof(int));
-		size_t len = aux.name.size();
+		size_t len;
 		fentrada.read(reinterpret_cast<char*>(&len), sizeof(size_t));
 		char* temp = new char[len + 1];
 		fentrada.read(temp, len);
