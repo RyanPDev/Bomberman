@@ -94,7 +94,7 @@ void Ranking::ReadFile()
 {
 	Winner aux;
 	std::ifstream fentrada;
-	fentrada.open(P_RANKING, std::ios::binary);
+	fentrada.open(P_RANKING, std::ios::in | std::ios::binary);
 
 	while (fentrada)
 	{
