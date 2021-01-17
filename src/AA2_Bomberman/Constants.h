@@ -8,6 +8,31 @@ const int SCREEN_WIDTH{ 720 };
 const int SCREEN_HEIGHT{ 704 };
 const int VERTICAL_SCREEN_OFFSET{ 576 };
 
+#pragma region PATHS
+
+//FILES
+const std::string P_RANKING = "../../res/files/ranking.bin";
+const std::string P_CONFIG = "../../res/files/config.xml";
+
+//GAME
+const std::string P_BG_GAME = "../../res/img/bgGame.jpg";
+const std::string P_ITEMS = "../../res/img/items.png";
+const std::string P_EXPLOSION = "../../res/img/explosion.png";
+
+//PLAYERS
+const std::string P_PLAYER1 = "../../res/img/player1.png";
+const std::string P_PLAYER2 = "../../res/img/player2.png";
+
+//AUDIOS
+const std::string P_ST_GAME = "../../res/au/game_theme.mp3";
+const std::string P_ST_MENU = "../../res/au/menu.mp3";
+
+//FONTS
+const std::string P_GAME_OVER_FONT = "../../res/ttf/game_over.ttf";
+const std::string P_SAIYAN_FONT = "../../res/ttf/saiyan.ttf";
+
+#pragma endregion
+
 #pragma region TIMERS
 
 //TOTAL GAME TIME

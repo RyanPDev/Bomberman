@@ -3,21 +3,21 @@
 Menu::Menu()
 {
 	//BACKGROUND
-	Renderer::GetInstance()->LoadTexture(T_BG_MENU, "../../res/img/bgGame.jpg");
+	Renderer::GetInstance()->LoadTexture(T_BG_MENU, P_BG_GAME);
 	Renderer::GetInstance()->LoadRect(T_BG_MENU, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 
 	//AUDIO
 	if (!AudioManager::GetInstance()->PausedMusic())
-		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/menu.mp3" });
+		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ P_ST_MENU });
 
 	//TITLE
-	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 200 });
+	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, P_GAME_OVER_FONT, 200 });
 	VEC2 vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_TITLE, "BOMBERMAN", {0, 0, 0, 255}, 0, 0 });
 	Renderer::GetInstance()->LoadRect(T_TITLE, { SCREEN_WIDTH / 2 - vtmp.x / 2, -25, vtmp.x, vtmp.y });
 
 #pragma region BUTTONS
 
-	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 150 });
+	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, P_GAME_OVER_FONT, 150 });
 
 	//PLAY BUTTON
 	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_LEVEL1_N, "Level 1", {0,0,0,255}, 0, 0 });

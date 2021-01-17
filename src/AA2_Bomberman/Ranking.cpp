@@ -4,15 +4,15 @@
 Ranking::Ranking()
 {
 	//BACKGROUND
-	Renderer::GetInstance()->LoadTexture(T_BG_RANKING, "../../res/img/bgGame.jpg");
+	Renderer::GetInstance()->LoadTexture(T_BG_RANKING, P_BG_GAME);
 	Renderer::GetInstance()->LoadRect(T_BG_RANKING, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 
 	//TITLE
-	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 200 });
+	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, P_GAME_OVER_FONT, 200 });
 	VEC2 vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_RANKING_TITLE, "RANKING", {0, 0, 0, 255}, 0, 0 });
 	Renderer::GetInstance()->LoadRect(T_RANKING_TITLE, { SCREEN_WIDTH / 2 - vtmp.x / 2, -25, vtmp.x, vtmp.y });
 
-	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 100 });
+	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, P_GAME_OVER_FONT, 100 });
 
 	//RANK BOARD
 	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_RANK, "RANK", {0, 0, 0, 255}, 0, 0 });
@@ -93,21 +93,17 @@ void Ranking::Draw()
 void Ranking::ReadFile()
 {
 	Winner aux;
-	int x;
-	std::string s;
-	std::ifstream fentrada("../../res/files/ranking.bin", std::ios::in | std::ios::binary);
+	std::ifstream fentrada(P_RANKING, std::ios::in | std::ios::binary);
 
 	while (fentrada)
 	{
-		fentrada.read(reinterpret_cast<char*>(&x), sizeof(int));
+		fentrada.read(reinterpret_cast<char*>(&aux.score), sizeof(int));
 		size_t len;
 		fentrada.read(reinterpret_cast<char*>(&len), sizeof(size_t));
 		char* temp = new char[len + 1];
 		fentrada.read(temp, len);
 		temp[len] = '\0';
-		s = temp;
-		aux.name = s;
-		aux.score = x;
+		aux.name = temp;
 		delete[]temp;
 		rank.push_back(aux);
 	}

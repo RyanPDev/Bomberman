@@ -3,32 +3,32 @@
 Gameplay::Gameplay() : map(Menu::GetCurrentLevel())
 {
 	//BACKGROUND
-	Renderer::GetInstance()->LoadTexture(T_BG_INGAME, "../../res/img/bgGame.jpg");
+	Renderer::GetInstance()->LoadTexture(T_BG_INGAME, P_BG_GAME);
 	Renderer::GetInstance()->LoadRect(T_BG_INGAME, { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
 
 	//WALLS
-	Renderer::GetInstance()->LoadTexture(T_WALL, "../../res/img/items.png");
-	Renderer::GetInstance()->LoadTexture(T_DESTRUCTIBLE_WALL, "../../res/img/items.png");
-	Renderer::GetInstance()->LoadTexture(T_DESTROYED_WALL, "../../res/img/items.png");
+	Renderer::GetInstance()->LoadTexture(T_WALL, P_ITEMS);
+	Renderer::GetInstance()->LoadTexture(T_DESTRUCTIBLE_WALL, P_ITEMS);
+	Renderer::GetInstance()->LoadTexture(T_DESTROYED_WALL, P_ITEMS);
 	map.AddWalls();
 
 	//BOMB
-	Renderer::GetInstance()->LoadTexture(T_BOMB, "../../res/img/items.png");
+	Renderer::GetInstance()->LoadTexture(T_BOMB, P_ITEMS);
 
 	//POWERUPS
-	Renderer::GetInstance()->LoadTexture(T_ROLLERS, "../../res/img/items.png");
+	Renderer::GetInstance()->LoadTexture(T_ROLLERS, P_ITEMS);
 	powerUpsTexture.push_back(T_ROLLERS);
-	Renderer::GetInstance()->LoadTexture(T_SHIELD, "../../res/img/items.png");
+	Renderer::GetInstance()->LoadTexture(T_SHIELD, P_ITEMS);
 	powerUpsTexture.push_back(T_SHIELD);
 
 	//EXPLOSION
-	Renderer::GetInstance()->LoadTexture(T_EXPLOSION, "../../res/img/explosion.png");
+	Renderer::GetInstance()->LoadTexture(T_EXPLOSION, P_EXPLOSION);
 
 	//PLAYERS
-	Renderer::GetInstance()->LoadTexture(T_PLAYER1, "../../res/img/player1.png");
+	Renderer::GetInstance()->LoadTexture(T_PLAYER1, P_PLAYER1);
 	playerTexture.push_back(T_PLAYER1);
 
-	Renderer::GetInstance()->LoadTexture(T_PLAYER2, "../../res/img/player2.png");
+	Renderer::GetInstance()->LoadTexture(T_PLAYER2, P_PLAYER2);
 	playerTexture.push_back(T_PLAYER2);
 
 	for (int i = 0; i < static_cast<int>(Player::EPlayerType::COUNT); i++)
@@ -39,10 +39,10 @@ Gameplay::Gameplay() : map(Menu::GetCurrentLevel())
 
 	//AUDIO
 	if (!AudioManager::GetInstance()->PausedMusic())
-		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ "../../res/au/game_theme.mp3" });
+		AudioManager::GetInstance()->LoadSoundtrack(Soundtrack{ P_ST_GAME });
 
 	//HUD
-	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, "../../res/ttf/game_over.ttf", 90 });
+	Renderer::GetInstance()->LoadFont(Font{ F_GAMEOVER, P_GAME_OVER_FONT, 90 });
 
 	//PLAYER 1
 	VEC2 vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_SC_NUM_PL1, "PL1: ", {0, 0, 0, 255}, 0, 0 });
@@ -61,10 +61,10 @@ Gameplay::Gameplay() : map(Menu::GetCurrentLevel())
 	Renderer::GetInstance()->LoadRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y });
 
 	//HP
-	Renderer::GetInstance()->LoadTexture(T_LIVES_PL1, "../../res/img/player1.png");
+	Renderer::GetInstance()->LoadTexture(T_LIVES_PL1, P_PLAYER1);
 	hpTexture.push_back(T_LIVES_PL1);
 
-	Renderer::GetInstance()->LoadTexture(T_LIVES_PL2, "../../res/img/player2.png");
+	Renderer::GetInstance()->LoadTexture(T_LIVES_PL2, P_PLAYER2);
 	hpTexture.push_back(T_LIVES_PL2);
 
 	livesFrame.x = Renderer::GetInstance()->GetTextureSize(T_LIVES_PL1).x / 3;
@@ -235,7 +235,7 @@ void Gameplay::UpdateRanking()
 		}
 	}
 
-	std::ofstream fsalida("../../res/files/ranking.bin", std::ios::out | std::ios::binary | std::ios::app);
+	std::ofstream fsalida(P_RANKING, std::ios::out | std::ios::binary | std::ios::app);
 	fsalida.write(reinterpret_cast<char*>(&score), sizeof(int));
 	size_t len = name.size();
 	fsalida.write(reinterpret_cast<char*>(&len), sizeof(size_t)); //se guarda el size

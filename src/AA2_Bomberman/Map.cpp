@@ -6,7 +6,7 @@ Map::Map() {}
 Map::Map(std::string _level)
 {
 	rapidxml::xml_document<> doc;
-	std::ifstream file("../../res/files/config.xml");
+	std::ifstream file(P_CONFIG);
 	std::stringstream buffer;
 	buffer << file.rdbuf();
 	file.close();
