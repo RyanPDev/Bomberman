@@ -93,17 +93,21 @@ void Ranking::Draw()
 void Ranking::ReadFile()
 {
 	Winner aux;
+	int x;
+	std::string s;
 	std::ifstream fentrada("../../res/files/ranking.bin", std::ios::in | std::ios::binary);
 
 	while (fentrada)
 	{
-		fentrada.read(reinterpret_cast<char*>(&aux.score), sizeof(int));
+		fentrada.read(reinterpret_cast<char*>(&x), sizeof(int));
 		size_t len;
 		fentrada.read(reinterpret_cast<char*>(&len), sizeof(size_t));
 		char* temp = new char[len + 1];
 		fentrada.read(temp, len);
 		temp[len] = '\0';
-		aux.name = temp;
+		s = temp;
+		aux.name = s;
+		aux.score = x;
 		delete[]temp;
 		rank.push_back(aux);
 	}
