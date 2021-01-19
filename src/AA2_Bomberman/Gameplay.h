@@ -19,6 +19,10 @@ private:
 	//Lives
 	RECT livesFrame;
 
+	bool isGameEnd;
+	bool winnerDeclared;
+	int winner = 0;
+
 public:
 	Gameplay();
 	~Gameplay();
@@ -29,4 +33,5 @@ public:
 	void TakeDamageBehaviour(InputData*);
 	void UpdateHUDText();
 	void UpdateRanking();
+	void DeclareWinner();
 };

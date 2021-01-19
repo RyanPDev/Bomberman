@@ -52,7 +52,7 @@ struct Soundtrack {
 enum class EInputKeys
 {
 	LEFT, RIGHT, UP, DOWN, A, D, W, S, SPACE, P,
-	ESC, MOUSE_LEFT, MOUSE_RIGHT, RIGHT_CTRL, QUIT, NONE, COUNT
+	ESC, MOUSE_LEFT, MOUSE_RIGHT, RIGHT_CTRL, RETURN, QUIT, NONE, COUNT
 };
 
 struct InputData

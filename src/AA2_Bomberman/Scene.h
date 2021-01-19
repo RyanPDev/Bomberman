@@ -14,6 +14,7 @@ protected:
 	std::string textureExit;
 	std::string textureSound;
 	std::string textureRanking;
+	std::string textureGameEnd;
 	std::vector<std::string> playerTexture;
 	std::vector<std::string> hpTexture;
 	std::vector<std::string> powerUpsTexture;

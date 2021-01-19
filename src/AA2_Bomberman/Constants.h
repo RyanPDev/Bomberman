@@ -36,7 +36,7 @@ const std::string P_SAIYAN_FONT = "../../res/ttf/saiyan.ttf";
 #pragma region TIMERS
 
 //TOTAL GAME TIME
-const float GAME_TIMER{ 5.f }; //seconds
+const float GAME_TIMER{ 8.f }; //seconds
 
 //BOMB TIMER
 const float BOMB_TIMER{ 3.f };
@@ -120,6 +120,10 @@ const std::string T_SC_PL1 = "TxtScPl1";
 const std::string T_SC_PL2 = "TxtScPl2";
 const std::string T_SC_NUM_PL1 = "TxtScNumPl1";
 const std::string T_SC_NUM_PL2 = "TxtScNumPl2";
-const std::string T_LIVES_PL1 = "LivesPl1";
-const std::string T_LIVES_PL2 = "LivesPl2";
+const std::string T_LIVES_PL1 = "TxtLivesPl1";
+const std::string T_LIVES_PL2 = "TxtLivesPl2";
+const std::string T_GAME_END_PL1 = "TxtGameEndPl1";
+const std::string T_GAME_END_PL2 = "TxtGameEndPl2";
+const std::string T_GAME_END_DRAW = "TxtGameEndDraw";
+const std::string T_ENTER_NAME = "TxtEnterName";
 #pragma endregion

@@ -13,5 +13,6 @@ public:
 	~InputManager();
 
 	void Update();
+	std::string ScanCode();
 	InputData* GetInput() { return &_input; }
 };

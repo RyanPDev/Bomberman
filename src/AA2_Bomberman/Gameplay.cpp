@@ -72,8 +72,26 @@ Gameplay::Gameplay() : map(Menu::GetCurrentLevel())
 	livesFrame.w = Renderer::GetInstance()->GetTextureSize(T_LIVES_PL1).x / 3;
 	livesFrame.h = Renderer::GetInstance()->GetTextureSize(T_LIVES_PL1).y / 4;
 
-	//INITIALIZE GAME TIMER
+	//GAME END TEXT
+	//PL1 WIN
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_PL1, "THE WINNER IS PLAYER 1", {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->LoadRect(T_GAME_END_PL1, { SCREEN_WIDTH / 2 - vtmp.x / 2, 200, vtmp.x, vtmp.y });
+	//PL2 WIN
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_PL2, "THE WINNER IS PLAYER 2", {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->LoadRect(T_GAME_END_PL2, { SCREEN_WIDTH / 2 - vtmp.x / 2, 200, vtmp.x, vtmp.y });
+	//DRAW
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_DRAW, "THE GAME IS A DRAW", {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->LoadRect(T_GAME_END_DRAW, { SCREEN_WIDTH / 2 - vtmp.x / 2, 200, vtmp.x, vtmp.y });
+
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_ENTER_NAME, "ENTER YOUR NAME", {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->LoadRect(T_ENTER_NAME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 300, vtmp.x, vtmp.y });
+
+
+
+	//INITIALIZE variables
 	timeDown = GAME_TIMER;
+	isGameEnd = false;
+	winnerDeclared = false;
 }
 
 Gameplay::~Gameplay() {}
@@ -82,32 +100,39 @@ void Gameplay::Update(InputData* _input)
 {
 	if (_input->IsPressed(EInputKeys::ESC)) SetSceneState(ESceneState::CLICK_EXIT);
 
-	//UPDATE PLAYERS
-	for (Player* p : _players)
-	{
-		p->Update(_input, &map, _powerUps);
-		if (p->GetHp() <= 0)
-		{
-			UpdateRanking();
-			SetSceneState(ESceneState::CLICK_RANKING);
-			break;
-		}
-	}
-
-	//BEHAVIOUR IN THE GAME WHEN PLAYERS TAKE DAMAGE
-	TakeDamageBehaviour(_input);
-
-	//TIMER
-	timeDown -= *_input->GetDeltaTime();
-
-	//UPDATE HUD
-	UpdateHUDText();
-
 	if (timeDown <= 0)
 	{
-		UpdateRanking();
-		SetSceneState(ESceneState::CLICK_RANKING);
+		//UpdateRanking();
+		isGameEnd = true;
+		if(!winnerDeclared) DeclareWinner();
+
+
+		if (_input->IsPressed(EInputKeys::RETURN))
+			SetSceneState(ESceneState::CLICK_RANKING);
 	}
+	else {
+		//UPDATE PLAYERS
+		for (Player* p : _players)
+		{
+			p->Update(_input, &map, _powerUps);
+			if (p->GetHp() <= 0)
+			{
+				UpdateRanking();
+				SetSceneState(ESceneState::CLICK_RANKING);
+				break;
+			}
+		}
+
+		//BEHAVIOUR IN THE GAME WHEN PLAYERS TAKE DAMAGE
+		TakeDamageBehaviour(_input);
+
+		//TIMER
+		timeDown -= *_input->GetDeltaTime();
+
+		//UPDATE HUD
+		UpdateHUDText();
+	}
+
 }
 
 void Gameplay::Draw()
@@ -124,34 +149,48 @@ void Gameplay::Draw()
 	Renderer::GetInstance()->PushImage(T_SC_PL2, T_SC_PL2);
 	Renderer::GetInstance()->PushImage(T_TIME, T_TIME);
 
-	//POWER UPS
-	for (PowerUp powerUp : _powerUps)
-	{
-		powerUp.Draw(powerUp.GetType());
-	}
-
-	//WALLS
-	for (Wall* w : map.walls)
-	{
-		Renderer::GetInstance()->PushSprite(T_WALL, w->GetFrame(), w->GetPosition());
-	}
-
-	//PLAYERS
-	for (int i = 0; i < _players.size(); i++)
-	{
-		//BOMBS
-		_players[i]->DrawBomb();
-		_players[i]->DrawExplosion(&map);
-
-		if (!_players[i]->GetDeath())
-			_players[i]->Draw(playerTexture[i], _players[i]);
-	}
-
 	//HP
 	for (int i = 0; i < static_cast<int>(Player::EPlayerType::COUNT); i++)
 	{
 		Player::EPlayerType type = static_cast<Player::EPlayerType>(i);
 		_players[i]->DrawHp(hpTexture[i], &livesFrame, type);
+	}
+
+	if (isGameEnd)
+	{
+		if (winner == 0)
+			Renderer::GetInstance()->PushImage(T_GAME_END_DRAW, T_GAME_END_DRAW);
+		else
+		{
+			std::string id = "TxtGameEndPl" + std::to_string(winner);
+			Renderer::GetInstance()->PushImage(id, id);
+			Renderer::GetInstance()->PushImage(T_ENTER_NAME, T_ENTER_NAME);
+		}
+	}
+	else
+	{
+		//POWER UPS
+		for (PowerUp powerUp : _powerUps)
+		{
+			powerUp.Draw(powerUp.GetType());
+		}
+
+		//WALLS
+		for (Wall* w : map.walls)
+		{
+			Renderer::GetInstance()->PushSprite(T_WALL, w->GetFrame(), w->GetPosition());
+		}
+
+		//PLAYERS
+		for (int i = 0; i < _players.size(); i++)
+		{
+			//BOMBS
+			_players[i]->DrawBomb();
+			_players[i]->DrawExplosion(&map);
+
+			if (!_players[i]->GetDeath())
+				_players[i]->Draw(playerTexture[i], _players[i]);
+		}
 	}
 
 	Renderer::GetInstance()->Render();
@@ -242,4 +281,14 @@ void Gameplay::UpdateRanking()
 	fsalida.write(name.c_str(), name.size()); //se guarda el string
 
 	fsalida.close();
+}
+
+void Gameplay::DeclareWinner()
+{
+	//HARDCODED (SHOULD FIX, LATER...?)
+	if (_players[0]->GetHp() <= 0 || _players[0]->GetScore() > _players[1]->GetScore()) winner = 1;
+	else if (_players[1]->GetHp() <= 0 || _players[0]->GetScore() < _players[1]->GetScore() <= 0) winner = 2;
+	else winner = 0;
+
+	winnerDeclared = true;
 }
