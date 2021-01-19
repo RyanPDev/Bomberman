@@ -102,9 +102,9 @@ void Gameplay::Update(InputData* _input)
 
 	if (timeDown <= 0)
 	{
-		//UpdateRanking();
 		isGameEnd = true;
 		if(!winnerDeclared) DeclareWinner();
+		UpdateRanking();
 
 
 		if (_input->IsPressed(EInputKeys::RETURN))
@@ -258,6 +258,7 @@ void Gameplay::UpdateHUDText()
 
 void Gameplay::UpdateRanking()
 {
+	
 	std::string name;
 	int score = 0;
 	std::cout << "Enter your name: " << std::endl;
