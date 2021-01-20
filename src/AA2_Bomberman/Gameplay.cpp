@@ -79,12 +79,17 @@ Gameplay::Gameplay() : map(Menu::GetCurrentLevel())
 	//PL2 WIN
 	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_PL2, "THE WINNER IS PLAYER 2", {0, 0, 0, 255}, 0, 0 });
 	Renderer::GetInstance()->LoadRect(T_GAME_END_PL2, { SCREEN_WIDTH / 2 - vtmp.x / 2, 200, vtmp.x, vtmp.y });
+
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_ENTER_NAME, "ENTER YOUR NAME", {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->LoadRect(T_ENTER_NAME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 250, vtmp.x, vtmp.y });
+
+
 	//DRAW
 	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_DRAW, "THE GAME IS A DRAW", {0, 0, 0, 255}, 0, 0 });
 	Renderer::GetInstance()->LoadRect(T_GAME_END_DRAW, { SCREEN_WIDTH / 2 - vtmp.x / 2, 200, vtmp.x, vtmp.y });
 
-	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_ENTER_NAME, "ENTER YOUR NAME", {0, 0, 0, 255}, 0, 0 });
-	Renderer::GetInstance()->LoadRect(T_ENTER_NAME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 300, vtmp.x, vtmp.y });
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_DRAW_ENTER, "PRESS ENTER", {0, 0, 0, 255}, 0, 0 });
+	Renderer::GetInstance()->LoadRect(T_GAME_END_DRAW_ENTER, { SCREEN_WIDTH / 2 - vtmp.x / 2, 250, vtmp.x, vtmp.y });
 
 
 
@@ -170,7 +175,10 @@ void Gameplay::Draw()
 	if (isGameEnd)
 	{
 		if (winner == 0)
+		{
 			Renderer::GetInstance()->PushImage(T_GAME_END_DRAW, T_GAME_END_DRAW);
+			Renderer::GetInstance()->PushImage(T_GAME_END_DRAW_ENTER, T_GAME_END_DRAW_ENTER);
+		}
 		else
 		{
 			std::string id = "TxtGameEndPl" + std::to_string(winner);
