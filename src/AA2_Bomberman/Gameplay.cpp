@@ -133,8 +133,14 @@ void Gameplay::Update(InputData* _input)
 			p->Update(_input, &map, _powerUps);
 			if (p->GetHp() <= 0)
 			{
-				UpdateRanking();
-				SetSceneState(ESceneState::CLICK_RANKING);
+				isGameEnd = true;
+				DeclareWinner();
+
+				if (gameEndDrawn)
+				{
+					UpdateRanking();
+					SetSceneState(ESceneState::CLICK_RANKING);
+				}
 				break;
 			}
 		}
@@ -326,7 +332,7 @@ void Gameplay::DeclareWinner()
 	//HARDCODED (SHOULD FIX, LATER...?)
 	int scpl1 = *_players[0]->GetScore(), scpl2 = *_players[1]->GetScore();
 	int hp1 = _players[0]->GetHp(), hp2 = _players[1]->GetHp();
-	if (hp1 <= 0 || scpl1 > scpl2) winner = 1;
-	else if (hp2 <= 0 || scpl1 < scpl2) winner = 2;
+	if (hp2 <= 0 || (scpl1 > scpl2 && hp1 > 0)) winner = 1;
+	else if (hp1 <= 0 || (scpl1 < scpl2 && hp2 > 0)) winner = 2;
 	else winner = 0;
 }

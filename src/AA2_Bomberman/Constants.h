@@ -125,5 +125,6 @@ const std::string T_LIVES_PL2 = "TxtLivesPl2";
 const std::string T_GAME_END_PL1 = "TxtGameEndPl1";
 const std::string T_GAME_END_PL2 = "TxtGameEndPl2";
 const std::string T_GAME_END_DRAW = "TxtGameEndDraw";
+const std::string T_GAME_END_DRAW_ENTER = "TxtGameEndDrawEnter";
 const std::string T_ENTER_NAME = "TxtEnterName";
 #pragma endregion
