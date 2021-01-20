@@ -20,7 +20,7 @@ private:
 	RECT livesFrame;
 
 	bool isGameEnd;
-	bool winnerDeclared;
+	bool gameEndDrawn;
 	int winner = 0;
 
 public:

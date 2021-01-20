@@ -91,7 +91,7 @@ Gameplay::Gameplay() : map(Menu::GetCurrentLevel())
 	//INITIALIZE variables
 	timeDown = GAME_TIMER;
 	isGameEnd = false;
-	winnerDeclared = false;
+	gameEndDrawn = false;
 }
 
 Gameplay::~Gameplay() {}
@@ -103,13 +103,23 @@ void Gameplay::Update(InputData* _input)
 	if (timeDown <= 0)
 	{
 		isGameEnd = true;
-		/*if(!winnerDeclared) */
+		DeclareWinner();
 
-		UpdateRanking();
-
-		SetSceneState(ESceneState::CLICK_RANKING);
-		/*if (_input->IsPressed(EInputKeys::RETURN))
-			;*/
+		if (gameEndDrawn)
+		{
+			if (winner == 0)
+			{
+				if (_input->IsPressed(EInputKeys::RETURN))
+				{
+					SetSceneState(ESceneState::CLICK_RANKING);
+				}
+			}
+			else
+			{
+				UpdateRanking();
+				SetSceneState(ESceneState::CLICK_RANKING);
+			}
+		}
 	}
 	else {
 		//UPDATE PLAYERS
@@ -167,6 +177,7 @@ void Gameplay::Draw()
 			Renderer::GetInstance()->PushImage(id, id);
 			Renderer::GetInstance()->PushImage(T_ENTER_NAME, T_ENTER_NAME);
 		}
+		gameEndDrawn = true;
 	}
 	else
 	{
@@ -310,6 +321,4 @@ void Gameplay::DeclareWinner()
 	if (hp1 <= 0 || scpl1 > scpl2) winner = 1;
 	else if (hp2 <= 0 || scpl1 < scpl2) winner = 2;
 	else winner = 0;
-
-	winnerDeclared = true;
 }
