@@ -103,12 +103,13 @@ void Gameplay::Update(InputData* _input)
 	if (timeDown <= 0)
 	{
 		isGameEnd = true;
-		if(!winnerDeclared) DeclareWinner();
+		/*if(!winnerDeclared) */
+
 		UpdateRanking();
 
-
-		if (_input->IsPressed(EInputKeys::RETURN))
-			SetSceneState(ESceneState::CLICK_RANKING);
+		SetSceneState(ESceneState::CLICK_RANKING);
+		/*if (_input->IsPressed(EInputKeys::RETURN))
+			;*/
 	}
 	else {
 		//UPDATE PLAYERS
@@ -256,13 +257,29 @@ void Gameplay::UpdateHUDText()
 	Renderer::GetInstance()->UpdateRect(T_TIME, { SCREEN_WIDTH / 2 - vtmp.x / 2, 0, vtmp.x, vtmp.y });
 }
 
+//WRITES WINNER INFO INTO RANKING BINARY FILE
 void Gameplay::UpdateRanking()
 {
-	
+	system("cls");
 	std::string name;
 	int score = 0;
-	std::cout << "Enter your name: " << std::endl;
-	std::getline(std::cin, name);
+	bool isOk = false;
+	do
+	{
+		std::cout << "Enter your name (A-Z | (3-10 characters): " << std::endl;
+		std::getline(std::cin, name);
+
+		if (name.size() > 10 || name.size() < 3) { system("cls"); std::cout << "INAPPROPIATE NUMBER OF CHARACTERS\n" << std::endl; }
+		else
+		{
+			for (int i = 0; i < name.size(); i++)
+			{
+				if ((name[i] >= 'A' && name[i] <= 'Z') || (name[i] >= 'a' && name[i] <= 'z')) isOk = true;
+				else { isOk = false;  system("cls"); std::cout << "INVALID CHARACTER\n" << std::endl; break; }
+			}
+		}
+
+	} while (!isOk);
 
 	for (Player* p : _players)
 	{
@@ -278,8 +295,8 @@ void Gameplay::UpdateRanking()
 	std::ofstream fsalida(P_RANKING, std::ios::out | std::ios::binary | std::ios::app);
 	fsalida.write(reinterpret_cast<char*>(&score), sizeof(int));
 	size_t len = name.size();
-	fsalida.write(reinterpret_cast<char*>(&len), sizeof(size_t)); //se guarda el size
-	fsalida.write(name.c_str(), name.size()); //se guarda el string
+	fsalida.write(reinterpret_cast<char*>(&len), sizeof(size_t));
+	fsalida.write(name.c_str(), name.size());
 
 	fsalida.close();
 }
@@ -287,8 +304,10 @@ void Gameplay::UpdateRanking()
 void Gameplay::DeclareWinner()
 {
 	//HARDCODED (SHOULD FIX, LATER...?)
-	if (_players[0]->GetHp() <= 0 || _players[0]->GetScore() > _players[1]->GetScore()) winner = 1;
-	else if (_players[1]->GetHp() <= 0 || _players[0]->GetScore() < _players[1]->GetScore() <= 0) winner = 2;
+	int scpl1 = *_players[0]->GetScore(), scpl2 = *_players[1]->GetScore();
+	int hp1 = _players[0]->GetHp(), hp2 = _players[1]->GetHp();
+	if (hp1 <= 0 || scpl1 > scpl2) winner = 1;
+	else if (hp2 <= 0 || scpl1 < scpl2) winner = 2;
 	else winner = 0;
 
 	winnerDeclared = true;
