@@ -268,14 +268,15 @@ void Gameplay::UpdateRanking()
 	{
 		std::cout << "Enter your name (A-Z | (3-10 characters): " << std::endl;
 		std::getline(std::cin, name);
+		system("cls");
 
-		if (name.size() > 10 || name.size() < 3) { system("cls"); std::cout << "INAPPROPIATE NUMBER OF CHARACTERS\n" << std::endl; }
+		if (name.size() > 10 || name.size() < 3) { std::cout << "INAPPROPIATE NUMBER OF CHARACTERS\n" << std::endl; }
 		else
 		{
 			for (int i = 0; i < name.size(); i++)
 			{
 				if ((name[i] >= 'A' && name[i] <= 'Z') || (name[i] >= 'a' && name[i] <= 'z')) isOk = true;
-				else { isOk = false;  system("cls"); std::cout << "INVALID CHARACTER\n" << std::endl; break; }
+				else { isOk = false; std::cout << "INVALID CHARACTER\n" << std::endl; break; }
 			}
 		}
 
