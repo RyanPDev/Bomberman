@@ -36,7 +36,7 @@ const std::string P_SAIYAN_FONT = "../../res/ttf/saiyan.ttf";
 #pragma region TIMERS
 
 //TOTAL GAME TIME
-const float GAME_TIMER{ 80.f }; //seconds
+const float GAME_TIMER{ 1.f }; //seconds
 
 //BOMB TIMER
 const float BOMB_TIMER{ 3.f };

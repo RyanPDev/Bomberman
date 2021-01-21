@@ -74,10 +74,10 @@ Gameplay::Gameplay() : map(Menu::GetCurrentLevel())
 
 	//GAME END TEXT
 	//PL1 WIN
-	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_PL1, "THE WINNER IS PLAYER 1", {0, 0, 0, 255}, 0, 0 });
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_PL1, "PLAYER 1 WINS!", {0, 0, 0, 255}, 0, 0 });
 	Renderer::GetInstance()->LoadRect(T_GAME_END_PL1, { SCREEN_WIDTH / 2 - vtmp.x / 2, 200, vtmp.x, vtmp.y });
 	//PL2 WIN
-	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_PL2, "THE WINNER IS PLAYER 2", {0, 0, 0, 255}, 0, 0 });
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_PL2, "PLAYER 2 WINS!", {0, 0, 0, 255}, 0, 0 });
 	Renderer::GetInstance()->LoadRect(T_GAME_END_PL2, { SCREEN_WIDTH / 2 - vtmp.x / 2, 200, vtmp.x, vtmp.y });
 
 	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_ENTER_NAME, "ENTER YOUR NAME", {0, 0, 0, 255}, 0, 0 });
@@ -85,13 +85,11 @@ Gameplay::Gameplay() : map(Menu::GetCurrentLevel())
 
 
 	//DRAW
-	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_DRAW, "THE GAME IS A DRAW", {0, 0, 0, 255}, 0, 0 });
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_DRAW, "IT'S A DRAW!", {0, 0, 0, 255}, 0, 0 });
 	Renderer::GetInstance()->LoadRect(T_GAME_END_DRAW, { SCREEN_WIDTH / 2 - vtmp.x / 2, 200, vtmp.x, vtmp.y });
 
-	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_DRAW_ENTER, "PRESS ENTER", {0, 0, 0, 255}, 0, 0 });
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_GAME_END_DRAW_ENTER, "PRESS ENTER TO CONTINUE", {0, 0, 0, 255}, 0, 0 });
 	Renderer::GetInstance()->LoadRect(T_GAME_END_DRAW_ENTER, { SCREEN_WIDTH / 2 - vtmp.x / 2, 250, vtmp.x, vtmp.y });
-
-
 
 	//INITIALIZE variables
 	timeDown = GAME_TIMER;

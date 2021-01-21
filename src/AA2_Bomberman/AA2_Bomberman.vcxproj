@@ -195,9 +195,7 @@
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="Ranking.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Rollers.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -216,9 +214,7 @@
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Rollers.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Shield.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Wall.h" />
