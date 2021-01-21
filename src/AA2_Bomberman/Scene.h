@@ -14,7 +14,7 @@ protected:
 	std::string textureExit;
 	std::string textureSound;
 	std::string textureRanking;
-	std::string textureGameEnd;
+	std::string textureBackToMenu;
 	std::vector<std::string> playerTexture;
 	std::vector<std::string> hpTexture;
 	std::vector<std::string> powerUpsTexture;
@@ -31,6 +31,7 @@ public:
 	virtual void SetTextureExit(std::string id) { textureExit = id; }
 	virtual void SetTextureSound(std::string id) { textureSound = id; }
 	virtual void SetTextureRanking(std::string id) { textureRanking = id; }
+	virtual void SetTextureBackToMenu(std::string id) { textureBackToMenu = id; }
 
 	ESceneState GetSceneState() { return sceneState; }
 	void SetSceneState(ESceneState state) { sceneState = state; }

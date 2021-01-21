@@ -26,6 +26,12 @@ Ranking::Ranking()
 	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_NAME, "NAME", {0, 0, 0, 255}, 0, 0 });
 	Renderer::GetInstance()->LoadRect(T_NAME, { SCREEN_WIDTH / 2 - vtmp.x / 2 + 200, 150, vtmp.x, vtmp.y });
 
+	//Back Button 
+	vtmp = Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_BACK_N, "EXIT", {0,0,0,255}, 0, 0 });
+	Renderer::GetInstance()->LoadTextureText(F_GAMEOVER, Text{ T_BACK_H, "EXIT", {200,100,0,255}, 0, 0 });
+	textureBackToMenu = T_BACK_N;
+	Renderer::GetInstance()->LoadRect(T_BACK, { 560, 580, vtmp.x, vtmp.y });
+
 	ReadFile();
 }
 
@@ -34,6 +40,14 @@ Ranking::~Ranking() {}
 void Ranking::Update(InputData* _input)
 {
 	if (_input->IsPressed(EInputKeys::ESC)) SetSceneState(ESceneState::CLICK_EXIT);
+
+	//Button Collisions
+	if (Collisions::ExistCollision(_input->GetMouseCoords(), Renderer::GetInstance()->GetRect(T_BACK)))
+	{
+		SetTextureBackToMenu(T_BACK_H);
+		if (_input->JustPressed(EInputKeys::MOUSE_LEFT)) { SetSceneState(ESceneState::CLICK_EXIT); }
+	}
+	else SetTextureBackToMenu(T_BACK_N);
 }
 
 void Ranking::Draw()
@@ -68,6 +82,9 @@ void Ranking::Draw()
 		Renderer::GetInstance()->UpdateRect(T_PL_RANK, { SCREEN_WIDTH / 2 - vtmp.x / 2 - 200, 200 + (35 * i), vtmp.x, vtmp.y });
 		Renderer::GetInstance()->PushImage(T_PL_RANK, T_PL_RANK);
 	}
+
+	//Button
+	Renderer::GetInstance()->PushImage(textureBackToMenu, T_BACK);
 
 	Renderer::GetInstance()->Render();
 }
