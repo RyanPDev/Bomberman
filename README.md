@@ -1,3 +1,3 @@
-# Bomberman 2D GAME
+# Bomberman 2D GAME - 2 players local
 
-University Programming C++/SDL/XML Bomberman Game - 2 Player local
+University Programming C++/SDL/XML
