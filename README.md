@@ -1,4 +1,4 @@
-# Bomberman 2D GAME - 2 players local
+# C/C++ Bomberman 2D GAME - 2 players local
 
 Player 1 - WASD to move and CTRL to drop bomb
 
